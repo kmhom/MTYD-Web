@@ -1,0 +1,67 @@
+.root {
+    --flexMarginTD: 10px;
+    --flexMarginLR: 10px;
+    --flexWidth: 100px;
+    --borderRadius: 50px;
+    --sectionHeight: 50px;
+    --fontSize: 24px;
+}
+
+.mainHeading {
+    text-align: center;
+    margin: 15px;
+}
+
+.subHeading {
+    text-align: left;
+    margin: 15px;
+}
+
+.cardContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardItem {
+    flex: 1 var(--flexWidth);
+    margin: var(--flexMarginTD) var(--flexMarginLR);
+    height: var(--sectionHeight);
+    border: solid 1px black;
+    border-radius: var(--borderRadius);
+    background-color: white;
+    color: black;
+}
+
+.inputContainer {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: var(--flexMarginTD) 0;
+}
+
+.inputItem {
+    flex: 1;
+    flex-basis: 100%;
+    margin: var(--flexMarginTD) var(--flexMarginLR);
+}
+
+.halfWidthInput {
+    flex-basis: unset;
+    width: 50%;
+}
+
+.input {
+    width: 90%;
+    margin: 0 var(--flexMarginLR);
+}
+
+@media (max-width: 500px) {
+    .root {
+        --flexMarginTD: 10px;
+        --flexMarginLR: 10px;
+        --flexWidth: 60px;
+        --borderRadius: 10px;
+        --sectionHeight: 50px;
+    }
+}

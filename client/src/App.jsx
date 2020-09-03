@@ -8,6 +8,7 @@ import AppliedRoute from './components/AppliedRoute';
 import NavBar from './components/NavBar';
 import Landing from './components/Landing';
 import ChoosePlan from './components/ChoosePlan';
+import PaymentDetails from './components/PaymentDetails';
 import NotFound from './components/NotFound';
 
 import './App.css';
@@ -15,25 +16,36 @@ import './App.css';
 function App() {
   return (
     <Provider store={store}>
-      <NavBar />
-      <Router>
-        <Switch>
-          <AppliedRoute
-            exact
-            path="/"
-            component={Landing}
-          />
-          <AppliedRoute
-            exact
-            path="/choose-plan"
-            component={ChoosePlan}
-          />
-          <AppliedRoute
-            path="*"
-            component={NotFound}
-          />
-        </Switch>
-      </Router>
+      <div className="root">
+        <Router>
+          <div className="sideNavBar">
+            <NavBar />
+          </div>
+          <div className="mainApp">
+            <Switch>
+              <AppliedRoute
+                exact
+                path="/"
+                component={Landing}
+              />
+              <AppliedRoute
+                exact
+                path='/choose-plan'
+                component={ChoosePlan}
+              />
+              <AppliedRoute
+                exact
+                path='/payment-details'
+                component={PaymentDetails}
+              />
+              <AppliedRoute
+                path="*"
+                component={NotFound}
+              />
+            </Switch>
+          </div>
+        </Router>
+      </div>
     </Provider>
   );
 }

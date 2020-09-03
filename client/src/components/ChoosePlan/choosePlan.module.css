@@ -1,0 +1,161 @@
+.root {
+    --flexMarginTD: 10px;
+    --flexMarginLR: 10px;
+    --flexWidth: 120px;
+    --borderRadius: 10px;
+    --sectionHeight: 80px;
+    --fontSize: 24px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ebebeb;
+}
+
+.mealHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.headerItem {
+    flex: 1;
+    /* text-align: center; */
+}
+
+.headerItem:nth-of-type(1) {
+    flex: 3;
+}
+
+.devlieryDayOptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deliveryDayButton {
+    flex: 1 var(--flexWidth);
+    margin: var(--flexMarginTD) var(--flexMarginLR);
+    height: var(--sectionHeight);
+    border: solid 1px black;
+    border-radius: var(--borderRadius);
+    background-color: white;
+    color: black;
+}
+
+.deliveryDayButtonSelected {
+    background-color: green;
+    color: white;
+}
+
+.deliveryButtonText {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    align-items:center;
+    justify-content:center;
+}
+
+.mealsEachDelivery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mealsDeliverySection {
+    flex: 1 var(--flexWidth);
+    margin: var(--flexMarginTD) var(--flexMarginLR);
+    height: var(--sectionHeight);
+    border: solid 1px black;
+    border-radius: var(--borderRadius);
+    background-color: white;
+    color: black;
+}
+
+.mealsDeliverySelected {
+    background-color: orange;
+    color: black;
+}
+
+.mealsDeliveryText {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
+}
+
+.paymentOptions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paymentOptionsSection {
+    flex: 1 var(--flexWidth);
+    margin: var(--flexMarginTD) var(--flexMarginLR);
+    height: var(--sectionHeight);
+    border: solid 1px black;
+    border-radius: var(--borderRadius);
+    background-color: white;
+    color: black;
+    /* font-size: var(--fontSize); */
+}
+
+.paymentOptionSelected {
+    background-color: green;
+    color: white;
+}
+
+.paymentOptionsText {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.finalSection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.finalElement {
+    flex: 1 var(--flexWidth);
+    margin: var(--flexMarginTD) var(--flexMarginLR);
+    height: var(--sectionHeight);
+    background-color: white;
+    color: black;
+}
+
+.finalContainer {
+    display: flex;
+    width: 100%;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: solid 1px;
+    border-radius: var(--borderRadius);
+    /* font-size: var(--fontSize); */
+}
+
+input {
+    font-size: large;
+}
+
+@media (max-width: 500px) {
+    .root {
+        --flexMarginTD: 10px;
+        --flexMarginLR: 10px;
+        --flexWidth: 100px;
+        --borderRadius: 50px;
+        --sectionHeight: 50px;
+    }
+
+    .mainHeading {
+        margin-top: -1px;
+    }
+}

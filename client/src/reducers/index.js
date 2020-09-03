@@ -2,8 +2,10 @@
 
 import { combineReducers}  from 'redux';
 import mtydReducer from './mtydReducer';
+import subscriptionReducer from './subscriptionReducer';
 
 export default combineReducers({
     //reducers
     mtyd: mtydReducer,
+    subscribe: subscriptionReducer,
 });
