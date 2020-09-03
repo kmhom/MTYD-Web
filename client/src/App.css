@@ -1,38 +1,208 @@
-.App {
+.landing {
+  display: flex;
+}
+.rightpanel {
+  display: block;
+  flex: 1;
+  background-color: aliceblue;
+  height: 95vh;
+  padding: 20px;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.centerpanel {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex: 3;
+  height: 95vh;
+  padding: 20px;
+}
+.navbar {
+  flex: 1;
+}
+
+.home-image {
+  background-image: url("./images/home.png");
+  background-color: #cccccc;
+  background-size: cover;
+  height: 40rem;
+  width: 40rem;
+  font-size: 3rem;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.home-image p h6 {
+  margin: 0rem;
+}
+.center-right {
+  display: block;
+  padding: 20px;
+  margin: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form1 {
+  height: 50%;
+}
+
+.form1 {
+  height: 50%;
+}
+
+/* Choose your Meal */
+
+.mealMain {
+  display: flex;
+  flex-direction: column;
+  background-color: #ebebeb;
+}
+.headericon {
+  color: #727272;
+  margin: 1rem;
+}
+.meal-header {
+  display: flex;
+}
+.fa-bars {
+  flex-direction: row;
+  flex: 3;
+}
+.fa-bell .fa-share-alt .fa-search {
+  flex: 1;
+}
+.title {
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: block;
+  margin-bottom: 20px;
+}
+
+#chooseYourPlan {
+  font-size: 25px;
+  font-weight: bolder;
+  margin: 0px;
+}
+
+#local {
+  font-size: 15px;
+  font-weight: 700;
+  color: #727272;
+  margin: 0px;
+}
+
+.mealselectmenu {
+  background-color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0px 20px;
+}
+
+#mealdays {
+  font-weight: bold;
+  color: black;
+  font-size: 15px;
+  margin: 1rem 0rem;
+}
+
+.meal-number {
+  font-weight: bold;
+  color: black;
+  font-size: 15px;
+  margin: 1rem 0rem;
+  text-align: center;
+}
+
+.meal-button {
+  color: #5a5a5a;
+  border: 2px solid #727272;
+  background-color: #ffffff;
+  border-radius: 25px;
+  padding: 1rem 2rem;
+  margin: 5px;
+  align-content: center;
+  flex: 1;
+}
+.button-wrapper {
+  align-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.meal-button:hover {
+  background-color: #eeeeee;
+  flex: 1;
+}
+
+.internal-titles {
+  font-weight: 600;
+  color: black;
+  font-size: 17px;
+  margin: 0.5rem 0rem;
+}
+
+.payment-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.payment-button {
+  color: #5a5a5a;
+  border: 2px solid #727272;
+  background-color: #ffffff;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  margin: 10px;
+  padding: 20px;
+}
+.payment-button:hover {
+  background-color: #eeeeee;
+}
+.amount {
+  display: flex;
+}
+
+#totalamount {
+  font-size: 1rem;
+  font-weight: 600;
+  flex: 2;
+  border: 2px solid #727272;
+  border-radius: 25px;
+  padding: 10px;
+  text-align: center;
+  margin-right: 2rem;
+  color: #5a5a5a;
+}
+
+#done-button {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  flex: 1;
+  color: #ffffff;
+  border: 2px solid #a1a1a1;
+  background-color: #a1a1a1;
+  border-radius: 25px;
+  padding: 10px;
+}
+
+.meal-footer {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #ebebeb;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.meal-footer p {
+  font-size: 10px;
+  margin: 0px;
+  padding: 5px;
+}
+
+.footer-icon-tray {
+  display: block;
+  color: #727272;
+  padding: 5px;
 }

@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 
 class NavBar extends React.Component {
-    render() {
-        return (
-            <div> Will be a nav bar </div>
-        );
-    }
+  render() {
+    return <div className='navbar'> Will be a nav bar </div>;
+  }
 }
 
 export default NavBar;
