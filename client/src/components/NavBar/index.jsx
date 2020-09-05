@@ -9,7 +9,7 @@ import ProfileIcon from './noun_profile_2057160.svg';
 import SelectIcon from './noun_select_2076436.svg';
 import MoreIcon from './noun_more_897914.svg';
 
-class NavBar extends React.Component {
+class SideNavBar extends React.Component {
     render() {
         return (
             <div className={styles.root}>
@@ -19,7 +19,7 @@ class NavBar extends React.Component {
                             <p> Home </p>
                         </div>
                     </Link>
-                    <Link to='/subscribe'>
+                    <Link to='/choose-plan'>
                         <div className={styles.navElt}>
                             <img src={SubscribeIcon} alt="Subscribe"/>
                         </div>
@@ -39,4 +39,56 @@ class NavBar extends React.Component {
     }
 }
 
-export default NavBar;
+
+class BottomNavBar extends React.Component {
+    render() {
+        return (
+            <div className={styles.root}>
+                {/* <div className='footer-icon-tray'>
+                    <i class='fa fa-heart'></i>
+                    <p>Favorites</p>
+                </div>
+                <div className='footer-icon-tray'>
+                    <i class='fa fa-search'></i>
+                    <p>Search</p>
+                </div>
+                <div className='footer-icon-tray'>
+                    <i class='fas fa-exclamation-circle '></i>
+                    <p>Information</p>
+                </div>
+                <div className='footer-icon-tray'>
+                    <i class='fas fa-bell'></i>
+                    <p>Notifications</p>
+                </div> */}
+                <div className={styles.navContainer}>
+                    <div className={styles.navElt}>
+                        <Link to='/'>
+                            <p> Home </p>
+                        </Link>
+                    </div>
+                    <div className={styles.navElt}>
+                        <Link to='/choose-plan'>
+                            <img src={SubscribeIcon} alt="Subscribe"/>
+                            <p> Subscribe </p>
+                        </Link>
+                    </div>
+                    <div className={styles.navElt}>
+                        <img src={ProfileIcon} alt="Profile"/>
+                        <p> Profile </p>
+                    </div>
+                    <div className={styles.navElt}>
+                        <img src={SelectIcon} alt="Select"/>
+                        <p> Select </p>
+                    </div>
+                    <div className={styles.navElt}>
+                        <img src={MoreIcon} alt="More"/>
+                        <p> More </p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
+
+
+export { BottomNavBar, SideNavBar };

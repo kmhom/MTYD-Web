@@ -24,13 +24,46 @@
   margin: 1rem;
 }
 
+.title {
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.mainTitle {
+  font-size: 25px;
+  font-weight: bolder;
+  margin: 0px;
+}
+
+.subTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #727272;
+  margin: 0px;
+}
+
+.bottomNavBar {
+  display: none;
+  background-color: #ebebeb;
+  height: var(--navBarHeight);
+}
+
 @media (max-width: 500px) {
   .root {
     --navBarWidth: 0px;
-    --navBarHeight: 90px;
+    --navBarHeight: 60px;
   }
 
   .sideNavBar {
     display: none;
+  }
+
+  .bottomNavBar {
+    display: inherit;
+    position: absolute;
+    bottom: 0px;
+    width: inherit;
   }
 }

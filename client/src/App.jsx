@@ -5,7 +5,7 @@ import store from './reducers/store';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import AppliedRoute from './components/AppliedRoute';
 
-import NavBar from './components/NavBar';
+import { SideNavBar, BottomNavBar } from './components/NavBar';
 import Landing from './components/Landing';
 import ChoosePlan from './components/ChoosePlan';
 import PaymentDetails from './components/PaymentDetails';
@@ -19,7 +19,7 @@ function App() {
       <div className="root">
         <Router>
           <div className="sideNavBar">
-            <NavBar />
+            <SideNavBar />
           </div>
           <div className="mainApp">
             <Switch>
@@ -43,6 +43,9 @@ function App() {
                 component={NotFound}
               />
             </Switch>
+          </div>
+          <div className="bottomNavBar">
+            <BottomNavBar />
           </div>
         </Router>
       </div>

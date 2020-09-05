@@ -1,22 +1,31 @@
-import { CHOOSE_PLAN_DAY, CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION,
-CHANGE_PAYMENT_TOTAL, } from "./actions/subscriptionTypes";
+import { CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION, CHANGE_PAYMENT_TOTAL,
+CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
+CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
+CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS,
+} from "./actions/subscriptionTypes";
 
 
 const initialState = {
-    day: '',
     meals: NaN,
     paymentOption: '',
     paymentTotal: '',
+    addressInfo: {
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+    },
+    address: {
+        street: '',
+        unit: '',
+        city: '',
+        state: '',
+        zip: '',
+    },
+    deliveryInstructions: '',
 };
 
 export default function(state = initialState, action) {
     switch(action.type) {
-        case CHOOSE_PLAN_DAY:
-            return {
-                ...state,
-                day: action.payload,
-            }
-
         case CHOOSE_MEALS_EACH_DELIVERY:
             return {
                 ...state,
@@ -33,6 +42,84 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 paymentTotal: action.payload,
+            }
+
+        case CHANGE_ADDRESS_FIRST_NAME:
+            return {
+                ...state,
+                addressInfo: {
+                    ...state.addressInfo,
+                    firstName: action.payload,
+                },
+            }
+
+        case CHANGE_ADDRESS_LAST_NAME:
+            return {
+                ...state,
+                addressInfo: {
+                    ...state.addressInfo,
+                    lastName: action.payload,
+                },
+            }
+        
+        case CHANGE_ADDRESS_STREET:
+            return {
+                ...state,
+                address: {
+                    ...state.address,
+                    street: action.payload,
+                }
+            }
+
+        case CHANGE_ADDRESS_UNIT:
+            return {
+                ...state,
+                address: {
+                    ...state.address,
+                    unit: action.payload,
+                }
+            }
+
+        case CHANGE_ADDRESS_CITY:
+            return {
+                ...state,
+                address: {
+                    ...state.address,
+                    city: action.payload,
+                }
+            }
+
+        case CHANGE_ADDRESS_STATE:
+            return {
+                ...state,
+                address: {
+                    ...state.address,
+                    state: action.payload,
+                }
+            }
+
+        case CHANGE_ADDRESS_ZIP:
+            return {
+                ...state,
+                address: {
+                    ...state.address,
+                    zip: action.payload,
+                }
+            }
+
+        case CHANGE_ADDRESS_PHONE:
+            return {
+                ...state,
+                addressInfo: {
+                    ...state.addressInfo,
+                    phoneNumber: action.payload,
+                }
+            }
+        
+        case CHANGE_DELIVERY_INSTRUCTIONS:
+            return {
+                ...state,
+                deliveryInstructions: action.payload,
             }
 
         default:

@@ -1,13 +1,7 @@
 .root {
-    --flexMarginTD: 10px;
-    --flexMarginLR: 10px;
-    --flexWidth: 120px;
-    --borderRadius: 10px;
-    --sectionHeight: 80px;
-    --fontSize: 24px;
     display: flex;
     flex-direction: column;
-    background-color: #ebebeb;
+    background-color: #ffffff;
 }
 
 .mealHeader {
@@ -15,135 +9,135 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
+    background-color: #ebebeb;
+    flex-wrap: wrap;
 }
 
 .headerItem {
     flex: 1;
-    /* text-align: center; */
 }
 
 .headerItem:nth-of-type(1) {
     flex: 3;
 }
 
-.devlieryDayOptions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.mealSelectMenu {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    padding: 0px 20px;
 }
 
-.deliveryDayButton {
-    flex: 1 var(--flexWidth);
-    margin: var(--flexMarginTD) var(--flexMarginLR);
-    height: var(--sectionHeight);
-    border: solid 1px black;
-    border-radius: var(--borderRadius);
-    background-color: white;
+.mealDays {
+    font-weight: bold;
     color: black;
+    font-size: 15px;
+    margin: 1rem 0rem;
 }
 
-.deliveryDayButtonSelected {
-    background-color: green;
-    color: white;
+.subTitle {
+    font-weight: 600;
+    color: black;
+    font-size: 17px;
+    margin: 0.5rem 0rem;
 }
 
-.deliveryButtonText {
-    display: flex;
-    width: inherit;
-    height: inherit;
-    align-items:center;
-    justify-content:center;
+.mealNumber {
+    font-weight: bold;
+    color: black;
+    font-size: 15px;
+    margin: 1rem 0rem;
+    text-align: center;
 }
 
-.mealsEachDelivery {
+.buttonWrapper {
+    align-content: center;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.mealsDeliverySection {
-    flex: 1 var(--flexWidth);
-    margin: var(--flexMarginTD) var(--flexMarginLR);
-    height: var(--sectionHeight);
-    border: solid 1px black;
-    border-radius: var(--borderRadius);
-    background-color: white;
-    color: black;
+.mealButton {
+    color: #5a5a5a;
+    border: 2px solid #727272;
+    background-color: #ffffff;
+    border-radius: 25px;
+    padding: 1rem 2rem;
+    margin: 5px;
+    align-content: center;
+    flex: 1;
+    min-width: 20%;
 }
 
-.mealsDeliverySelected {
+.mealButtonSelected {
     background-color: orange;
     color: black;
 }
 
-.mealsDeliveryText {
-    display: flex;
-    width: inherit;
-    height: inherit;
-    align-items: center;
-    justify-content: center;
-}
-
-.paymentOptions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.paymentOptionsSection {
-    flex: 1 var(--flexWidth);
-    margin: var(--flexMarginTD) var(--flexMarginLR);
-    height: var(--sectionHeight);
-    border: solid 1px black;
-    border-radius: var(--borderRadius);
-    background-color: white;
+.subTitle2 {
+    font-weight: 600;
     color: black;
-    /* font-size: var(--fontSize); */
+    font-size: 17px;
+    margin: 0.5rem 0rem;
 }
 
-.paymentOptionSelected {
+.paymentWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.paymentButton {
+    color: #5a5a5a;
+    border: 2px solid #727272;
+    background-color: #ffffff;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    margin: 10px;
+    padding: 20px;
+}
+
+.paymentButtonSelected {
     background-color: green;
     color: white;
 }
 
-.paymentOptionsText {
+.amount {
     display: flex;
+    margin-top: 20px;
+}
+
+.amountItem {
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.amountItem:nth-of-type(1) {
+    flex: 2;
+}
+
+.amountItem:nth-of-type(1) input {
     width: inherit;
     height: inherit;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    border: 2px solid #727272;
+    border-radius: 25px;
+    padding: 10px;
+    margin-right: 2rem;
+    color: #5a5a5a;
 }
 
-.finalSection {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.amountItem:nth-of-type(2) {
+    flex: 1;
 }
 
-.finalElement {
-    flex: 1 var(--flexWidth);
-    margin: var(--flexMarginTD) var(--flexMarginLR);
-    height: var(--sectionHeight);
-    background-color: white;
-    color: black;
-}
-
-.finalContainer {
-    display: flex;
+.amountItem:nth-of-type(2) button {
     width: 100%;
-    height: inherit;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border: solid 1px;
-    border-radius: var(--borderRadius);
-    /* font-size: var(--fontSize); */
-}
-
-input {
-    font-size: large;
+    height: 100%;
+    color: #ffffff;
+    border: 2px solid #a1a1a1;
+    background-color: #a1a1a1;
+    border-radius: 25px;
+    padding: 10px;
 }
 
 @media (max-width: 500px) {
@@ -155,7 +149,7 @@ input {
         --sectionHeight: 50px;
     }
 
-    .mainHeading {
-        margin-top: -1px;
+    .mealButton {
+        min-width: 40%;
     }
 }
