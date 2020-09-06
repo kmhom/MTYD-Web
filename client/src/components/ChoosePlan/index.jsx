@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { chooseMealsDelivery, choosePaymentOption, changeTotalPayment } from '../../reducers/actions/subscriptionActions';
+import { fetchPlans, chooseMealsDelivery, choosePaymentOption, } from '../../reducers/actions/subscriptionActions';
 
 import { Link } from "react-router-dom";
 
@@ -11,11 +11,50 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faBell, faShareAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 class ChoosePlan extends React.Component {  
-    render() {
+
+    componentDidMount() {
+        this.props.fetchPlans();
+    }
+
+    mealsDelivery = () => {
         let deselectedMealButton = styles.mealButton;
         let selectedMealButton = styles.mealButton + ' ' + styles.mealButtonSelected;
+        let mealButtons = [];
+        for (const plan of this.props.numItems) {
+            let planStr = plan.toString();
+            mealButtons.push(
+                <button
+                    key={planStr}
+                    className={this.props.meals === planStr ? selectedMealButton : deselectedMealButton}
+                    onClick={() => this.props.chooseMealsDelivery(planStr,this.props.paymentOption,this.props.plans)}
+                >
+                    {planStr} MEALS
+                </button>
+            )
+        }
+        return mealButtons;
+    }
+
+    paymentFrequency = () => {
         let deselectedPaymentOption = styles.paymentButton;
         let selectedPaymentOption = styles.paymentButton + ' ' + styles.paymentButtonSelected;
+        let paymentOptionButtons = [];
+        for (const option of this.props.paymentFrequency) {
+            let optionStr = option.toString();
+            paymentOptionButtons.push(
+                <button
+                    key={optionStr}
+                    className={this.props.paymentOption === optionStr ? selectedPaymentOption : deselectedPaymentOption}
+                    onClick={() => this.props.choosePaymentOption(optionStr,this.props.meals,this.props.plans)}
+                >
+                    {optionStr}
+                </button>
+            )
+        }
+        return paymentOptionButtons;
+    }
+
+    render() {
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -33,64 +72,16 @@ class ChoosePlan extends React.Component {
                     <h6 className={styles.subTitle}>NUMBER OF MEALS PER DELIVERY</h6>
                     <div className={styles.mealNumber}>
                         <div className={styles.buttonWrapper}>
-                            <button
-                                className={ this.props.meals === 2 ? selectedMealButton : deselectedMealButton}
-                                onClick={() => this.props.chooseMealsDelivery(2)}
-                            >
-                                2 MEALS
-                            </button>
-                            <button
-                                className={ this.props.meals === 4 ? selectedMealButton : deselectedMealButton}
-                                onClick={() => this.props.chooseMealsDelivery(4)}
-                            >
-                                4 MEALS
-                            </button>
-                            <button
-                                className={ this.props.meals === 6 ? selectedMealButton : deselectedMealButton}
-                                onClick={() => this.props.chooseMealsDelivery(6)}
-                            >
-                                6 MEALS
-                            </button>
-                            <button
-                                className={ this.props.meals === 8 ? selectedMealButton : deselectedMealButton}
-                                onClick={() => this.props.chooseMealsDelivery(8)}
-                            >
-                                8 MEALS
-                            </button>
+                            {this.mealsDelivery()}
                         </div>
                     </div>
                     <p className={styles.subTitle2}>PAYMENT FREQUENCY</p>
                     <div className={styles.paymentWrapper}>
-                        <button
-                            className={this.props.paymentOption === '1' ? selectedPaymentOption : deselectedPaymentOption}
-                            onClick={() => this.props.choosePaymentOption('1')}
-                        >
-                            1
-                        </button>
-                        <button
-                            className={this.props.paymentOption === '2' ? selectedPaymentOption : deselectedPaymentOption}
-                            onClick={() => this.props.choosePaymentOption('2')}
-                        >
-                            2
-                        </button>
-                        <button
-                            className={this.props.paymentOption === '3' ? selectedPaymentOption : deselectedPaymentOption}
-                            onClick={() => this.props.choosePaymentOption('3')}
-                        >
-                            3
-                        </button>
+                        {this.paymentFrequency()}
                     </div>
                     <div className={styles.amount}>
                         <div className={styles.amountItem}>
-                            <input
-                                type="number"
-                                min='0'
-                                placeholder="$$ TOTAL"
-                                value={this.props.paymentTotal}
-                                onChange={(e) => {
-                                    this.props.changeTotalPayment(e.target.value)
-                                }}
-                            />
+                            <p> $$ TOTAL {this.props.totalPayment} </p>
                         </div>
                         <div className={styles.amountItem}>
                             <Link to='/payment-details'>
@@ -105,18 +96,23 @@ class ChoosePlan extends React.Component {
 }
 
 ChoosePlan.propTypes = {
+    fetchPlans: PropTypes.func.isRequired,
     chooseMealsDelivery: PropTypes.func.isRequired,
     choosePaymentOption: PropTypes.func.isRequired,
-    changeTotalPayment: PropTypes.func.isRequired,
-    meals: PropTypes.number.isRequired,
+    numItems: PropTypes.array.isRequired,
+    paymentFrequency: PropTypes.array.isRequired,
+    meals: PropTypes.string.isRequired,
     paymentOption: PropTypes.string.isRequired,
-    paymentTotal: PropTypes.string.isRequired,
+    totalPayment: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({
+    plans: state.subscribe.plans,
+    numItems: state.subscribe.numItems,
+    paymentFrequency: state.subscribe.paymentFrequency,
     meals: state.subscribe.meals,
     paymentOption: state.subscribe.paymentOption,
-    paymentTotal: state.subscribe.paymentTotal,
+    totalPayment: state.subscribe.totalPayment,
 })
 
-export default connect(mapStateToProps, { chooseMealsDelivery, choosePaymentOption, changeTotalPayment })(ChoosePlan);
+export default connect(mapStateToProps, { fetchPlans, chooseMealsDelivery, choosePaymentOption, })(ChoosePlan);

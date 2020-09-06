@@ -14,11 +14,11 @@ class SideNavBar extends React.Component {
         return (
             <div className={styles.root}>
                 <div className={styles.navContainer}>
-                    <Link to='/'>
+                    {/* <Link to='/'>
                         <div className={styles.navElt}>
                             <p> Home </p>
                         </div>
-                    </Link>
+                    </Link> */}
                     <Link to='/choose-plan'>
                         <div className={styles.navElt}>
                             <img src={SubscribeIcon} alt="Subscribe"/>
@@ -61,11 +61,11 @@ class BottomNavBar extends React.Component {
                     <p>Notifications</p>
                 </div> */}
                 <div className={styles.navContainer}>
-                    <div className={styles.navElt}>
+                    {/* <div className={styles.navElt}>
                         <Link to='/'>
                             <p> Home </p>
                         </Link>
-                    </div>
+                    </div> */}
                     <div className={styles.navElt}>
                         <Link to='/choose-plan'>
                             <img src={SubscribeIcon} alt="Subscribe"/>

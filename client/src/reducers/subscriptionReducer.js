@@ -1,14 +1,18 @@
-import { CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION, CHANGE_PAYMENT_TOTAL,
+import {
+CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION, GET_TOTAL_PAYMENT,
 CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
 CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
-CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS,
+CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, FETCH_PLAN_INFO,
 } from "./actions/subscriptionTypes";
 
 
 const initialState = {
-    meals: NaN,
+    plans: [],
+    numItems: [],
+    paymentFrequency: [],
+    totalPayment: '',
+    meals: '',
     paymentOption: '',
-    paymentTotal: '',
     addressInfo: {
         firstName: '',
         lastName: '',
@@ -26,6 +30,14 @@ const initialState = {
 
 export default function(state = initialState, action) {
     switch(action.type) {
+        case FETCH_PLAN_INFO:
+            return {
+                ...state,
+                plans: action.payload.items,
+                numItems: action.payload.numItems,
+                paymentFrequency: action.payload.paymentFrequency,
+            }
+
         case CHOOSE_MEALS_EACH_DELIVERY:
             return {
                 ...state,
@@ -38,10 +50,10 @@ export default function(state = initialState, action) {
                 paymentOption: action.payload,
             }
 
-        case CHANGE_PAYMENT_TOTAL:
+        case GET_TOTAL_PAYMENT:
             return {
                 ...state,
-                paymentTotal: action.payload,
+                totalPayment: action.payload,
             }
 
         case CHANGE_ADDRESS_FIRST_NAME:

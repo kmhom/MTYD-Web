@@ -66,7 +66,7 @@ class PaymentDetails extends React.Component {
                     <div className={styles.inputItem}>
                         <input
                             type="text"
-                            placeholder="Street"
+                            placeholder="Address"
                             className={styles.input}
                             value={this.props.street}
                             onChange={(e) => {
