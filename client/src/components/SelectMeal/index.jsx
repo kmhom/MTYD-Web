@@ -1,13 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import SelectPlan from "./selectPlan";
-// Import needed actions
+import MealSelection from "./mealSelection";
 
 class ChoosePlan extends React.Component {
   render() {
     return (
       <div>
-        <SelectPlan />
+        <MealSelection />
       </div>
     );
   }

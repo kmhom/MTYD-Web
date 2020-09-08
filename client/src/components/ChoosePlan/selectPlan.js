@@ -1,6 +1,6 @@
 import React from "react";
 
-class MealSelection extends React.Component {
+class SelectPlan extends React.Component {
   render() {
     return (
       <div className='mealMain'>
@@ -32,7 +32,7 @@ class MealSelection extends React.Component {
             <button className='payment-button'>2</button>
             <button className='payment-button'>3</button>
           </div>
-          <div className='amount'>
+          <div className='flexclass'>
             <p id='totalamount'>$$ TOTAL</p>
             <p id='done-button'>DONE</p>
           </div>
@@ -61,4 +61,4 @@ class MealSelection extends React.Component {
   }
 }
 
-export default MealSelection;
+export default SelectPlan;

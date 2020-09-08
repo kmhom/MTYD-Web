@@ -10,8 +10,8 @@ class Landing extends React.Component {
   render() {
     return (
       <div className='landing'>
-        {/* <Center /> */}
-        {/* <Right /> */}
+        <Center />
+        <Right />
       </div>
     );
   }
