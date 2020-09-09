@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import MenuItem from "./menuItem";
 import mealicon from "../ChoosePlan/dish.png";
+import Filter from "./Filter";
 
 export class MenuItemList extends Component {
   constructor() {
     super();
     this.state = {
       data: [],
+      myDate: "2020-09-13",
     };
   }
 
@@ -28,6 +30,13 @@ export class MenuItemList extends Component {
     this.loadMenuItems();
   }
 
+  filterDates = (event) => {
+    console.log(event.target.value);
+    this.setState({
+      myDate: event.target.value,
+    });
+  };
+
   render() {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, "0");
@@ -37,12 +46,19 @@ export class MenuItemList extends Component {
     today = (yyyy + "-" + mm + "-" + dd).toString();
     // console.log(today.toString());
 
+    const dates = this.state.data.map((date) => date.menu_date);
+    const uniqueDates = Array.from(new Set(dates));
+
     return (
       <div>
         <div className='mealselectmenu'>
           <div className='flexclass'>
-            {/* <p id='date'>{today}</p> */}
-            <p id='date'>Sun, Sept 13</p>
+            {/* <select name='date' id='date'>
+              {uniqueDates.map((date) => (
+                <option value={date}>{date}</option>
+              ))}
+            </select> */}
+            <Filter dates={uniqueDates} filterDates={this.filterDates} />
             <p id='save-button'>Save</p>
           </div>
           <div className='indicator-wrapper'>
@@ -62,7 +78,7 @@ export class MenuItemList extends Component {
         </div>
         <div className='menu-items-wrapper'>
           {this.state.data
-            .filter((date) => date.menu_date == "2020-09-13")
+            .filter((date) => date.menu_date == this.state.myDate)
             .map((menuitem) => (
               <div className='menuitem-individual'>
                 <MenuItem

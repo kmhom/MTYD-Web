@@ -4,7 +4,7 @@ export class Center extends Component {
   render() {
     return (
       <div className='centerpanel'>
-        <div>Navbar</div>
+        {/* <div>Navbar</div> */}
         <div className='home-image'>
           <p>Nutrition Made Easy</p>
           {/* <h6>Meal plans with your health in mind</h6> */}
