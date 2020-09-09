@@ -1,19 +1,33 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// Import needed actions
 
-// Can also use functional components instead if you do not need to use lifecycle methods
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faBell, faShareAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
+
+import styles from './landing.module.css'
 
 class Landing extends React.Component {
     render() {
         return (
-            <div> Will be Landing Page </div>
-        );
+            <div className={styles.root}>
+                <div className={styles.mealHeader}>
+                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    <div className='title'>
+                        <h4 className='mainTitle'>LOGIN</h4>
+                        <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
+                    </div>
+                </div>
+            </div>
+        )
     }
 }
 
 const mapStateToProps = state => ({
-    /* Put needed states from store here */
+
 })
 
-export default connect(mapStateToProps, { /* Needed functions from actions*/ })(Landing);
+export default connect(mapStateToProps, {})(Landing);

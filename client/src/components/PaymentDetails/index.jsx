@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { changeAddressFirstName, changeAddressLastName, 
-    changeAddressStreet, changeAddressUnit, changeAddressCity, 
-    changeAddressState, changeAddressZip,
-    changeAddressPhone, changeDeliveryInstructions
+import {
+    changeAddressFirstName, changeAddressLastName, changeAddressStreet,
+    changeAddressUnit, changeAddressCity, changeAddressState, changeAddressZip,
+    changeAddressPhone, changeDeliveryInstructions, submitPayment
 } from '../../reducers/actions/subscriptionActions';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -141,7 +141,11 @@ class PaymentDetails extends React.Component {
                     </div>
                 </div>
                 <div className={styles.buttonContainer}>
-                    <button className={styles.button}> DONE </button>
+                    <button
+                        className={styles.button}
+                    >
+                        DONE
+                    </button>
                 </div>
             </div>
         );
@@ -190,6 +194,7 @@ const functionList = {
     changeAddressZip,
     changeAddressPhone,
     changeDeliveryInstructions,
+    submitPayment,
 }
 
 export default connect(mapStateToProps, functionList )(PaymentDetails);

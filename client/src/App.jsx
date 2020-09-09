@@ -9,6 +9,7 @@ import { SideNavBar, BottomNavBar } from './components/NavBar';
 import Landing from './components/Landing';
 import ChoosePlan from './components/ChoosePlan';
 import PaymentDetails from './components/PaymentDetails';
+import Profile from './components/Profile';
 import NotFound from './components/NotFound';
 
 import './App.css';
@@ -37,6 +38,11 @@ function App() {
                 exact
                 path='/payment-details'
                 component={PaymentDetails}
+              />
+              <AppliedRoute
+                exact
+                path='/profile'
+                component={Profile}
               />
               <AppliedRoute
                 path="*"

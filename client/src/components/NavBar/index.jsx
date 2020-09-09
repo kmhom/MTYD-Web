@@ -24,9 +24,11 @@ class SideNavBar extends React.Component {
                             <img src={SubscribeIcon} alt="Subscribe"/>
                         </div>
                     </Link>
-                    <div className={styles.navElt}>
-                        <img src={ProfileIcon} alt="Profile"/>
-                    </div>
+                    <Link to='/profile'>
+                        <div className={styles.navElt}>
+                            <img src={ProfileIcon} alt="Profile"/>
+                        </div>
+                    </Link>
                     <div className={styles.navElt}>
                         <img src={SelectIcon} alt="Select"/>
                     </div>
@@ -44,22 +46,6 @@ class BottomNavBar extends React.Component {
     render() {
         return (
             <div className={styles.root}>
-                {/* <div className='footer-icon-tray'>
-                    <i class='fa fa-heart'></i>
-                    <p>Favorites</p>
-                </div>
-                <div className='footer-icon-tray'>
-                    <i class='fa fa-search'></i>
-                    <p>Search</p>
-                </div>
-                <div className='footer-icon-tray'>
-                    <i class='fas fa-exclamation-circle '></i>
-                    <p>Information</p>
-                </div>
-                <div className='footer-icon-tray'>
-                    <i class='fas fa-bell'></i>
-                    <p>Notifications</p>
-                </div> */}
                 <div className={styles.navContainer}>
                     {/* <div className={styles.navElt}>
                         <Link to='/'>
@@ -73,8 +59,10 @@ class BottomNavBar extends React.Component {
                         </Link>
                     </div>
                     <div className={styles.navElt}>
-                        <img src={ProfileIcon} alt="Profile"/>
-                        <p> Profile </p>
+                        <Link to='/profile'>
+                            <img src={ProfileIcon} alt="Profile"/>
+                            <p> Profile </p>
+                        </Link>
                     </div>
                     <div className={styles.navElt}>
                         <img src={SelectIcon} alt="Select"/>

@@ -4,14 +4,18 @@ import {
     FETCH_PLAN_INFO, CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION, GET_TOTAL_PAYMENT,
     CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
     CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
-    CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS,
+    CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, SUBMIT_PAYMENT,
 } from "../actions/subscriptionTypes";
 
 import { API_URL } from '../constants'
 
 export const fetchPlans = () => dispatch => {
     axios
-        .get(API_URL+'plans?business_uid=200-000001')
+        .get(API_URL+'plans',{
+            params: {
+                business_uid:'200-000001'
+            }
+        })
         .then((res) => {
             let items = res.data.result;
             let numItems = items.map((curValue) => curValue.num_items);
@@ -132,4 +136,21 @@ export const changeDeliveryInstructions = (newInstructions) => dispatch => {
         type: CHANGE_DELIVERY_INSTRUCTIONS,
         payload: newInstructions,
     })
+}
+
+export const submitPayment = () => dispatch => {
+    axios
+        .post(API_URL+'checkout',{
+            customer_uid: '100-000001',
+            business_uid: '200-000001',
+        })
+        .then((res) => {
+            console.log(res);
+            dispatch({
+                type: SUBMIT_PAYMENT,   
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 }
