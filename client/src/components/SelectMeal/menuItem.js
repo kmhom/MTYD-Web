@@ -23,6 +23,12 @@ class MenuItem extends React.Component {
       });
     }
   }
+
+  componentDidUpdate() {
+    if (this.state.count > 0) {
+      console.log("We are changing color noe");
+    }
+  }
   render() {
     return (
       <React.Fragment>
@@ -37,6 +43,7 @@ class MenuItem extends React.Component {
           <p id='meal-counter' className='menu-elements'>
             {this.state.count}
           </p>
+
           <button
             onClick={this.decrementCount}
             id='minus-button'
