@@ -1,49 +1,87 @@
+/* Landing Page CSS */
+
 .landing {
   display: flex;
-}
-.rightpanel {
-  display: block;
-  flex: 1;
-  background-color: aliceblue;
-  height: 95vh;
-  padding: 20px;
-  text-align: center;
-}
-.centerpanel {
-  display: flex;
-  flex: 3;
-  height: 95vh;
-  padding: 20px;
-}
-.navbar {
-  flex: 1;
+  flex-direction: row;
 }
 
-.home-image {
-  background-image: url("./images/home.png");
+.mainPanel {
+  position: absolute;
+  display: flex;
+  height: 95vh;
+  padding: 0px;
+  flex-direction: column;
+  width: 100%;
+  font-size: 3rem;
+  color: rgb(0, 0, 0);
+}
+
+.MainImage {
+  width: 100%;
+  height: 320px;
+  color: white;
+  font-family: fantasy;
+  font-weight: 500;
+  text-align: center;
+  padding: 0.2rem;
+  font-size: 2.7rem;
+  background-image: url("./images/homeNew.png");
   background-color: #cccccc;
   background-size: cover;
-  height: 40rem;
-  width: 40rem;
-  font-size: 3rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+  height: 1rem;
+  padding: 5px;
+  text-align: center;
+  padding-top: 2.5rem;
+}
+
+.loginPanel {
+  position: absolute;
+  background-color: #f3f3f3;
+  text-align: center;
+  width: 100%;
+  bottom: 10px;
+}
+
+.loginPanel p {
+  letter-spacing: 2px;
+  margin: 0px;
+  padding-top: 4rem;
+  color: #502400;
+  font-size: 2.2rem;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}
+#already {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: small;
+  padding: 1rem;
+  letter-spacing: 0px;
+}
+.loginPanel span {
+  color: #00457e;
+  font-size: small;
+  font-weight: 600;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.signUp {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  border-radius: 7px;
+  border: none;
+  width: 20rem;
+  height: 2rem;
+  padding: 0.3rem;
+  background-color: #2a82a5;
   color: white;
 }
 
-.home-image p h6 {
-  margin: 0rem;
-}
-.center-right {
-  display: block;
-  padding: 20px;
-  margin: 20px;
-}
-
-.form1 {
-  height: 50%;
-}
-
-.form1 {
-  height: 50%;
+.navbar {
+  flex: 1;
 }
 
 /* Choose your Meal */
@@ -231,9 +269,15 @@
   align-content: center;
   flex: 2;
   margin-right: 4rem;
+  height: 1.7rem;
+  width: 9rem;
+  margin-top: 0.9rem;
 }
 
 #save-button {
+  margin-top: 0.9rem;
+  height: 1.7rem;
+  width: 9rem;
   flex: 1;
   text-align: center;
   color: #5a5a5a;
@@ -245,27 +289,29 @@
 
 .indicator-wrapper {
   display: flex;
-  justify-content: flex-left;
-  padding-right: 50%;
-  align-content: center;
-  text-align: center;
+  justify-content: flex-start;
+  align-content: left;
+  text-align: left;
+  flex-direction: row;
+  margin-top: 1rem;
 }
 .dishicon {
   position: relative;
-  height: 25px;
-  width: 25px;
-  top: 2px;
+  height: 20px;
+  width: 20px;
+  top: 5px;
+  padding-left: 15px;
 }
 
 .meal-selection-indicator {
   flex: 1;
   /* border-radius: 20%; */
   padding: 0px 10px;
-  margin: 0px 5px 1px 1px;
+  /* margin: 0px 5px 1px 1px; */
   background-color: #ebebeb;
 }
 
-/* .meal-selection-indicator:nth-child(2) {
+/* .meal-selection-indicator:nth-child(1) {
   background-color: #e5f324;
 } */
 
@@ -286,7 +332,7 @@
   background-color: #ffffff;
   height: 100%;
   width: 100%;
-  padding: 0.5rem;
+  padding-left: 10px;
   margin-bottom: 4rem;
 }
 
@@ -314,7 +360,7 @@
 }
 #favorite {
   position: absolute;
-  color: #555555;
+  color: #8b0a5a;
   top: 0;
   left: 0;
   padding: 0.5rem;
@@ -367,4 +413,41 @@
 .menuitem-individual {
   height: 12rem;
   width: 10rem;
+}
+
+@media only screen and (min-width: 600px) {
+  .landing {
+    flex-direction: column;
+  }
+  .mainPanel {
+    display: flex;
+    flex-direction: row;
+  }
+  .MainImage {
+    width: 35rem;
+    height: 40rem;
+    z-index: 1;
+  }
+  .info {
+    display: flex;
+    flex: 2;
+    width: 100%;
+  }
+  .loginPanel {
+    position: relative;
+    background-color: #f3f3f3;
+    text-align: center;
+    width: 100%;
+    bottom: 10px;
+    flex: 1;
+    height: 100vh;
+  }
+
+  .signUp {
+    width: 5rem;
+    height: 2rem;
+    padding: 0.3rem;
+    background-color: #2a82a5;
+    color: white;
+  }
 }

@@ -1,66 +1,50 @@
 import React from "react";
 
 class MenuItem extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      count: 0,
-    };
-    this.incrementCount = this.incrementCount.bind(this);
-    this.decrementCount = this.decrementCount.bind(this);
-  }
-
-  incrementCount() {
-    this.setState({
-      count: this.state.count + 1,
-    });
-  }
-
-  decrementCount() {
-    if (this.state.count >= 1) {
-      this.setState({
-        count: this.state.count - 1,
-      });
-    }
-  }
-
-  componentDidUpdate() {
-    if (this.state.count > 0) {
-      console.log("We are changing color noe");
-    }
-  }
   render() {
+    const { cartItems } = this.props;
+
     return (
       <React.Fragment>
-        <div
-          style={{
-            backgroundImage: `url(${this.props.imgSrc})`,
-            backgroundSize: "cover",
-          }}
-          className='menu-item'
-        >
-          <i id='favorite' class='fa fa-heart'></i>
-          <p id='meal-counter' className='menu-elements'>
-            {this.state.count}
-          </p>
+        {this.props.data
+          .filter((date) => date.menu_date == this.props.myDate)
+          .map((menuitem) => (
+            <div className='menuitem-individual'>
+              <div
+                style={{
+                  backgroundImage: `url(${menuitem.meal_photo_URL})`,
+                  backgroundSize: "cover",
+                }}
+                className='menu-item'
+              >
+                <i id='favorite' class='fa fa-heart'></i>
+                <p id='meal-counter' className='menu-elements'>
+                  {cartItems.map((item) =>
+                    item.menu_meal_id === menuitem.menu_meal_id
+                      ? item.count
+                      : ""
+                  )}
+                </p>
 
-          <button
-            onClick={this.decrementCount}
-            id='minus-button'
-            className='menu-elements'
-          >
-            -
-          </button>
-          <button
-            onClick={this.incrementCount}
-            id='plus-button'
-            className='menu-elements'
-          >
-            +
-          </button>
-        </div>
-        <p id='menuItem-title'>{this.props.title}</p>
-        <p id='menuItem-desc'>${this.props.desc}</p>
+                <button
+                  onClick={() => this.props.removeFromCart(menuitem)}
+                  id='minus-button'
+                  className='menu-elements'
+                >
+                  -
+                </button>
+                <button
+                  onClick={() => this.props.addToCart(menuitem)}
+                  id='plus-button'
+                  className='menu-elements'
+                >
+                  +
+                </button>
+              </div>
+              <p id='menuItem-title'>{menuitem.meal_name}</p>
+              <p id='menuItem-desc'>${menuitem.meal_price}</p>
+            </div>
+          ))}
       </React.Fragment>
     );
   }

@@ -3,13 +3,9 @@ import React, { Component } from "react";
 export class Center extends Component {
   render() {
     return (
-      <div className='centerpanel'>
-        {/* <div>Navbar</div> */}
-        <div className='home-image'>
-          <p>Nutrition Made Easy</p>
-          {/* <h6>Meal plans with your health in mind</h6> */}
-        </div>
-        <div classname='center-right'>
+      <div className='mainPanel'>
+        <div className='MainImage'>Nutrition Made Easy</div>
+        <div className='info'>
           <div>
             <h3>Why is eating healthy so hard?</h3>
             <p>
@@ -19,15 +15,13 @@ export class Center extends Component {
               and easy on the wallet."
             </p>
           </div>
-          <div>
-            <h4>Get your Meal delivered to your house in 3 Simple Steps!</h4>
-            <ol>
-              <li>Choose No of Meals</li>
-              <li>Enter delivery information</li>
-              <li>Setup Payment Method</li>
-            </ol>
-            <button>Plan Now </button>
-          </div>
+        </div>
+        <div className='loginPanel'>
+          {/* <span>Meal Plans with you Health in Mind</span> */}
+          <button className='signUp'>Sign Up</button>
+          <p id='already'>
+            Already Registered? <span>Sign In</span>
+          </p>
         </div>
       </div>
     );

@@ -3,6 +3,7 @@ import subscribe from "../NavBar/subscribe.png";
 import select from "../NavBar/select.png";
 import profile from "../NavBar/profile.png";
 import more from "../NavBar/more.png";
+import { Link } from "react-router-dom";
 
 class NavBar extends React.Component {
   render() {
@@ -13,10 +14,12 @@ class NavBar extends React.Component {
             <img src={subscribe} className='footer-icons' alt='' />
             <p>Subscribe</p>
           </div>
-          <div className='footer-icon-tray'>
-            <img src={select} alt='' className='footer-icons' />
-            <p>Select</p>
-          </div>
+          <Link to='/select-meal'>
+            <div className='footer-icon-tray'>
+              <img src={select} alt='' className='footer-icons' />
+              <p>Select</p>
+            </div>
+          </Link>
           <div className='footer-icon-tray'>
             <img src={profile} alt='' className='footer-icons' />
             <p>Profile</p>

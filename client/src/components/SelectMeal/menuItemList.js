@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import MenuItem from "./menuItem";
-import mealicon from "../ChoosePlan/dish.png";
 import Filter from "./Filter";
-
+import MealIndicator from "./MealIndicator";
+import axios from "axios";
 export class MenuItemList extends Component {
   constructor() {
     super();
     this.state = {
       data: [],
       myDate: "2020-09-13",
+      cartItems: [],
+      totalCount: 0,
     };
+    this.saveMeal = this.saveMeal.bind(this);
   }
 
   loadMenuItems = () => {
@@ -37,57 +40,98 @@ export class MenuItemList extends Component {
     });
   };
 
+  addToCart = (menuitem) => {
+    const cartItems = this.state.cartItems.slice();
+    let alreadyInCart = false;
+    if (this.state.totalCount < 4) {
+      cartItems.forEach((item) => {
+        if (item.menu_uid === menuitem.menu_uid) {
+          item.count++;
+          alreadyInCart = true;
+        }
+      });
+      if (!alreadyInCart) {
+        cartItems.push({ ...menuitem, count: 1 });
+      }
+
+      this.setState({ cartItems, totalCount: this.state.totalCount + 1 });
+    }
+  };
+
+  removeFromCart = (menuitem) => {
+    const cartItems = this.state.cartItems.slice();
+    let alreadyInCart_1 = false;
+    cartItems.forEach((item) => {
+      if (this.state.totalCount > 0) {
+        if (item.menu_uid === menuitem.menu_uid) {
+          if (item.count !== 0) {
+            alreadyInCart_1 = true;
+            item.count--;
+          }
+          if (
+            item.menu_uid === menuitem.menu_uid &&
+            alreadyInCart_1 &&
+            item.count == 0
+          ) {
+            cartItems.pop({ ...item, count: 0 });
+          }
+          this.setState({ cartItems, totalCount: this.state.totalCount - 1 });
+        }
+      }
+    });
+  };
+
+  saveMeal() {
+    const myarr = [];
+    this.state.cartItems.map((meal) => {
+      myarr.push({
+        qty: meal.count,
+        name: meal.meal_name,
+        price: meal.meal_price,
+        item_uid: meal.meal_uid,
+      });
+    });
+    console.log(myarr);
+    const data = {
+      is_addon: false,
+      items: myarr,
+      purchase_id: "400-000024",
+      menu_date: "2020-09-13",
+      delivery_day: "Sunday",
+    };
+    axios
+      .post("http://localhost:2000/api/v2/meals_selection", data)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
-
-    today = (yyyy + "-" + mm + "-" + dd).toString();
-    // console.log(today.toString());
-
     const dates = this.state.data.map((date) => date.menu_date);
     const uniqueDates = Array.from(new Set(dates));
 
     return (
-      <div>
+      <div className='mealMenuWrapper'>
         <div className='mealselectmenu'>
           <div className='flexclass'>
-            {/* <select name='date' id='date'>
-              {uniqueDates.map((date) => (
-                <option value={date}>{date}</option>
-              ))}
-            </select> */}
             <Filter dates={uniqueDates} filterDates={this.filterDates} />
-            <p id='save-button'>Save</p>
+            <button id='save-button' onClick={this.saveMeal}>
+              Save
+            </button>
           </div>
-          <div className='indicator-wrapper'>
-            <div id='left-indicator' className='meal-selection-indicator'>
-              <img className='dishicon' src={mealicon} alt='something.jpg' />
-            </div>
-            <div className='meal-selection-indicator'>
-              <img className='dishicon' src={mealicon} alt='something.jpg' />
-            </div>
-            <div className='meal-selection-indicator'>
-              <img className='dishicon' src={mealicon} alt='something.jpg' />
-            </div>
-            <div id='right-indicator' className='meal-selection-indicator'>
-              <img className='dishicon' src={mealicon} alt='something.jpg' />
-            </div>
-          </div>
+          <MealIndicator totalCount={this.state.totalCount} />
         </div>
         <div className='menu-items-wrapper'>
-          {this.state.data
-            .filter((date) => date.menu_date == this.state.myDate)
-            .map((menuitem) => (
-              <div className='menuitem-individual'>
-                <MenuItem
-                  title={menuitem.meal_name}
-                  imgSrc={menuitem.meal_photo_URL}
-                  desc={menuitem.meal_price}
-                />
-              </div>
-            ))}
+          <MenuItem
+            addToCart={this.addToCart}
+            removeFromCart={this.removeFromCart}
+            data={this.state.data}
+            myDate={this.state.myDate}
+            cartItems={this.state.cartItems}
+          />
         </div>
       </div>
     );

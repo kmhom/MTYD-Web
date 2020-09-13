@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Center from "./center";
-import Right from "./right";
+import NavBar from "../NavBar";
 // Import needed actions
 
 // Can also use functional components instead if you do not need to use lifecycle methods
@@ -11,7 +11,7 @@ class Landing extends React.Component {
     return (
       <div className='landing'>
         <Center />
-        <Right />
+        <NavBar />
       </div>
     );
   }
