@@ -139,7 +139,7 @@
 .mealselectmenu {
   background-color: #ffffff;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0px 20px;
+  /* padding: 0px 20px; */
   /* overflow: auto; */
 }
 
@@ -300,7 +300,8 @@
   height: 20px;
   width: 20px;
   top: 5px;
-  padding-left: 15px;
+  padding-left: 10px;
+  margin-right: 20px;
 }
 
 .meal-selection-indicator {
@@ -413,6 +414,14 @@
 .menuitem-individual {
   height: 12rem;
   width: 10rem;
+}
+.mealSelector {
+  position: relative;
+  margin: 0rem 3rem;
+  padding: 5px 50px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 
 @media only screen and (min-width: 600px) {

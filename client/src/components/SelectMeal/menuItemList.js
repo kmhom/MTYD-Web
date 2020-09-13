@@ -3,6 +3,7 @@ import MenuItem from "./menuItem";
 import Filter from "./Filter";
 import MealIndicator from "./MealIndicator";
 import axios from "axios";
+import Header from "./header";
 export class MenuItemList extends Component {
   constructor() {
     super();
@@ -43,7 +44,7 @@ export class MenuItemList extends Component {
   addToCart = (menuitem) => {
     const cartItems = this.state.cartItems.slice();
     let alreadyInCart = false;
-    if (this.state.totalCount < 4) {
+    if (this.state.totalCount < this.props.totalMeals) {
       cartItems.forEach((item) => {
         if (item.menu_uid === menuitem.menu_uid) {
           item.count++;
@@ -64,19 +65,24 @@ export class MenuItemList extends Component {
     cartItems.forEach((item) => {
       if (this.state.totalCount > 0) {
         if (item.menu_uid === menuitem.menu_uid) {
-          if (item.count !== 0) {
+          if (item.count != 0) {
             alreadyInCart_1 = true;
             item.count--;
           }
-          if (
-            item.menu_uid === menuitem.menu_uid &&
-            alreadyInCart_1 &&
-            item.count == 0
-          ) {
-            cartItems.pop({ ...item, count: 0 });
-          }
           this.setState({ cartItems, totalCount: this.state.totalCount - 1 });
         }
+      }
+    });
+    cartItems.forEach((meal) => {
+      if (
+        meal.menu_uid == menuitem.menu_uid &&
+        meal.count == 0 &&
+        this.state.totalCount > 0
+      ) {
+        this.setState({
+          cartItems: cartItems.filter((x) => x.menu_uid !== menuitem.menu_uid),
+          totalCount: this.state.totalCount - 1,
+        });
       }
     });
   };
@@ -110,19 +116,24 @@ export class MenuItemList extends Component {
   }
 
   render() {
+    const { totalMeals } = this.props;
     const dates = this.state.data.map((date) => date.menu_date);
     const uniqueDates = Array.from(new Set(dates));
-
+    const { meals } = this.props;
     return (
       <div className='mealMenuWrapper'>
         <div className='mealselectmenu'>
+          <Header meals={meals} mealsOnChange={this.props.mealsOnChange} />
           <div className='flexclass'>
             <Filter dates={uniqueDates} filterDates={this.filterDates} />
             <button id='save-button' onClick={this.saveMeal}>
               Save
             </button>
           </div>
-          <MealIndicator totalCount={this.state.totalCount} />
+          <MealIndicator
+            totalCount={this.state.totalCount}
+            totalMeals={totalMeals}
+          />
         </div>
         <div className='menu-items-wrapper'>
           <MenuItem

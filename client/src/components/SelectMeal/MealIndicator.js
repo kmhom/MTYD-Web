@@ -4,11 +4,18 @@ import mealicon from "../ChoosePlan/dish.png";
 export default class MealIndicator extends Component {
   render() {
     const { totalCount } = this.props;
+    const { totalMeals } = this.props;
     // var colorPicker = "";
     // cartItems.length === 0
     //   ? (colorPicker = "meal-selection-indicator")
     //   : (colorPicker = `meal-selection-indicator meal-selection-indicator:nth-child(${cartItems.length}`);
-    const percentage = totalCount * 25;
+
+    let temp = 100 / totalMeals;
+    const percentage = totalCount * temp;
+    const myarr = [];
+    for (let i = 0; i < totalMeals; i++) {
+      myarr.push(i);
+    }
 
     return (
       <div>
@@ -31,16 +38,16 @@ export default class MealIndicator extends Component {
             style={{
               border: "1px solid #ebebeb",
               borderRadius: "50px 0px 50px 0px",
-              padding: "0px 0px",
+              padding: "0px 0px 0px 14px",
               height: "2rem",
-              width: "10rem",
+              width: "100%",
+
               background: `-moz-linear-gradient(left, #fff343 ${percentage}%, white 0%)`,
             }}
           >
-            <img className='dishicon' src={mealicon} alt='something.jpg' />
-            <img className='dishicon' src={mealicon} alt='something.jpg' />
-            <img className='dishicon' src={mealicon} alt='something.jpg' />
-            <img className='dishicon' src={mealicon} alt='something.jpg' />
+            {/* {myarr.map((item) => (
+              <img className='dishicon' src={mealicon} alt='something.jpg' />
+            ))} */}
           </div>
         </div>
       </div>
