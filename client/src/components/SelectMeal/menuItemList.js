@@ -105,8 +105,8 @@ export class MenuItemList extends Component {
     const data = {
       is_addon: false,
       items: myarr,
-      purchase_id: this.state.purchase_uid,
-      myDate: this.state.myDate,
+      purchase_id: this.state.purchaseID,
+      menu_date: this.state.myDate,
       delivery_day: "Sunday",
     };
     axios
