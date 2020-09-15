@@ -9,11 +9,14 @@ export class MenuItemList extends Component {
     super();
     this.state = {
       data: [],
-      myDate: "2020-09-13",
+      myDate: "",
       cartItems: [],
+      meals: [],
       totalCount: 0,
+      displayCount: "none",
     };
     this.saveMeal = this.saveMeal.bind(this);
+    this.loadMeals = this.loadMeals.bind(this);
   }
 
   loadMenuItems = () => {
@@ -32,6 +35,7 @@ export class MenuItemList extends Component {
 
   componentDidMount() {
     this.loadMenuItems();
+    this.loadMeals();
   }
 
   filterDates = (event) => {
@@ -44,7 +48,7 @@ export class MenuItemList extends Component {
   addToCart = (menuitem) => {
     const cartItems = this.state.cartItems.slice();
     let alreadyInCart = false;
-    if (this.state.totalCount < this.props.totalMeals) {
+    if (this.state.totalCount < this.state.totalMeals) {
       cartItems.forEach((item) => {
         if (item.menu_uid === menuitem.menu_uid) {
           item.count++;
@@ -101,8 +105,8 @@ export class MenuItemList extends Component {
     const data = {
       is_addon: false,
       items: myarr,
-      purchase_id: "400-000024",
-      menu_date: "2020-09-13",
+      purchase_id: this.state.purchase_uid,
+      myDate: this.state.myDate,
       delivery_day: "Sunday",
     };
     axios
@@ -115,15 +119,55 @@ export class MenuItemList extends Component {
       });
   }
 
+  loadMeals() {
+    fetch(
+      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/customer_lplp?customer_uid=100-000001`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        this.setState({
+          meals: [...json.result],
+        });
+        // console.log(this.state.meals);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  mealsOnChange = (e) => {
+    let planCount = e.target.value;
+    let mystr = planCount.toString().slice(0, 2);
+    this.state.meals.map((mealItem) => {
+      let meal = JSON.parse(mealItem.items)[0];
+      if (meal.name == planCount) {
+        this.setState({
+          purchaseID: mealItem.purchase_uid,
+        });
+      }
+    });
+    return this.setState({
+      totalMeals: mystr,
+      cartItems: [],
+      totalCount: 0,
+      displayCount: "block",
+    });
+  };
+
+  checkSave = (e) => {
+    if (this.state.totalCount == 0) {
+      console.log(e.target.value);
+    }
+  };
+
   render() {
-    const { totalMeals } = this.props;
     const dates = this.state.data.map((date) => date.menu_date);
     const uniqueDates = Array.from(new Set(dates));
-    const { meals } = this.props;
+
     return (
       <div className='mealMenuWrapper'>
         <div className='mealselectmenu'>
-          <Header meals={meals} mealsOnChange={this.props.mealsOnChange} />
+          <Header meals={this.state.meals} mealsOnChange={this.mealsOnChange} />
           <div className='flexclass'>
             <Filter dates={uniqueDates} filterDates={this.filterDates} />
             <button id='save-button' onClick={this.saveMeal}>
@@ -132,7 +176,8 @@ export class MenuItemList extends Component {
           </div>
           <MealIndicator
             totalCount={this.state.totalCount}
-            totalMeals={totalMeals}
+            totalMeals={this.state.totalMeals}
+            displayCount={this.state.displayCount}
           />
         </div>
         <div className='menu-items-wrapper'>

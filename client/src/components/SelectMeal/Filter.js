@@ -12,6 +12,9 @@ export default class Filter extends Component {
             name='date'
             id='date'
           >
+            <option value='' selected>
+              Pick a date
+            </option>
             {this.props.dates.map((date) => (
               <option value={date}>{date}</option>
             ))}

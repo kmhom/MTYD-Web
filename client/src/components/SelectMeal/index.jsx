@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import MealSelection from "./mealSelection";
+import MenuItemList from "./menuItemList";
 
 class ChoosePlan extends React.Component {
   render() {
     return (
       <div>
-        <MealSelection />
+        <MenuItemList />
       </div>
     );
   }

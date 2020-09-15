@@ -18,7 +18,11 @@ export class Header extends Component {
           <p id='local'>LOCAL. ORGANIC. RESPONSIBLE.</p>
         </div>
         <div>
-          <select onChange={this.props.mealsOnChange} className='mealSelector'>
+          <select
+            onClick={this.props.checkSave}
+            onChange={this.props.mealsOnChange}
+            className='mealSelector'
+          >
             <option value='' selected>
               Select Meal Plan
             </option>

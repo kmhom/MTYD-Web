@@ -288,12 +288,15 @@
 }
 
 .indicator-wrapper {
+  margin: 0px 10px;
   display: flex;
   justify-content: flex-start;
   align-content: left;
-  text-align: left;
+  text-align: center;
   flex-direction: row;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+
+  height: 3rem;
 }
 .dishicon {
   position: relative;
