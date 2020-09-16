@@ -166,20 +166,16 @@ export class MenuItemList extends Component {
 
     return (
       <div className='mealMenuWrapper'>
-        <div className='mealselectmenu'>
-          <Header meals={this.state.meals} mealsOnChange={this.mealsOnChange} />
-          <div className='flexclass'>
-            <Filter dates={uniqueDates} filterDates={this.filterDates} />
-            <button id='save-button' onClick={this.saveMeal}>
-              Save
-            </button>
-          </div>
-          <MealIndicator
-            totalCount={this.state.totalCount}
-            totalMeals={this.state.totalMeals}
-            displayCount={this.state.displayCount}
-          />
-        </div>
+        <Header
+          dates={uniqueDates}
+          filterDates={this.filterDates}
+          meals={this.state.meals}
+          mealsOnChange={this.mealsOnChange}
+          totalCount={this.state.totalCount}
+          totalMeals={this.state.totalMeals}
+          displayCount={this.state.displayCount}
+        />
+
         <div className='menu-items-wrapper'>
           <MenuItem
             addToCart={this.addToCart}
