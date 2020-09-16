@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchPlans, chooseMealsDelivery, choosePaymentOption, } from '../../reducers/actions/subscriptionActions';
 
 import { Link } from "react-router-dom";
+import { withRouter } from 'react-router';
 
 import styles from './choosePlan.module.css';
 
@@ -12,8 +13,24 @@ import { faBars, faBell, faShareAlt, faSearch } from '@fortawesome/free-solid-sv
 
 class ChoosePlan extends React.Component {  
 
+    constructor() {
+        super();
+        this.state = {
+            mounted: false,
+        }
+    }
+
     componentDidMount() {
-        this.props.fetchPlans();
+        // Check for logged in
+        if (document.cookie.split(';').some((item) => item.trim().startsWith('customer_uid='))) {
+            this.props.fetchPlans();
+            this.setState({
+                mounted: true,
+            })
+        }  else {
+            // Reroute to log in page
+            this.props.history.push('/')
+        }
     }
 
     mealsDelivery = () => {
@@ -55,6 +72,9 @@ class ChoosePlan extends React.Component {
     }
 
     render() {
+        if(!this.state.mounted) {
+            return null;
+        }
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -81,7 +101,7 @@ class ChoosePlan extends React.Component {
                     </div>
                     <div className={styles.amount}>
                         <div className={styles.amountItem}>
-                            <p> $$ TOTAL {this.props.totalPayment} </p>
+                            <p> $$ TOTAL {this.props.selectedPlan.item_price} </p>
                         </div>
                         <div className={styles.amountItem}>
                             <Link to='/payment-details'>
@@ -103,7 +123,7 @@ ChoosePlan.propTypes = {
     paymentFrequency: PropTypes.array.isRequired,
     meals: PropTypes.string.isRequired,
     paymentOption: PropTypes.string.isRequired,
-    totalPayment: PropTypes.string.isRequired,
+    selectedPlan: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -112,7 +132,7 @@ const mapStateToProps = state => ({
     paymentFrequency: state.subscribe.paymentFrequency,
     meals: state.subscribe.meals,
     paymentOption: state.subscribe.paymentOption,
-    totalPayment: state.subscribe.totalPayment,
+    selectedPlan: state.subscribe.selectedPlan,
 })
 
-export default connect(mapStateToProps, { fetchPlans, chooseMealsDelivery, choosePaymentOption, })(ChoosePlan);
+export default connect(mapStateToProps, { fetchPlans, chooseMealsDelivery, choosePaymentOption, })(withRouter(ChoosePlan));

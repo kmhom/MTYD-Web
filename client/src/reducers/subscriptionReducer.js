@@ -10,7 +10,7 @@ const initialState = {
     plans: [],
     numItems: [],
     paymentFrequency: [],
-    totalPayment: '',
+    selectedPlan: {},
     meals: '',
     paymentOption: '',
     addressInfo: {
@@ -53,7 +53,7 @@ export default function(state = initialState, action) {
         case GET_TOTAL_PAYMENT:
             return {
                 ...state,
-                totalPayment: action.payload,
+                selectedPlan: action.payload,
             }
 
         case CHANGE_ADDRESS_FIRST_NAME:

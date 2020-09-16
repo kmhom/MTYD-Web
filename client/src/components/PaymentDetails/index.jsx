@@ -7,13 +7,38 @@ import {
     changeAddressPhone, changeDeliveryInstructions, submitPayment
 } from '../../reducers/actions/subscriptionActions';
 
+import { withRouter } from 'react-router';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faBell, faShareAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 
 import styles from './paymentDetails.module.css'
 
 class PaymentDetails extends React.Component {
+
+    constructor() {
+        super();
+        this.state = {
+            mounted: false,
+        }
+    }
+
+    componentDidMount() {
+        if (document.cookie.split(';').some((item) => item.trim().startsWith('customer_uid='))) {
+            this.setState({
+                mounted: true,
+            })
+        } else {
+            // Reroute to log in page
+            this.props.history.push('/')
+        }
+    }
+
     render() {
+        if(!this.state.mounted) {
+            return null;
+        }
+        // let customer_uid = document.cookie.split('; ').find(row => row.startsWith('customer_uid')).split('=')[1];
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -143,6 +168,12 @@ class PaymentDetails extends React.Component {
                 <div className={styles.buttonContainer}>
                     <button
                         className={styles.button}
+                        onClick={() => {
+                            this.props.submitPayment(
+                                'will be customer id',this.props.password,this.props.firstName,this.props.lastName,this.props.phone, this.props.street, this.props.unit,
+                                this.props.city, this.props.state, this.props.zip, this.props.instructions, this.props.selectedPlan,
+                            );
+                        }}
                     >
                         DONE
                     </button>
@@ -169,7 +200,7 @@ PaymentDetails.propTypes = {
     state: PropTypes.string.isRequired,
     zip: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
-    instructions: PropTypes.string.isRequired,
+    instructions: PropTypes.string.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -182,6 +213,9 @@ const mapStateToProps = state => ({
     zip: state.subscribe.address.zip,
     phone: state.subscribe.addressInfo.phoneNumber,
     instructions: state.subscribe.deliveryInstructions,
+    selectedPlan: state.subscribe.selectedPlan,
+    email: state.login.email,
+    password: state.login.password,
 })
 
 const functionList = {
@@ -197,4 +231,4 @@ const functionList = {
     submitPayment,
 }
 
-export default connect(mapStateToProps, functionList )(PaymentDetails);
+export default connect(mapStateToProps, functionList )(withRouter(PaymentDetails));

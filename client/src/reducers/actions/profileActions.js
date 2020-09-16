@@ -6,11 +6,15 @@ import {
 
 import { API_URL } from '../constants'
 
-export const fetchOrderHistory = () => dispatch => {
+export const fetchOrderHistory = (customer_uid) => dispatch => {
     // Change 100-000001 to other customers when log in implemented
     axios
         // .get(API_URL + 'meals_selected?customer_uid=100-000001')
-        .get(API_URL + 'customer_lplp?customer_uid=100-000001')
+        .get(API_URL + 'customer_lplp',{
+            params: {
+                customer_uid: customer_uid,
+            }
+        })
         .then((res) => {
             console.log(res.data.result);
             dispatch({
@@ -18,8 +22,8 @@ export const fetchOrderHistory = () => dispatch => {
                 payload: res.data.result,
             })
         })
-        .catch((error) => {
-            console.log(error);
+        .catch((err) => {
+            console.log(err);
         })
 
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import {
     fetchOrderHistory
@@ -13,11 +14,41 @@ import styles from './profile.module.css';
 
 class Profile extends React.Component {
 
+    constructor(){
+        super();
+        this.state = {
+            mounted: false,
+        }
+    }
+
     componentDidMount() {
-        this.props.fetchOrderHistory();
+        console.log(document.cookie)
+        if (document.cookie.split(';').some((item) => item.trim().startsWith('customer_uid='))) {
+            // Logged in
+            let customer_uid = document.cookie.split('; ').find(row => row.startsWith('customer_uid')).split('=')[1];
+            console.log(customer_uid)
+            // console.log(customerFirstName)
+            this.props.fetchOrderHistory(customer_uid);
+            this.setState({
+                mounted: true,
+            })
+        } else {
+            // Reroute to log in page
+            this.props.history.push('/')
+        }
     }
 
     render() {
+        // Return nothing before login checked
+        if(!this.state.mounted) {
+            return (
+                null
+            )
+        }
+        // Page if logged in
+        let firstName = document.cookie.split('; ').find(row => row.startsWith('customer_first_name')).split('=')[1];
+        let lastName= document.cookie.split('; ').find(row => row.startsWith('customer_last_name')).split('=')[1];
+        let email = document.cookie.split('; ').find(row => row.startsWith('customer_email')).split('=')[1];
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -39,9 +70,8 @@ class Profile extends React.Component {
                     </div>
                 </div>
                 <div className={styles.personalDetails}>
-                    <div> First Name Last Name</div>
-                    <div> Email </div>
-                    <div> Phone </div>
+                    <div> {firstName} {lastName} </div>
+                    <div> {email} </div>
                 </div>
                 <div className={styles.headingContainer}>
                     <div className={styles.headingItem}>
@@ -110,4 +140,4 @@ const mapStateToProps = state => ({
     orderHistory: state.profile.orderHistory,
 })
 
-export default connect(mapStateToProps, { fetchOrderHistory } )(Profile);
+export default connect(mapStateToProps, { fetchOrderHistory } )(withRouter(Profile));
