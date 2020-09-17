@@ -434,9 +434,10 @@
   position: relative;
   border: none;
   border-radius: 20px;
-  color: #d3872f;
-  border: 2px solid #d3872f;
+  color: #ffffff;
+  font-weight: 600;
   padding: 0.2rem 0rem;
+  background-color: #e09d51;
 }
 
 .sticky-header {

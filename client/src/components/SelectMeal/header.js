@@ -1,9 +1,31 @@
 import React, { Component } from "react";
 import MealIndicator from "./MealIndicator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 export class Header extends Component {
   render() {
-    const { meals } = this.props;
+    const { meals, myDate, data } = this.props;
+    const mySet = new Set();
+    data.map((menuitem) => {
+      if (menuitem.menu_date == myDate) {
+        mySet.add(menuitem.delivery_days);
+      }
+    });
+    const myarr = [...mySet];
+    let str = "";
+    let temp = "";
+    if (myarr.length > 0) {
+      str = myarr[0];
+      temp = str.replace(/[^a-zA-Z ]/g, "").split(" ");
+    }
+    if (document.getElementById("save-button") != null) {
+      if (this.props.totalCount != this.props.totalMeals) {
+        document.getElementById("save-button").disabled = true;
+      } else {
+        document.getElementById("save-button").disabled = false;
+      }
+    }
+
     return (
       <React.Fragment>
         <div className='meal-header'>
@@ -45,6 +67,19 @@ export class Header extends Component {
               <option value={date}>{date}</option>
             ))}
           </select>
+          <div className='delivery-days'>
+            {temp.length > 0
+              ? temp.map((day) => (
+                  <button
+                    className='selection-styles'
+                    value={day}
+                    onClick={this.props.setDeliveryDay}
+                  >
+                    {day}
+                  </button>
+                ))
+              : ""}
+          </div>
           <div className='suprise-skip-save'>
             <button className='selection-styles' id='surprise-button'>
               Surprise
@@ -55,7 +90,7 @@ export class Header extends Component {
             <button
               className='selection-styles'
               id='save-button'
-              onClick={this.saveMeal}
+              onClick={this.props.saveMeal}
             >
               Save
             </button>

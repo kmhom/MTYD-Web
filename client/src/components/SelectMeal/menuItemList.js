@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import MenuItem from "./menuItem";
-import Filter from "./Filter";
-import MealIndicator from "./MealIndicator";
 import axios from "axios";
 import Header from "./header";
 export class MenuItemList extends Component {
@@ -14,6 +12,7 @@ export class MenuItemList extends Component {
       meals: [],
       totalCount: 0,
       displayCount: "none",
+      deliveryDay: "",
     };
     this.saveMeal = this.saveMeal.bind(this);
     this.loadMeals = this.loadMeals.bind(this);
@@ -107,7 +106,7 @@ export class MenuItemList extends Component {
       items: myarr,
       purchase_id: this.state.purchaseID,
       menu_date: this.state.myDate,
-      delivery_day: "Sunday",
+      delivery_day: this.state.deliveryDay,
     };
     axios
       .post("http://localhost:2000/api/v2/meals_selection", data)
@@ -137,7 +136,7 @@ export class MenuItemList extends Component {
 
   mealsOnChange = (e) => {
     let planCount = e.target.value;
-    let mystr = planCount.toString().slice(0, 2);
+    let mystr = planCount.toString().slice(0, 2).replace(/\s/g, "");
     this.state.meals.map((mealItem) => {
       let meal = JSON.parse(mealItem.items)[0];
       if (meal.name == planCount) {
@@ -154,6 +153,13 @@ export class MenuItemList extends Component {
     });
   };
 
+  setDeliveryDay = (e) => {
+    let deliver = e.target.value;
+    return this.setState({
+      deliveryDay: deliver,
+    });
+  };
+
   checkSave = (e) => {
     if (this.state.totalCount == 0) {
       console.log(e.target.value);
@@ -167,6 +173,7 @@ export class MenuItemList extends Component {
     return (
       <div className='mealMenuWrapper'>
         <Header
+          data={this.state.data}
           dates={uniqueDates}
           filterDates={this.filterDates}
           meals={this.state.meals}
@@ -174,6 +181,9 @@ export class MenuItemList extends Component {
           totalCount={this.state.totalCount}
           totalMeals={this.state.totalMeals}
           displayCount={this.state.displayCount}
+          myDate={this.state.myDate}
+          setDeliveryDay={this.setDeliveryDay}
+          saveMeal={this.saveMeal}
         />
 
         <div className='menu-items-wrapper'>

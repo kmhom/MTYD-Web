@@ -24,6 +24,7 @@ export default class MealIndicator extends Component {
         <div
           style={{
             border: "1px solid #ebebeb",
+            borderColor: "#e09d51",
             borderRadius: "50px 0px 50px 0px",
             padding: "0px 0px 0px 14px",
             height: "2rem",
@@ -32,7 +33,7 @@ export default class MealIndicator extends Component {
             background: `-moz-linear-gradient(left,  ${
               selectCount === 0
                 ? (indicatorColor = "#42d4a8")
-                : (indicatorColor = "#dbcd65")
+                : (indicatorColor = "#e09d51")
             } ${percentage}%, white 0%)`,
           }}
         >
