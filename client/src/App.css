@@ -1,3 +1,73 @@
+.root {
+  width: 100%;
+  height: 100%;
+  --navBarWidth: 80px;
+  --navBarHeight: 0px;
+}
+
+.sideNavBar {
+  width: var(--navBarWidth);
+  height: 100%;
+  position: fixed;
+  background-color: brown;
+  overflow-x: hidden;
+}
+
+.mainApp {
+  margin-left: var(--navBarWidth);
+  width: 100vw - var(--navBarWidth);
+  height: 100vh - var(--navBarHeight);
+}
+
+.headerIcon {
+  color: #727272;
+  margin: 1rem;
+}
+
+.title {
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.mainTitle {
+  font-size: 25px;
+  font-weight: bolder;
+  margin: 0px;
+}
+
+.subTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #727272;
+  margin: 0px;
+}
+
+.bottomNavBar {
+  display: none;
+  background-color: #ebebeb;
+  height: var(--navBarHeight);
+}
+
+@media (max-width: 500px) {
+  .root {
+    --navBarWidth: 0px;
+    --navBarHeight: 60px;
+  }
+
+  .sideNavBar {
+    display: none;
+  }
+
+  .bottomNavBar {
+    display: inherit;
+    position: absolute;
+    bottom: 0px;
+    width: inherit;
+  }
+}
+
 /* Landing Page CSS */
 
 .landing {
