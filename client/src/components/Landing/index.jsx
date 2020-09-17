@@ -9,10 +9,23 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faBell, faShareAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 
+import GoogleLogin from 'react-google-login';
+
 import styles from './landing.module.css'
 
 class Landing extends React.Component {
+
+    responseGoogle = response => {
+        console.log(response);
+        if(response.profileObj) {
+            console.log('Google login successful')
+        } else {
+            console.log('Google Login failed')
+        }
+    }
+
     render() {
+        console.log(process.env)
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -26,6 +39,18 @@ class Landing extends React.Component {
                     </div>
                 </div>
                 <div className={styles.loginSectionContainer}>
+                    <div className={styles.loginSectionItem}>
+                        <GoogleLogin
+                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                            buttonText="Login with Google"
+                            onSuccess={this.responseGoogle}
+                            onFailure={this.responseGoogle}
+                            isSignedIn={false}
+                            disabled={false}
+                            cookiePolicy={"single_host_origin"}
+                            className={styles.loginSectionInput}
+                        />
+                    </div>
                     <div className={styles.loginSectionItem}>
                         <input
                             type="text"
