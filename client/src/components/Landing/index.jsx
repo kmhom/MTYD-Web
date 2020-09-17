@@ -16,85 +16,98 @@ import {
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 
-import styles from "./landing.module.css";
+import GoogleLogin from 'react-google-login';
+
+import styles from './landing.module.css'
 
 class Landing extends React.Component {
-  render() {
-    return (
-      <div className={styles.root}>
-        <div className={styles.mealHeader}>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faBars} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faBell} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faSearch} className={"headerIcon"} />{" "}
-          </div>
-          <div className='title'>
-            <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
-            <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
-          </div>
-        </div>
-        <div className={styles.loginSectionContainer}>
-          <div className={styles.loginSectionItem}>
-            <input
-              type='text'
-              placeholder='email'
-              className={styles.loginSectionInput}
-              value={this.props.email}
-              onChange={(e) => {
-                this.props.changeEmail(e.target.value);
-              }}
-            />
-          </div>
-          <div className={styles.loginSectionItem}>
-            <input
-              type='password'
-              placeholder='password'
-              className={styles.loginSectionInput}
-              value={this.props.password}
-              onChange={(e) => {
-                this.props.changePassword(e.target.value);
-              }}
-            />
-          </div>
-        </div>
-        <div className={styles.buttonContainer}>
-          <div className={styles.buttonContainerItem}>
-            <button
-              className={styles.button}
-              onClick={() => {
-                console.log("start login");
-                this.props.loginAttempt(
-                  this.props.email,
-                  this.props.password,
-                  () => {
-                    console.log("login done");
-                    this.props.history.push("/choose-plan");
-                    console.log("routing done");
-                  }
-                );
-              }}
-            >
-              Sign In
-            </button>
-          </div>
-          <div className={styles.buttonContainerItem}>
-            <button className={styles.button}>Sign Up</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+
+    responseGoogle = response => {
+        console.log(response);
+        if(response.profileObj) {
+            console.log('Google login successful')
+        } else {
+            console.log('Google Login failed')
+        }
+    }
+
+    render() {
+        console.log(process.env)
+        return (
+            <div className={styles.root}>
+                <div className={styles.mealHeader}>
+                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    <div className='title'>
+                        <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
+                        <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
+                    </div>
+                </div>
+                <div className={styles.loginSectionContainer}>
+                    <div className={styles.loginSectionItem}>
+                        <GoogleLogin
+                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                            buttonText="Login with Google"
+                            onSuccess={this.responseGoogle}
+                            onFailure={this.responseGoogle}
+                            isSignedIn={false}
+                            disabled={false}
+                            cookiePolicy={"single_host_origin"}
+                            className={styles.loginSectionInput}
+                        />
+                    </div>
+                    <div className={styles.loginSectionItem}>
+                        <input
+                            type="text"
+                            placeholder="email"
+                            className={styles.loginSectionInput}
+                            value={this.props.email}
+                            onChange={(e) => {
+                                this.props.changeEmail(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className={styles.loginSectionItem}>
+                        <input
+                            type="password"
+                            placeholder="password"
+                            className={styles.loginSectionInput}
+                            value={this.props.password}
+                            onChange={(e) => {
+                                this.props.changePassword(e.target.value);
+                            }}
+                        />
+                    </div>
+                </div>
+                <div className={styles.buttonContainer}>
+                    <div className={styles.buttonContainerItem}>
+                        <button
+                            className={styles.button}
+                            onClick={() => {
+                                console.log('start login')
+                                this.props.loginAttempt(this.props.email,this.props.password,() => {
+                                    console.log('login done')
+                                    this.props.history.push('/choose-plan')
+                                    console.log('routing done')
+                                });
+                            }}
+                        >
+                            Sign In
+                        </button>
+                    </div>
+                    <div className={styles.buttonContainerItem}>
+                        <button
+                            className={styles.button}
+                        >
+                            Sign Up
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
 Landing.propTypes = {
@@ -107,8 +120,10 @@ const mapStateToProps = (state) => ({
   password: state.login.password,
 });
 
-export default connect(mapStateToProps, {
+const functionList = {
   changeEmail,
   changePassword,
   loginAttempt,
-})(withRouter(Landing));
+}
+
+export default connect(mapStateToProps, functionList)(withRouter(Landing));

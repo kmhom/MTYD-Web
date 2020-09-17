@@ -100,3 +100,20 @@ export const loginAttempt = (email, password, callback) => dispatch => {
         }
     })
 }
+
+export const socialLoginAttempt = (email, refreshToken, callback) => dispatch => {
+    axios
+    .post(API_URL+'login',{
+        email: email,
+        token: refreshToken
+    })
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((err) => {
+        console.log(err);
+        if(err.response) {
+            console.log(err.response);
+        }
+    })
+}
