@@ -14,6 +14,8 @@ class MenuItem extends React.Component {
                 style={{
                   backgroundImage: `url(${menuitem.meal_photo_URL})`,
                   backgroundSize: "cover",
+                  boxShadow:
+                    "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 }}
                 className='menu-item'
               >

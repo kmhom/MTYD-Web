@@ -18,11 +18,37 @@ export class Header extends Component {
       str = myarr[0];
       temp = str.replace(/[^a-zA-Z ]/g, "").split(" ");
     }
+
+    //To disable and enable save button
     if (document.getElementById("save-button") != null) {
       if (this.props.totalCount != this.props.totalMeals) {
         document.getElementById("save-button").disabled = true;
       } else {
         document.getElementById("save-button").disabled = false;
+      }
+    }
+
+    //To disable and enable Surprise button
+    if (document.getElementById("surprise-button") != null) {
+      if (
+        this.props.myDate == "" ||
+        document.getElementById("meal-plan-picker").value == null
+      ) {
+        document.getElementById("surprise-button").disabled = true;
+      } else {
+        document.getElementById("surprise-button").disabled = false;
+      }
+    }
+
+    //To disable and enable Skip button
+    if (document.getElementById("skip-button") != null) {
+      if (
+        this.props.myDate == "" ||
+        document.getElementById("meal-plan-picker").value == null
+      ) {
+        document.getElementById("skip-button").disabled = true;
+      } else {
+        document.getElementById("skip-button").disabled = false;
       }
     }
 
@@ -43,6 +69,7 @@ export class Header extends Component {
             onClick={this.props.checkSave}
             onChange={this.props.mealsOnChange}
             className='pickers'
+            id='meal-plan-picker'
           >
             <option value='' selected>
               Select Meal Plan
@@ -81,10 +108,18 @@ export class Header extends Component {
               : ""}
           </div>
           <div className='suprise-skip-save'>
-            <button className='selection-styles' id='surprise-button'>
+            <button
+              onClick={this.props.surprise}
+              className='selection-styles'
+              id='surprise-button'
+            >
               Surprise
             </button>
-            <button className='selection-styles' id='skip-button'>
+            <button
+              onClick={this.props.skip}
+              className='selection-styles'
+              id='skip-button'
+            >
               Skip
             </button>
             <button

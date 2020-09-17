@@ -24,12 +24,14 @@ export default class MealIndicator extends Component {
         <div
           style={{
             border: "1px solid #ebebeb",
-            borderColor: "#e09d51",
+            borderColor: "#dbcd65",
             borderRadius: "50px 0px 50px 0px",
             padding: "0px 0px 0px 14px",
             height: "2rem",
             margin: "0rem 1rem",
             width: "100%",
+            transition: "background 1s",
+            transitionTimingFunction: "ease-in-out",
             background: `-moz-linear-gradient(left,  ${
               selectCount === 0
                 ? (indicatorColor = "#42d4a8")

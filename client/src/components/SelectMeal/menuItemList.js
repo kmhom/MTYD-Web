@@ -38,9 +38,10 @@ export class MenuItemList extends Component {
   }
 
   filterDates = (event) => {
-    console.log(event.target.value);
     this.setState({
       myDate: event.target.value,
+      cartItems: [],
+      totalCount: 0,
     });
   };
 
@@ -166,6 +167,58 @@ export class MenuItemList extends Component {
     }
   };
 
+  surprise = (e) => {
+    const supriseData = [
+      {
+        qty: "",
+        name: "SURPRISE",
+        price: "",
+        item_uid: "",
+      },
+    ];
+    const data1 = {
+      is_addon: false,
+      items: supriseData,
+      purchase_id: this.state.purchaseID,
+      menu_date: this.state.myDate,
+      delivery_day: this.state.deliveryDay,
+    };
+    axios
+      .post("http://localhost:2000/api/v2/meals_selection", data1)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  skip = (e) => {
+    const skipData = [
+      {
+        qty: "",
+        name: "SKIP",
+        price: "",
+        item_uid: "",
+      },
+    ];
+    const data2 = {
+      is_addon: false,
+      items: skipData,
+      purchase_id: this.state.purchaseID,
+      menu_date: this.state.myDate,
+      delivery_day: this.state.deliveryDay,
+    };
+    axios
+      .post("http://localhost:2000/api/v2/meals_selection", data2)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   render() {
     const dates = this.state.data.map((date) => date.menu_date);
     const uniqueDates = Array.from(new Set(dates));
@@ -184,6 +237,8 @@ export class MenuItemList extends Component {
           myDate={this.state.myDate}
           setDeliveryDay={this.setDeliveryDay}
           saveMeal={this.saveMeal}
+          surprise={this.surprise}
+          skip={this.skip}
         />
 
         <div className='menu-items-wrapper'>
