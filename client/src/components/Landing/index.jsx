@@ -18,6 +18,8 @@ import {
 
 import GoogleLogin from 'react-google-login';
 
+import GoogleLogin from 'react-google-login';
+
 import styles from './landing.module.css'
 
 class Landing extends React.Component {
