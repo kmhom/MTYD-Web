@@ -42,6 +42,7 @@ export class MenuItemList extends Component {
       myDate: event.target.value,
       cartItems: [],
       totalCount: 0,
+      deliveryDay: "",
     });
   };
 
@@ -239,6 +240,7 @@ export class MenuItemList extends Component {
           saveMeal={this.saveMeal}
           surprise={this.surprise}
           skip={this.skip}
+          deliveryDay={this.state.deliveryDay}
         />
 
         <div className='menu-items-wrapper'>

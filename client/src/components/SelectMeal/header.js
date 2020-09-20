@@ -3,11 +3,10 @@ import MealIndicator from "./MealIndicator";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export class Header extends Component {
-  render() {
-    const { meals, myDate, data } = this.props;
+  showDeliveryDay = () => {
     const mySet = new Set();
-    data.map((menuitem) => {
-      if (menuitem.menu_date == myDate) {
+    this.props.data.map((menuitem) => {
+      if (menuitem.menu_date == this.props.myDate) {
         mySet.add(menuitem.delivery_days);
       }
     });
@@ -18,6 +17,45 @@ export class Header extends Component {
       str = myarr[0];
       temp = str.replace(/[^a-zA-Z ]/g, "").split(" ");
     }
+
+    let deselectedMealButton = "selection-styles";
+    let selectedMealButton = "selection-styles selected-days";
+    let mealdays = [];
+    for (const day of temp) {
+      let dayselector = day;
+      mealdays.push(
+        <button
+          key={dayselector}
+          value={dayselector}
+          className={
+            this.props.deliveryDay == "" ||
+            this.props.deliveryDay != dayselector
+              ? deselectedMealButton
+              : selectedMealButton
+          }
+          onClick={(e) => this.props.setDeliveryDay(e)}
+        >
+          {dayselector}
+        </button>
+      );
+    }
+    return mealdays;
+
+    // return temp.length > 0
+    //   ? temp.map((day) => (
+    //       <button
+    //         className='selection-styles-1'
+    //         value={day}
+    //         onClick={(e) => this.props.setDeliveryDay(e)}
+    //       >
+    //         {day}
+    //       </button>
+    //     ))
+    //   : "";
+  };
+
+  render() {
+    const { meals } = this.props;
 
     //To disable and enable save button
     if (document.getElementById("save-button") != null) {
@@ -94,19 +132,7 @@ export class Header extends Component {
               <option value={date}>{date}</option>
             ))}
           </select>
-          <div className='delivery-days'>
-            {temp.length > 0
-              ? temp.map((day) => (
-                  <button
-                    className='selection-styles'
-                    value={day}
-                    onClick={this.props.setDeliveryDay}
-                  >
-                    {day}
-                  </button>
-                ))
-              : ""}
-          </div>
+          <div className='delivery-days'>{this.showDeliveryDay()}</div>
           <div className='suprise-skip-save'>
             <button
               onClick={this.props.surprise}
