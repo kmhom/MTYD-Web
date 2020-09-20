@@ -7,7 +7,6 @@ import {
     CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, SUBMIT_PAYMENT,
 } from "../actions/subscriptionTypes";
 
-import { BING_LOCATION_API_KEY } from '../constants_keys';
 import { API_URL, BING_LCOATION_API_URL } from '../constants'
 
 export const fetchPlans = () => dispatch => {
@@ -141,11 +140,11 @@ export const changeDeliveryInstructions = (newInstructions) => dispatch => {
 export const submitPayment = (
     customerUid, customerPassword, deliveryFirstName, deliveryLastName, deliveryPhone, 
     deliveryAddress, deliveryUnit, deliveryCity, deliveryState, deliveryZip,
-    deliveryInstructions, selectedPlan
+    deliveryInstructions, selectedPlan, callback
 ) => dispatch => {
     // Will need to Re-login to retrieve hash, hard-coded currently
     //Location API to retrieve longitude, latitude
-    axios
+    axios 
     .get(BING_LCOATION_API_URL,{
         params: {
             CountryRegion: 'US',
@@ -153,7 +152,7 @@ export const submitPayment = (
             locality: deliveryCity,
             postalCode: deliveryZip,
             addressLine: deliveryAddress,
-            key: BING_LOCATION_API_KEY,
+            key: process.env.REACT_APP_BING_LOCATION_KEY,
         }
     })
     .then((res) => {
@@ -211,6 +210,7 @@ export const submitPayment = (
                     dispatch({
                         type: SUBMIT_PAYMENT,   
                     })
+                    callback();
                 })
                 .catch((err) => {
                     console.log(err);

@@ -170,8 +170,11 @@ class PaymentDetails extends React.Component {
                         className={styles.button}
                         onClick={() => {
                             this.props.submitPayment(
-                                'will be customer id',this.props.password,this.props.firstName,this.props.lastName,this.props.phone, this.props.street, this.props.unit,
+                                'will be customer id','password',this.props.firstName,this.props.lastName,this.props.phone, this.props.street, this.props.unit,
                                 this.props.city, this.props.state, this.props.zip, this.props.instructions, this.props.selectedPlan,
+                                () => {
+                                    this.props.history.push('/select-meal')
+                                }
                             );
                         }}
                     >
@@ -215,7 +218,6 @@ const mapStateToProps = state => ({
     instructions: state.subscribe.deliveryInstructions,
     selectedPlan: state.subscribe.selectedPlan,
     email: state.login.email,
-    password: state.login.password,
 })
 
 const functionList = {

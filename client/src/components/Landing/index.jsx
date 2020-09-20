@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withRouter } from "react-router";
 import {
   changeEmail,
   changePassword,
   loginAttempt,
+  socialLoginAttempt,
 } from "../../reducers/actions/loginActions";
+import { withRouter } from "react-router";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,8 +16,6 @@ import {
   faShareAlt,
   faSearch,
 } from "@fortawesome/free-solid-svg-icons";
-
-import GoogleLogin from 'react-google-login';
 
 import GoogleLogin from 'react-google-login';
 
@@ -34,7 +33,6 @@ class Landing extends React.Component {
     }
 
     render() {
-        console.log(process.env)
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -126,6 +124,7 @@ const functionList = {
   changeEmail,
   changePassword,
   loginAttempt,
+  socialLoginAttempt,
 }
 
 export default connect(mapStateToProps, functionList)(withRouter(Landing));

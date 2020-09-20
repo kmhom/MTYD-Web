@@ -109,6 +109,17 @@ export const socialLoginAttempt = (email, refreshToken, callback) => dispatch =>
     })
     .then((res) => {
         console.log(res);
+        if(res.status === 200) {
+            let customerInfo = res.data.result;
+            console.log(customerInfo);
+            console.log('cookie',document.cookie)
+            document.cookie = 'customer_uid=' + customerInfo.customer_uid;
+            document.cookie = 'customer_last_name=' + customerInfo.customer_last_name;
+            document.cookie = 'customer_first_name=' + customerInfo.customer_first_name;
+            document.cookie = 'customer_email=' + customerInfo.customer_email
+            console.log('cookie',document.cookie)
+            callback();
+        }
     })
     .catch((err) => {
         console.log(err);

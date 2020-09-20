@@ -19,7 +19,7 @@ export class MenuItemList extends Component {
   }
 
   loadMenuItems = () => {
-    fetch(`http://localhost:2000/api/v2/upcoming_menu`)
+    fetch(`https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/upcoming_menu`)
       .then((response) => response.json())
       .then((json) => {
         this.setState({
@@ -110,7 +110,7 @@ export class MenuItemList extends Component {
       delivery_day: this.state.deliveryDay,
     };
     axios
-      .post("http://localhost:2000/api/v2/meals_selection", data)
+      .post("https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selection", data)
       .then((response) => {
         console.log(response);
       })
@@ -184,7 +184,7 @@ export class MenuItemList extends Component {
       delivery_day: this.state.deliveryDay,
     };
     axios
-      .post("http://localhost:2000/api/v2/meals_selection", data1)
+      .post("https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selection", data1)
       .then((response) => {
         console.log(response);
       })
@@ -210,7 +210,7 @@ export class MenuItemList extends Component {
       delivery_day: this.state.deliveryDay,
     };
     axios
-      .post("http://localhost:2000/api/v2/meals_selection", data2)
+      .post("https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selection", data2)
       .then((response) => {
         console.log(response);
       })
