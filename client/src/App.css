@@ -15,8 +15,8 @@
 
 .mainApp {
   margin-left: var(--navBarWidth);
-  width: 100vw - var(--navBarWidth);
-  height: 100vh - var(--navBarHeight);
+  width: calc(100vw - var(--navBarWidth));
+  height: calc(100vh - var(--navBarHeight));
 }
 
 .headerIcon {
