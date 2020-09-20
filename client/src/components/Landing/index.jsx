@@ -27,6 +27,15 @@ class Landing extends React.Component {
         console.log(response);
         if(response.profileObj) {
             console.log('Google login successful')
+            let email = response.profileObj.email;
+            let accessToken = response.accessToken;
+            let refreshToken = response.googleId;
+            console.log('start login')
+            this.props.socialLoginAttempt(email,refreshToken,() => {
+                console.log('login done')
+                this.props.history.push('/choose-plan')
+                console.log('routing done')
+            });
         } else {
             console.log('Google Login failed')
         }
