@@ -354,7 +354,7 @@
   width: 5rem;
   flex: 1;
   text-align: center;
-  border: 2px solid #d3872f;
+  border: 2px solid #e09d51;
   border-radius: 25px;
   align-content: center;
   margin: 10px;
@@ -362,7 +362,7 @@
 
 .selected-days {
   color: "#d3872f";
-  background-color: #d3872f;
+  background-color: #e09d51;
 }
 
 .indicator-wrapper {

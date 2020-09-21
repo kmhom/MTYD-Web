@@ -28,8 +28,8 @@ export class Header extends Component {
           key={dayselector}
           value={dayselector}
           className={
-            this.props.deliveryDay == "" ||
-            this.props.deliveryDay != dayselector
+            this.props.deliveryDay != dayselector ||
+            this.props.deliveryDay === ""
               ? deselectedMealButton
               : selectedMealButton
           }
@@ -40,53 +40,69 @@ export class Header extends Component {
       );
     }
     return mealdays;
+  };
 
-    // return temp.length > 0
-    //   ? temp.map((day) => (
-    //       <button
-    //         className='selection-styles-1'
-    //         value={day}
-    //         onClick={(e) => this.props.setDeliveryDay(e)}
-    //       >
-    //         {day}
-    //       </button>
-    //     ))
-    //   : "";
+  showSelectionOptions = () => {
+    let deselectedMealButton = "selection-styles";
+    let selectedMealButton = "selection-styles selected-days";
+    let options = ["Surprise", "Skip", "Save"];
+    let selections = [];
+    for (const day of options) {
+      let selectionOptions = day;
+      selections.push(
+        <button
+          id={selectionOptions}
+          value={selectionOptions}
+          className={
+            this.props.selectValue == "" ||
+            this.props.selectValue != selectionOptions
+              ? deselectedMealButton
+              : selectedMealButton
+          }
+          onClick={(e) => this.props.makeSelection(e)}
+        >
+          {selectionOptions}
+        </button>
+      );
+    }
+    return selections;
   };
 
   render() {
     const { meals } = this.props;
 
     //To disable and enable save button
-    if (document.getElementById("save-button") != null) {
+    if (document.getElementById("Save") != null) {
       if (this.props.totalCount != this.props.totalMeals) {
-        document.getElementById("save-button").disabled = true;
+        document.getElementById("Save").disabled = true;
       } else {
-        document.getElementById("save-button").disabled = false;
+        document.getElementById("Save").disabled = false;
       }
     }
 
     //To disable and enable Surprise button
-    if (document.getElementById("surprise-button") != null) {
+    if (document.getElementById("Surprise") != null) {
       if (
         this.props.myDate == "" ||
-        document.getElementById("meal-plan-picker").value == null
+        document.getElementById("meal-plan-picker").value == null ||
+        this.props.totalCount > 0
       ) {
-        document.getElementById("surprise-button").disabled = true;
+        document.getElementById("Surprise").disabled = true;
       } else {
-        document.getElementById("surprise-button").disabled = false;
+        document.getElementById("Surprise").disabled = false;
       }
     }
 
     //To disable and enable Skip button
-    if (document.getElementById("skip-button") != null) {
+    if (document.getElementById("Skip") != null) {
       if (
         this.props.myDate == "" ||
-        document.getElementById("meal-plan-picker").value == null
+        document.getElementById("meal-plan-picker").value == null ||
+        this.props.totalCount > 0
       ) {
-        document.getElementById("skip-button").disabled = true;
+        document.getElementById("Skip").disabled = true;
       } else {
-        document.getElementById("skip-button").disabled = false;
+        document.getElementById("Skip").disabled = false;
       }
     }
 
@@ -134,7 +150,8 @@ export class Header extends Component {
           </select>
           <div className='delivery-days'>{this.showDeliveryDay()}</div>
           <div className='suprise-skip-save'>
-            <button
+            {this.showSelectionOptions()}
+            {/* <button
               onClick={this.props.surprise}
               className='selection-styles'
               id='surprise-button'
@@ -154,7 +171,7 @@ export class Header extends Component {
               onClick={this.props.saveMeal}
             >
               Save
-            </button>
+            </button> */}
           </div>
           <MealIndicator
             totalCount={this.props.totalCount}

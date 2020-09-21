@@ -10,8 +10,32 @@ import PaymentDetails from "./components/PaymentDetails";
 import Profile from "./components/Profile";
 import SelectMeal from "./components/SelectMeal";
 import NotFound from "./components/NotFound";
-
 import "./App.css";
+
+// const authentication = {
+//   isLoggedIn: false,
+//   onAuthentication() {
+//     this.isLoggedIn = true;
+//   },
+//   getLoginStatus() {
+//     return this.isLoggedIn;
+//   },
+// };
+
+// function SecuredRoute(props) {
+//   return (
+//     <Route
+//       path={props.path}
+//       render={(data) =>
+//         authentication.getLoginStatus() ? (
+//           <props.component {...data}></props.component>
+//         ) : (
+//           <Redirect to={{ pathname: "/" }}></Redirect>
+//         )
+//       }
+//     ></Route>
+//   );
+// }
 
 function App() {
   return (

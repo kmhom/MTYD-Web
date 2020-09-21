@@ -14,7 +14,7 @@ export class MenuItemList extends Component {
       displayCount: "none",
       deliveryDay: "",
     };
-    this.saveMeal = this.saveMeal.bind(this);
+
     this.loadMeals = this.loadMeals.bind(this);
   }
 
@@ -92,33 +92,94 @@ export class MenuItemList extends Component {
     });
   };
 
-  saveMeal() {
-    const myarr = [];
-    this.state.cartItems.map((meal) => {
-      myarr.push({
-        qty: meal.count,
-        name: meal.meal_name,
-        price: meal.meal_price,
-        item_uid: meal.meal_uid,
-      });
+  makeSelection = (e) => {
+    this.setState({
+      selectValue: e.target.value,
     });
-    console.log(myarr);
-    const data = {
-      is_addon: false,
-      items: myarr,
-      purchase_id: this.state.purchaseID,
-      menu_date: this.state.myDate,
-      delivery_day: this.state.deliveryDay,
-    };
-    axios
-      .post("http://localhost:2000/api/v2/meals_selection", data)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+    if (e.target.value == "Surprise") {
+      if (this.state.myDate !== "" && this.state.totalCount == 0) {
+        const supriseData = [
+          {
+            qty: "",
+            name: "SURPRISE",
+            price: "",
+            item_uid: "",
+          },
+        ];
+        const data1 = {
+          is_addon: false,
+          items: supriseData,
+          purchase_id: this.state.purchaseID,
+          menu_date: this.state.myDate,
+          delivery_day: this.state.deliveryDay,
+        };
+        axios
+          .post("http://localhost:2000/api/v2/meals_selection", data1)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        alert("Unselect meals to use Surprise");
+      }
+    } else if (e.target.value == "Skip") {
+      const skipData = [
+        {
+          qty: "",
+          name: "SKIP",
+          price: "",
+          item_uid: "",
+        },
+      ];
+      const data2 = {
+        is_addon: false,
+        items: skipData,
+        purchase_id: this.state.purchaseID,
+        menu_date: this.state.myDate,
+        delivery_day: this.state.deliveryDay,
+      };
+      axios
+        .post("http://localhost:2000/api/v2/meals_selection", data2)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      if (this.state.deliveryDay == "") {
+        alert("Please Select Delivery Day!");
+      } else {
+        const myarr = [];
+        this.state.cartItems.map((meal) => {
+          myarr.push({
+            qty: meal.count,
+            name: meal.meal_name,
+            price: meal.meal_price,
+            item_uid: meal.meal_uid,
+          });
+        });
+        console.log(myarr);
+        const data = {
+          is_addon: false,
+          items: myarr,
+          purchase_id: this.state.purchaseID,
+          menu_date: this.state.myDate,
+          delivery_day: this.state.deliveryDay,
+        };
+        axios
+          .post("http://localhost:2000/api/v2/meals_selection", data)
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    }
+  };
 
   loadMeals() {
     fetch(
@@ -168,58 +229,6 @@ export class MenuItemList extends Component {
     }
   };
 
-  surprise = (e) => {
-    const supriseData = [
-      {
-        qty: "",
-        name: "SURPRISE",
-        price: "",
-        item_uid: "",
-      },
-    ];
-    const data1 = {
-      is_addon: false,
-      items: supriseData,
-      purchase_id: this.state.purchaseID,
-      menu_date: this.state.myDate,
-      delivery_day: this.state.deliveryDay,
-    };
-    axios
-      .post("http://localhost:2000/api/v2/meals_selection", data1)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  skip = (e) => {
-    const skipData = [
-      {
-        qty: "",
-        name: "SKIP",
-        price: "",
-        item_uid: "",
-      },
-    ];
-    const data2 = {
-      is_addon: false,
-      items: skipData,
-      purchase_id: this.state.purchaseID,
-      menu_date: this.state.myDate,
-      delivery_day: this.state.deliveryDay,
-    };
-    axios
-      .post("http://localhost:2000/api/v2/meals_selection", data2)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   render() {
     const dates = this.state.data.map((date) => date.menu_date);
     const uniqueDates = Array.from(new Set(dates));
@@ -241,6 +250,8 @@ export class MenuItemList extends Component {
           surprise={this.surprise}
           skip={this.skip}
           deliveryDay={this.state.deliveryDay}
+          makeSelection={this.makeSelection}
+          selectValue={this.state.selectValue}
         />
 
         <div className='menu-items-wrapper'>
