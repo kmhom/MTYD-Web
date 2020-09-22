@@ -3,7 +3,7 @@ import MenuItem from "./menuItem";
 import axios from "axios";
 import Header from "./header";
 
-import API_URL from '../../reducers/constants'
+import { API_URL } from '../../reducers/constants'
 
 export class MenuItemList extends Component {
   constructor() {

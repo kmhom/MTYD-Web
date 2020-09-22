@@ -43,7 +43,7 @@ class BottomNavBar extends React.Component {
         <div className='meal-footer'>
           <Link to='/choose-plan'>
             <div className='footer-icon-tray'>
-              <img src={subscribe} alt='Subscribe' className='footer-icons' />
+              <img src={Subscribe} alt='Subscribe' className='footer-icons' />
               <p>Subscribe</p>
             </div>
           </Link>
