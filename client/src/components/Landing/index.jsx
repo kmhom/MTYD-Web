@@ -18,6 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 
 import styles from './landing.module.css'
 
@@ -26,18 +27,33 @@ class Landing extends React.Component {
     responseGoogle = response => {
         console.log(response);
         if(response.profileObj) {
+            // Google Login successful, try to login to MTYD
             console.log('Google login successful')
             let email = response.profileObj.email;
             let accessToken = response.accessToken;
             let refreshToken = response.googleId;
-            console.log('start login')
             this.props.socialLoginAttempt(email,refreshToken,() => {
-                console.log('login done')
                 this.props.history.push('/choose-plan')
-                console.log('routing done')
             });
         } else {
+            // Google Login unsuccessful
             console.log('Google Login failed')
+        }
+    }
+
+    responseFacebook = response => {
+        console.log(response);
+        if(response.email) {
+            console.log('Facebook Login successful');
+            let email = response.email;
+            let accessToken = response.accessToken;
+            let refreshToken = response.id;
+            this.props.socialLoginAttempt(email,refreshToken,() => {
+                this.props.history.push('/choose-plan')
+            });
+        } else {
+            // Facebook Login unsuccessful
+            console.log('Facebook Login failed')
         }
     }
 
@@ -55,6 +71,17 @@ class Landing extends React.Component {
                     </div>
                 </div>
                 <div className={styles.loginSectionContainer}>
+                    <div className={styles.loginSectionItem}>
+                        <FacebookLogin
+                            appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+                            autoLoad={false}
+                            fields={"name,email,picture"}
+                            callback={this.responseFacebook}
+                            className={styles.loginSectionInput}
+                        />
+                    </div>
+                    <br />
+                    <br />
                     <div className={styles.loginSectionItem}>
                         <GoogleLogin
                             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
