@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import MenuItem from "./menuItem";
 import axios from "axios";
 import Header from "./header";
+
+import API_URL from '../../reducers/constants'
+
 export class MenuItemList extends Component {
   constructor() {
     super();
@@ -19,7 +22,7 @@ export class MenuItemList extends Component {
   }
 
   loadMenuItems = () => {
-    fetch(`http://localhost:2000/api/v2/upcoming_menu`)
+    fetch(API_URL + 'upcoming_menu')
       .then((response) => response.json())
       .then((json) => {
         this.setState({
@@ -110,7 +113,7 @@ export class MenuItemList extends Component {
       delivery_day: this.state.deliveryDay,
     };
     axios
-      .post("http://localhost:2000/api/v2/meals_selection", data)
+      .post(API_URL + 'meals_selection', data)
       .then((response) => {
         console.log(response);
       })
@@ -121,7 +124,7 @@ export class MenuItemList extends Component {
 
   loadMeals() {
     fetch(
-      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/customer_lplp?customer_uid=100-000001`
+      API_URL + 'customer_lplp?customer_uid=100-000001'
     )
       .then((response) => response.json())
       .then((json) => {
@@ -184,7 +187,7 @@ export class MenuItemList extends Component {
       delivery_day: this.state.deliveryDay,
     };
     axios
-      .post("http://localhost:2000/api/v2/meals_selection", data1)
+      .post(API_URL + 'meals_selection', data1)
       .then((response) => {
         console.log(response);
       })
@@ -210,7 +213,7 @@ export class MenuItemList extends Component {
       delivery_day: this.state.deliveryDay,
     };
     axios
-      .post("http://localhost:2000/api/v2/meals_selection", data2)
+      .post(API_URL + 'meals_selection', data2)
       .then((response) => {
         console.log(response);
       })

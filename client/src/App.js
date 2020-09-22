@@ -14,6 +14,7 @@ import NotFound from "./components/NotFound";
 import "./App.css";
 
 function App() {
+  console.log(process.env);
   return (
     <Provider store={store}>
       <div className='root'>
