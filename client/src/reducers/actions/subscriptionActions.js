@@ -179,7 +179,7 @@ export const submitPayment = (
             let object = {
                 customer_uid: '100-000082',
                 salt: '64a7f1fb0df93d8f5b9df14077948afa1b75b4c5028d58326fb801d825c9cd24412f88c8b121c50ad5c62073c75d69f14557255da1a21e24b9183bc584efef71',
-                business_id: '200-000001',
+                business_uid: '200-000001',
                 delivery_first_name: deliveryFirstName,
                 delivery_last_name: deliveryLastName,
                 delivery_email: 'quang@gmail.com',
