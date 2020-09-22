@@ -7,7 +7,6 @@ import {
     CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, SUBMIT_PAYMENT,
 } from "../actions/subscriptionTypes";
 
-import { BING_LOCATION_API_KEY } from '../constants_keys';
 import { API_URL, BING_LCOATION_API_URL } from '../constants'
 
 export const fetchPlans = () => dispatch => {
@@ -153,7 +152,7 @@ export const submitPayment = (
             locality: deliveryCity,
             postalCode: deliveryZip,
             addressLine: deliveryAddress,
-            key: BING_LOCATION_API_KEY,
+            key: process.env.REACT_APP_BING_LOCATION_KEY,
         }
     })
     .then((res) => {
