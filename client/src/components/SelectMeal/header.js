@@ -106,6 +106,15 @@ export class Header extends Component {
       }
     }
 
+    //To disable and enable date picker
+    if (document.getElementById("date") != null) {
+      if (this.props.totalCount > 0) {
+        document.getElementById("date").disabled = true;
+      } else {
+        document.getElementById("date").disabled = false;
+      }
+    }
+
     return (
       <React.Fragment>
         <div className='meal-header'>
