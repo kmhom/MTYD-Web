@@ -6,12 +6,9 @@ export default class MealIndicator extends Component {
   render() {
     const { totalCount } = this.props;
     const { totalMeals } = this.props;
-    // var colorPicker = "";
-    // cartItems.length === 0
-    //   ? (colorPicker = "meal-selection-indicator")
-    //   : (colorPicker = `meal-selection-indicator meal-selection-indicator:nth-child(${cartItems.length}`);
+    const { displayCount } = this.props;
     const selectCount = totalMeals - totalCount;
-
+    console.log(selectCount);
     let temp = 100 / totalMeals;
     const percentage = totalCount * temp;
     const myarr = [];
@@ -30,10 +27,8 @@ export default class MealIndicator extends Component {
             height: "2rem",
             margin: "0rem 1rem",
             width: "100%",
-            transition: "background 1s",
-            transitionTimingFunction: "ease-in-out",
-            background: `-moz-linear-gradient(left,  ${
-              selectCount === 0
+            backgroundImage: `linear-gradient(to right, ${
+              selectCount == 0
                 ? (indicatorColor = "#42d4a8")
                 : (indicatorColor = "#e09d51")
             } ${percentage}%, white 0%)`,
@@ -41,12 +36,12 @@ export default class MealIndicator extends Component {
         >
           <p
             style={{
-              display: this.props.displayCount,
+              display: displayCount,
               marginTop: "0.01rem",
-              color: selectCount === 0 ? "white" : "black",
+              color: selectCount == 0 ? "white" : "black",
             }}
           >
-            {selectCount === 0
+            {selectCount == 0
               ? "All Meals Selected!"
               : `select ${selectCount} meals`}
           </p>

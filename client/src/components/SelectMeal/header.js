@@ -158,30 +158,7 @@ export class Header extends Component {
             ))}
           </select>
           <div className='delivery-days'>{this.showDeliveryDay()}</div>
-          <div className='suprise-skip-save'>
-            {this.showSelectionOptions()}
-            {/* <button
-              onClick={this.props.surprise}
-              className='selection-styles'
-              id='surprise-button'
-            >
-              Surprise
-            </button>
-            <button
-              onClick={this.props.skip}
-              className='selection-styles'
-              id='skip-button'
-            >
-              Skip
-            </button>
-            <button
-              className='selection-styles'
-              id='save-button'
-              onClick={this.props.saveMeal}
-            >
-              Save
-            </button> */}
-          </div>
+          <div className='suprise-skip-save'>{this.showSelectionOptions()}</div>
           <MealIndicator
             totalCount={this.props.totalCount}
             totalMeals={this.props.totalMeals}
