@@ -2,7 +2,7 @@ import {
     CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION, GET_TOTAL_PAYMENT,
     CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
     CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
-    CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, FETCH_PLAN_INFO,
+    CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, FETCH_PLAN_INFO, CHANGE_PAYMENT_PASSWORD,
 } from "./actions/subscriptionTypes";
 
 
@@ -26,6 +26,7 @@ const initialState = {
         zip: '',
     },
     deliveryInstructions: '',
+    paymentPassword: '',
 };
 
 export default function(state = initialState, action) {
@@ -132,6 +133,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 deliveryInstructions: action.payload,
+            }
+
+        case CHANGE_PAYMENT_PASSWORD:
+            return {
+                ...state,
+                paymentPassword: action.payload,
             }
 
         default:

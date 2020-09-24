@@ -68,12 +68,12 @@ export class MenuItemList extends Component {
 
   removeFromCart = (menuitem) => {
     const cartItems = this.state.cartItems.slice();
-    let alreadyInCart_1 = false;
+    // let alreadyInCart_1 = false;
     cartItems.forEach((item) => {
       if (this.state.totalCount > 0) {
         if (item.menu_uid === menuitem.menu_uid) {
-          if (item.count != 0) {
-            alreadyInCart_1 = true;
+          if (item.count !== 0) {
+            // alreadyInCart_1 = true;
             item.count--;
           }
           this.setState({ cartItems, totalCount: this.state.totalCount - 1 });
@@ -82,8 +82,8 @@ export class MenuItemList extends Component {
     });
     cartItems.forEach((meal) => {
       if (
-        meal.menu_uid == menuitem.menu_uid &&
-        meal.count == 0 &&
+        meal.menu_uid === menuitem.menu_uid &&
+        meal.count === 0 &&
         this.state.totalCount > 0
       ) {
         this.setState({
@@ -103,6 +103,7 @@ export class MenuItemList extends Component {
         price: meal.meal_price,
         item_uid: meal.meal_uid,
       });
+      return meal;
     });
     console.log(myarr);
     const data = {
@@ -143,11 +144,12 @@ export class MenuItemList extends Component {
     let mystr = planCount.toString().slice(0, 2).replace(/\s/g, "");
     this.state.meals.map((mealItem) => {
       let meal = JSON.parse(mealItem.items)[0];
-      if (meal.name == planCount) {
+      if (meal.name === planCount) {
         this.setState({
           purchaseID: mealItem.purchase_uid,
         });
       }
+      return mealItem;
     });
     return this.setState({
       totalMeals: mystr,
@@ -165,7 +167,7 @@ export class MenuItemList extends Component {
   };
 
   checkSave = (e) => {
-    if (this.state.totalCount == 0) {
+    if (this.state.totalCount === 0) {
       console.log(e.target.value);
     }
   };
