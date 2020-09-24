@@ -2,12 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
+  bypassLogin,
   changeEmail,
   changePassword,
   loginAttempt,
   socialLoginAttempt,
 } from "../../reducers/actions/loginActions";
 import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,6 +26,32 @@ import styles from './landing.module.css'
 
 class Landing extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {
+            mounted: false,
+        }
+    }
+
+    successLogin = () => {
+        this.props.history.push('choose-plan');
+    }
+
+    componentDidMount() {
+        let queryString = this.props.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        // Clear Query parameters
+        window.history.pushState({}, document.title, window.location.pathname);
+        // Automatic log in 
+        if(urlParams.has('email') && urlParams.has('hashed')) {
+            this.props.bypassLogin(urlParams.get('email'),urlParams.get('hashed'),this.successLogin);
+        } else {
+            this.setState({
+                mounted: true,
+            })
+        }
+    }
+
     responseGoogle = response => {
         console.log(response);
         if(response.profileObj) {
@@ -32,9 +60,7 @@ class Landing extends React.Component {
             let email = response.profileObj.email;
             let accessToken = response.accessToken;
             let refreshToken = response.googleId;
-            this.props.socialLoginAttempt(email,refreshToken,() => {
-                this.props.history.push('/choose-plan')
-            });
+            this.props.socialLoginAttempt(email,refreshToken,this.successLogin);
         } else {
             // Google Login unsuccessful
             console.log('Google Login failed')
@@ -48,9 +74,7 @@ class Landing extends React.Component {
             let email = response.email;
             let accessToken = response.accessToken;
             let refreshToken = response.id;
-            this.props.socialLoginAttempt(email,refreshToken,() => {
-                this.props.history.push('/choose-plan')
-            });
+            this.props.socialLoginAttempt(email,refreshToken,this.successLogin);
         } else {
             // Facebook Login unsuccessful
             console.log('Facebook Login failed')
@@ -58,6 +82,9 @@ class Landing extends React.Component {
     }
 
     render() {
+        if(!this.state.mounted) {
+            return null;
+        }
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -71,29 +98,6 @@ class Landing extends React.Component {
                     </div>
                 </div>
                 <div className={styles.loginSectionContainer}>
-                    <div className={styles.loginSectionItem}>
-                        <FacebookLogin
-                            appId={process.env.REACT_APP_FACEBOOK_APP_ID}
-                            autoLoad={false}
-                            fields={"name,email,picture"}
-                            callback={this.responseFacebook}
-                            className={styles.loginSectionInput}
-                        />
-                    </div>
-                    <br />
-                    <br />
-                    <div className={styles.loginSectionItem}>
-                        <GoogleLogin
-                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                            buttonText="Login with Google"
-                            onSuccess={this.responseGoogle}
-                            onFailure={this.responseGoogle}
-                            isSignedIn={false}
-                            disabled={false}
-                            cookiePolicy={"single_host_origin"}
-                            className={styles.loginSectionInput}
-                        />
-                    </div>
                     <div className={styles.loginSectionItem}>
                         <input
                             type="text"
@@ -122,11 +126,8 @@ class Landing extends React.Component {
                         <button
                             className={styles.button}
                             onClick={() => {
-                                console.log('start login')
                                 this.props.loginAttempt(this.props.email,this.props.password,() => {
-                                    console.log('login done')
                                     this.props.history.push('/choose-plan')
-                                    console.log('routing done')
                                 });
                             }}
                         >
@@ -134,12 +135,35 @@ class Landing extends React.Component {
                         </button>
                     </div>
                     <div className={styles.buttonContainerItem}>
-                        <button
-                            className={styles.button}
-                        >
-                            Sign Up
-                        </button>
+                        <Link to='sign-up'>
+                            <button
+                                className={styles.button}
+                            >
+                                Sign Up
+                            </button>
+                        </Link>
                     </div>
+                </div>
+                <div className={styles.socialLoginItem}>
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                        buttonText="Login with Google"
+                        onSuccess={this.responseGoogle}
+                        onFailure={this.responseGoogle}
+                        isSignedIn={false}
+                        disabled={false}
+                        cookiePolicy={"single_host_origin"}
+                        className={styles.loginSectionInput}
+                    />
+                </div>
+                <div className={styles.socialLoginItem}>
+                    <FacebookLogin
+                        appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+                        autoLoad={false}
+                        fields={"name,email,picture"}
+                        callback={this.responseFacebook}
+                        className={styles.loginSectionInput}
+                    />
                 </div>
             </div>
         )
@@ -147,6 +171,11 @@ class Landing extends React.Component {
 }
 
 Landing.propTypes = {
+  bypassLogin: PropTypes.func.isRequired,
+  changeEmail: PropTypes.func.isRequired,
+  changePassword: PropTypes.func.isRequired,
+  loginAttempt: PropTypes.func.isRequired,
+  socialLoginAttempt: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
 };
@@ -157,6 +186,7 @@ const mapStateToProps = (state) => ({
 });
 
 const functionList = {
+  bypassLogin,
   changeEmail,
   changePassword,
   loginAttempt,

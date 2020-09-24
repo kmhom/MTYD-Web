@@ -7,9 +7,10 @@ export class Header extends Component {
     const { meals, myDate, data } = this.props;
     const mySet = new Set();
     data.map((menuitem) => {
-      if (menuitem.menu_date == myDate) {
+      if (menuitem.menu_date === myDate) {
         mySet.add(menuitem.delivery_days);
       }
+      return menuitem;
     });
     const myarr = [...mySet];
     let str = "";
@@ -21,7 +22,7 @@ export class Header extends Component {
 
     //To disable and enable save button
     if (document.getElementById("save-button") != null) {
-      if (this.props.totalCount != this.props.totalMeals) {
+      if (this.props.totalCount !== this.props.totalMeals) {
         document.getElementById("save-button").disabled = true;
       } else {
         document.getElementById("save-button").disabled = false;
@@ -31,7 +32,7 @@ export class Header extends Component {
     //To disable and enable Surprise button
     if (document.getElementById("surprise-button") != null) {
       if (
-        this.props.myDate == "" ||
+        this.props.myDate === "" ||
         document.getElementById("meal-plan-picker").value == null
       ) {
         document.getElementById("surprise-button").disabled = true;
@@ -43,7 +44,7 @@ export class Header extends Component {
     //To disable and enable Skip button
     if (document.getElementById("skip-button") != null) {
       if (
-        this.props.myDate == "" ||
+        this.props.myDate === "" ||
         document.getElementById("meal-plan-picker").value == null
       ) {
         document.getElementById("skip-button").disabled = true;

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
     changeAddressFirstName, changeAddressLastName, changeAddressStreet,
     changeAddressUnit, changeAddressCity, changeAddressState, changeAddressZip,
-    changeAddressPhone, changeDeliveryInstructions, submitPayment
+    changeAddressPhone, changeDeliveryInstructions, changePaymentPassword, submitPayment
 } from '../../reducers/actions/subscriptionActions';
 
 import { withRouter } from 'react-router';
@@ -38,7 +38,22 @@ class PaymentDetails extends React.Component {
         if(!this.state.mounted) {
             return null;
         }
-        // let customer_uid = document.cookie.split('; ').find(row => row.startsWith('customer_uid')).split('=')[1];
+        let loggedInByPassword = false;
+        let socialMediaCookieValue = document.cookie
+            .split('; ')
+            .find((item) => item.startsWith('customer_social_media='))
+            .split('=')[1];
+        if (socialMediaCookieValue === 'FALSE') {
+            loggedInByPassword = true;
+        }
+        let customerUid = document.cookie
+            .split('; ')
+            .find((item) => item.startsWith('customer_uid='))
+            .split('=')[1];
+        let customerEmail = document.cookie
+            .split('; ')
+            .find((item) => item.startsWith('customer_email='))
+            .split('=')[1];
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -164,14 +179,30 @@ class PaymentDetails extends React.Component {
                             }}
                         />
                     </div>
+                    {loggedInByPassword &&
+                    <div className={styles.inputItem}>
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className={styles.input}
+                            value={this.props.password}
+                            onChange={(e) => {
+                                this.props.changePaymentPassword(e.target.value);
+                            }}
+                        />
+                    </div>
+                    }
                 </div>
                 <div className={styles.buttonContainer}>
                     <button
                         className={styles.button}
                         onClick={() => {
                             this.props.submitPayment(
-                                'will be customer id','password',this.props.firstName,this.props.lastName,this.props.phone, this.props.street, this.props.unit,
-                                this.props.city, this.props.state, this.props.zip, this.props.instructions, this.props.selectedPlan,
+                                customerEmail, customerUid, this.props.password,
+                                this.props.firstName, this.props.lastName, this.props.phone,
+                                this.props.street, this.props.unit,
+                                this.props.city, this.props.state, this.props.zip,
+                                this.props.instructions, this.props.selectedPlan,
                                 () => {
                                     this.props.history.push('/select-meal')
                                 }
@@ -195,6 +226,8 @@ PaymentDetails.propTypes = {
     changeAddressZip: PropTypes.func.isRequired,
     changeAddressPhone: PropTypes.func.isRequired,
     changeDeliveryInstructions: PropTypes.func.isRequired,
+    changePaymentPassword: PropTypes.func.isRequired,
+    submitPayment: PropTypes.func.isRequired,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
     street: PropTypes.string.isRequired,
@@ -203,7 +236,8 @@ PaymentDetails.propTypes = {
     state: PropTypes.string.isRequired,
     zip: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
-    instructions: PropTypes.string.isRequired
+    instructions: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -217,7 +251,7 @@ const mapStateToProps = state => ({
     phone: state.subscribe.addressInfo.phoneNumber,
     instructions: state.subscribe.deliveryInstructions,
     selectedPlan: state.subscribe.selectedPlan,
-    email: state.login.email,
+    password: state.subscribe.paymentPassword,
 })
 
 const functionList = {
@@ -230,6 +264,7 @@ const functionList = {
     changeAddressZip,
     changeAddressPhone,
     changeDeliveryInstructions,
+    changePaymentPassword,
     submitPayment,
 }
 

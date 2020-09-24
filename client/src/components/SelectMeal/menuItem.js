@@ -7,7 +7,7 @@ class MenuItem extends React.Component {
     return (
       <React.Fragment>
         {this.props.data
-          .filter((date) => date.menu_date == this.props.myDate)
+          .filter((date) => date.menu_date === this.props.myDate)
           .map((menuitem) => (
             <div className='menuitem-individual'>
               <div
