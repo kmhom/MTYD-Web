@@ -6,9 +6,10 @@ export class Header extends Component {
   showDeliveryDay = () => {
     const mySet = new Set();
     this.props.data.map((menuitem) => {
-      if (menuitem.menu_date == this.props.myDate) {
+      if (menuitem.menu_date === this.props.myDate) {
         mySet.add(menuitem.delivery_days);
       }
+      return menuitem;
     });
     const myarr = [...mySet];
     let str = "";
@@ -72,8 +73,8 @@ export class Header extends Component {
     const { meals } = this.props;
 
     //To disable and enable save button
-    if (document.getElementById("Save") != null) {
-      if (this.props.totalCount != this.props.totalMeals) {
+    if (document.getElementById("Save") !== null) {
+      if (this.props.totalCount !== this.props.totalMeals) {
         document.getElementById("Save").disabled = true;
       } else {
         document.getElementById("Save").disabled = false;
@@ -81,10 +82,10 @@ export class Header extends Component {
     }
 
     //To disable and enable Surprise button
-    if (document.getElementById("Surprise") != null) {
+    if (document.getElementById("Surprise") !== null) {
       if (
-        this.props.myDate == "" ||
-        document.getElementById("meal-plan-picker").value == null ||
+        this.props.myDate === "" ||
+        document.getElementById("meal-plan-picker").value === null ||
         this.props.totalCount > 0
       ) {
         document.getElementById("Surprise").disabled = true;
@@ -94,10 +95,10 @@ export class Header extends Component {
     }
 
     //To disable and enable Skip button
-    if (document.getElementById("Skip") != null) {
+    if (document.getElementById("Skip") !== null) {
       if (
-        this.props.myDate == "" ||
-        document.getElementById("meal-plan-picker").value == null ||
+        this.props.myDate === "" ||
+        document.getElementById("meal-plan-picker").value === null ||
         this.props.totalCount > 0
       ) {
         document.getElementById("Skip").disabled = true;
@@ -107,7 +108,7 @@ export class Header extends Component {
     }
 
     //To disable and enable date picker
-    if (document.getElementById("date") != null) {
+    if (document.getElementById("date") !== null) {
       if (this.props.totalCount > 0) {
         document.getElementById("date").disabled = true;
       } else {

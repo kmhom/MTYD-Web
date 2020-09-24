@@ -1,6 +1,6 @@
-import { number } from "prop-types";
+// import { number } from "prop-types";
 import React, { Component } from "react";
-import mealicon from "../ChoosePlan/dish.png";
+// import mealicon from "../ChoosePlan/dish.png";
 
 export default class MealIndicator extends Component {
   render() {

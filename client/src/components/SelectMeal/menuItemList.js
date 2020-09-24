@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import MenuItem from "./menuItem";
 import axios from "axios";
 import Header from "./header";
+
+import { API_URL } from "../../reducers/constants";
+
 export class MenuItemList extends Component {
   constructor() {
     super();
@@ -68,12 +71,12 @@ export class MenuItemList extends Component {
 
   removeFromCart = (menuitem) => {
     const cartItems = this.state.cartItems.slice();
-    let alreadyInCart_1 = false;
+    // let alreadyInCart_1 = false;
     cartItems.forEach((item) => {
       if (this.state.totalCount > 0) {
         if (item.menu_uid === menuitem.menu_uid) {
-          if (item.count != 0) {
-            alreadyInCart_1 = true;
+          if (item.count !== 0) {
+            // alreadyInCart_1 = true;
             item.count--;
           }
           this.setState({ cartItems, totalCount: this.state.totalCount - 1 });
@@ -82,8 +85,8 @@ export class MenuItemList extends Component {
     });
     cartItems.forEach((meal) => {
       if (
-        meal.menu_uid == menuitem.menu_uid &&
-        meal.count == 0 &&
+        meal.menu_uid === menuitem.menu_uid &&
+        meal.count === 0 &&
         this.state.totalCount > 0
       ) {
         this.setState({
@@ -187,9 +190,7 @@ export class MenuItemList extends Component {
   };
 
   loadMeals() {
-    fetch(
-      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/customer_lplp?customer_uid=100-000001`
-    )
+    fetch(API_URL + "customer_lplp?customer_uid=100-000001")
       .then((response) => response.json())
       .then((json) => {
         this.setState({
@@ -207,11 +208,12 @@ export class MenuItemList extends Component {
     let mystr = planCount.toString().slice(0, 2).replace(/\s/g, "");
     this.state.meals.map((mealItem) => {
       let meal = JSON.parse(mealItem.items)[0];
-      if (meal.name == planCount) {
+      if (meal.name === planCount) {
         this.setState({
           purchaseID: mealItem.purchase_id,
         });
       }
+      return mealItem;
     });
     return this.setState({
       totalMeals: mystr,
@@ -229,7 +231,7 @@ export class MenuItemList extends Component {
   };
 
   checkSave = (e) => {
-    if (this.state.totalCount == 0) {
+    if (this.state.totalCount === 0) {
       console.log(e.target.value);
     }
   };
