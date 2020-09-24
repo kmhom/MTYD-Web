@@ -70,11 +70,11 @@ export class Header extends Component {
   };
 
   render() {
-    const { meals } = this.props;
-
+    const { meals, totalCount, totalMeals } = this.props;
+    let mealsCount = parseInt(totalMeals);
     //To disable and enable save button
     if (document.getElementById("Save") !== null) {
-      if (this.props.totalCount !== this.props.totalMeals) {
+      if (totalCount !== mealsCount) {
         document.getElementById("Save").disabled = true;
       } else {
         document.getElementById("Save").disabled = false;
@@ -86,7 +86,7 @@ export class Header extends Component {
       if (
         this.props.myDate === "" ||
         document.getElementById("meal-plan-picker").value === null ||
-        this.props.totalCount > 0
+        totalCount > 0
       ) {
         document.getElementById("Surprise").disabled = true;
       } else {
@@ -99,7 +99,7 @@ export class Header extends Component {
       if (
         this.props.myDate === "" ||
         document.getElementById("meal-plan-picker").value === null ||
-        this.props.totalCount > 0
+        totalCount > 0
       ) {
         document.getElementById("Skip").disabled = true;
       } else {
@@ -109,7 +109,7 @@ export class Header extends Component {
 
     //To disable and enable date picker
     if (document.getElementById("date") !== null) {
-      if (this.props.totalCount > 0) {
+      if (totalCount > 0) {
         document.getElementById("date").disabled = true;
       } else {
         document.getElementById("date").disabled = false;
@@ -135,9 +135,6 @@ export class Header extends Component {
             className='pickers'
             id='meal-plan-picker'
           >
-            <option value='' selected>
-              Select Meal Plan
-            </option>
             {meals.map((mealItem) => {
               let meal = JSON.parse(mealItem.items)[0];
               return <option>{meal.name}</option>;
@@ -151,9 +148,6 @@ export class Header extends Component {
             id='date'
             className='pickers'
           >
-            <option value='' selected>
-              Pick a date
-            </option>
             {this.props.dates.map((date) => (
               <option value={date}>{date}</option>
             ))}
