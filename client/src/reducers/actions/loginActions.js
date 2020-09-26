@@ -1,14 +1,28 @@
 import axios from 'axios';
 
 import {
-    CHANGE_EMAIL, CHANGE_PASSWORD, SUBMIT_PASSWORD,
+    LOGOUT_LOGIN, CHANGE_EMAIL, CHANGE_PASSWORD, SUBMIT_PASSWORD, SUBMIT_SOCIAL,
     CHANGE_NEW_EMAIL, CHANGE_NEW_PASSWORD, CHANGE_NEW_PASSWORD_CONFIRM,
     CHANGE_NEW_FIRST_NAME, CHANGE_NEW_LAST_NAME, CHANGE_NEW_PHONE,
     CHANGE_NEW_STREET, CHANGE_NEW_UNIT, CHANGE_NEW_CITY,
-    CHANGE_NEW_STATE, CHANGE_NEW_ZIP, SUBMIT_PASSWORD_SIGNUP,
+    CHANGE_NEW_STATE, CHANGE_NEW_ZIP, SUBMIT_SIGNUP,
 } from './loginTypes'
 
 import { API_URL, BING_LCOATION_API_URL} from '../constants'
+
+export const resetLogin = (callback) => dispatch => {
+    document.cookie = 'customer_uid=1;max-age=0';
+    document.cookie = 'customer_last_name=1;max-age=0';
+    document.cookie = 'customer_first_name=1;max-age=0';
+    document.cookie = 'customer_email=1;max-age=0';
+    document.cookie = 'customer_social_media=1;max-age=0';
+    if(typeof callback !== 'undefined') {
+        callback();
+    }
+    dispatch({
+        type: LOGOUT_LOGIN,
+    })
+}
 
 // Actions for Login Page
 
@@ -110,7 +124,8 @@ export const loginAttempt = (email, password, callback) => dispatch => {
     })
 }
 
-export const socialLoginAttempt = (email, refreshToken, callback) => dispatch => {
+export const socialLoginAttempt = (email, accessToken, refreshToken, platform, successCallback, signupCallback) => dispatch => {
+    console.log(email,refreshToken)
     axios
     .post(API_URL+'login',{
         email: email,
@@ -127,15 +142,24 @@ export const socialLoginAttempt = (email, refreshToken, callback) => dispatch =>
             document.cookie = 'customer_first_name=' + customerInfo.customer_first_name;
             document.cookie = 'customer_email=' + customerInfo.customer_email
             console.log('cookie',document.cookie)
-            callback();
+            successCallback();
         }
     })
     .catch((err) => {
+        dispatch({
+            type: SUBMIT_SOCIAL,
+            payload: {
+                email: email,
+                platform: platform,
+                accessToken: accessToken,
+                refreshToken: refreshToken,
+            }
+        })
         console.log(err);
         if(err.response) {
             console.log(err.response);
             if(err.response.data.message === 'Email Not Found') {
-                // Social Media Sign UP
+                signupCallback();
             }
         }
     })
@@ -249,7 +273,7 @@ export const changeNewZip = (newZip) => dispatch => {
 
 export const submitPasswordSignUp = (
     email, password, passwordConfirm, firstName, lastName, phone,
-    street, unit, city, state, zip
+    street, unit, city, state, zip, callback
 ) => dispatch => {
     if(password === passwordConfirm) {
         axios
@@ -300,8 +324,11 @@ export const submitPasswordSignUp = (
                 .then((res) => {
                     console.log(res);
                     dispatch({
-                        type: SUBMIT_PASSWORD_SIGNUP,
+                        type: SUBMIT_SIGNUP,
                     })
+                    if(typeof callback !== 'undefined') {
+                        callback();
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
@@ -320,4 +347,79 @@ export const submitPasswordSignUp = (
     } else {
         console.log('Not matching password setting')
     }
+}
+
+export const submitSocialSignUp = (
+    email, platform, accessToken, refreshToken, firstName, lastName, phone,
+    street, unit, city, state, zip, callback
+) => dispatch => {
+    axios
+    .get(BING_LCOATION_API_URL,{
+        params: {
+            CountryRegion: 'US',
+            adminDistrict: state,
+            locality: city,
+            postalCode: zip,
+            addressLine: street,
+            key: process.env.REACT_APP_BING_LOCATION_KEY,
+        }
+    })
+    .then((res) => {
+        console.log(state);
+        let locationApiResult = res.data;
+        if(locationApiResult.statusCode === 200) {
+            let locations = locationApiResult.resourceSets[0].resources;
+            /* Possible improvement: choose better location in case first one not desired
+            */
+            let location = locations[0];
+            let lat = location.geocodePoints[0].coordinates[0];
+            let long = location.geocodePoints[0].coordinates[1];
+            if(location.geocodePoints.length === 2) {
+                lat = location.geocodePoints[1].coordinates[0];
+                long = location.geocodePoints[1].coordinates[1];
+            }
+            let object = {
+                email: email,
+                access_token: accessToken,
+                refresh_token: refreshToken,
+                first_name: firstName,
+                last_name: lastName,
+                phone_number: phone,
+                address: street,
+                unit: unit,
+                city: city,
+                state: state,
+                zip_code: zip,
+                latitude: lat,
+                longitude: long,
+                referral_source: 'Website',
+                role: 'customer',
+                social: platform,
+            }
+            console.log(JSON.stringify(object));
+            axios
+            .post(API_URL+'signup',object)
+            .then((res) => {
+                console.log(res);
+                dispatch({
+                    type: SUBMIT_SIGNUP,
+                })
+                if(typeof callback !== 'undefined') {
+                    callback();
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+                if(err.response) {
+                    console.log(err.response);
+                }
+            })
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        if(err.response) {
+            console.log(err.response);
+        }
+    })
 }

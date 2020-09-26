@@ -27,16 +27,23 @@ import {
 import styles from './signup.module.css'
 
 class SignUp extends React.Component {
+
+    signUpSuccess = () => {
+        this.props.history.push('/');
+    }
+
     render() {
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItemContainer}>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    </div>
                     <div className='title'>
-                        <h4 className='mainTitle'>Sign Up</h4>
+                        <h4 className='mainTitle'>SIGN UP</h4>
                         <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
                     </div>
                 </div>
@@ -175,7 +182,7 @@ class SignUp extends React.Component {
                                 this.props.email, this.props.password, this.props.passwordConfirm,
                                 this.props.firstName, this.props.lastName, this.props.phone,
                                 this.props.street, this.props.unit, this.props.city, this.props.state,
-                                this.props.zip
+                                this.props.zip,this.signUpSuccess
                             );
                         }}
                     >

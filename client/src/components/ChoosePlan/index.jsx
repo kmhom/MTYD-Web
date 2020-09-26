@@ -112,26 +112,16 @@ class ChoosePlan extends React.Component {
     return (
       <div className={styles.root}>
         <div className={styles.mealHeader}>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faBars} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faBell} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faSearch} className={"headerIcon"} />{" "}
-          </div>
-          <div className='title'>
-            <h4 className='mainTitle'>CHOOSE YOUR PLAN</h4>
-            <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
-          </div>
+            <div className={styles.headerItemContainer}>
+                <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
+                <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
+                <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
+                <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+            </div>
+            <div className='title'>
+                <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
+                <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
+            </div>
         </div>
         <div className={styles.mealSelectMenu}>
           <h6 className={styles.mealDays}>

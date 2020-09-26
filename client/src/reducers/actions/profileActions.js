@@ -1,10 +1,16 @@
 import axios from 'axios';
 
 import {
-    FETCH_ORDER_HISTORY
+    LOGOUT_PROFILE, FETCH_ORDER_HISTORY
 } from './profileTypes';
 
 import { API_URL } from '../constants'
+
+export const resetProfile = () => dispatch => {
+    dispatch({
+        type: LOGOUT_PROFILE,
+    })
+}
 
 export const fetchOrderHistory = (customer_uid) => dispatch => {
     // Change 100-000001 to other customers when log in implemented

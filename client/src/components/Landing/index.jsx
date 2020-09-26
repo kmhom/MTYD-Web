@@ -37,6 +37,10 @@ class Landing extends React.Component {
         this.props.history.push('choose-plan');
     }
 
+    socialSignUp = () => {
+        this.props.history.push('social-sign-up')
+    }
+
     componentDidMount() {
         let queryString = this.props.location.search;
         let urlParams = new URLSearchParams(queryString);
@@ -60,7 +64,8 @@ class Landing extends React.Component {
             let email = response.profileObj.email;
             let accessToken = response.accessToken;
             let refreshToken = response.googleId;
-            this.props.socialLoginAttempt(email,refreshToken,this.successLogin);
+            // console.log(email,accessToken,refreshToken)
+            this.props.socialLoginAttempt(email,accessToken,refreshToken,'GOOGLE',this.successLogin,this.socialSignUp);
         } else {
             // Google Login unsuccessful
             console.log('Google Login failed')
@@ -68,13 +73,14 @@ class Landing extends React.Component {
     }
 
     responseFacebook = response => {
+        console.log('Hello')
         console.log(response);
         if(response.email) {
             console.log('Facebook Login successful');
             let email = response.email;
             let accessToken = response.accessToken;
             let refreshToken = response.id;
-            this.props.socialLoginAttempt(email,refreshToken,this.successLogin);
+            this.props.socialLoginAttempt(email,accessToken,refreshToken,'FACEBOOK',this.successLogin,this.socialSignUp);
         } else {
             // Facebook Login unsuccessful
             console.log('Facebook Login failed')
@@ -88,10 +94,12 @@ class Landing extends React.Component {
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItemContainer}>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    </div>
                     <div className='title'>
                         <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
                         <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
@@ -126,9 +134,7 @@ class Landing extends React.Component {
                         <button
                             className={styles.button}
                             onClick={() => {
-                                this.props.loginAttempt(this.props.email,this.props.password,() => {
-                                    this.props.history.push('/choose-plan')
-                                });
+                                this.props.loginAttempt(this.props.email,this.props.password,this.successLogin);
                             }}
                         >
                             Sign In

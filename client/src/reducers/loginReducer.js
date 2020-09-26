@@ -1,9 +1,9 @@
 import {
-    CHANGE_EMAIL, CHANGE_PASSWORD, SUBMIT_PASSWORD,
+    LOGOUT_LOGIN, CHANGE_EMAIL, CHANGE_PASSWORD, SUBMIT_PASSWORD, SUBMIT_SOCIAL,
     CHANGE_NEW_EMAIL, CHANGE_NEW_PASSWORD, CHANGE_NEW_PASSWORD_CONFIRM,
     CHANGE_NEW_FIRST_NAME, CHANGE_NEW_LAST_NAME, CHANGE_NEW_PHONE,
     CHANGE_NEW_STREET, CHANGE_NEW_UNIT, CHANGE_NEW_CITY,
-    CHANGE_NEW_STATE, CHANGE_NEW_ZIP, SUBMIT_PASSWORD_SIGNUP,
+    CHANGE_NEW_STATE, CHANGE_NEW_ZIP, SUBMIT_SIGNUP,
 } from "./actions/loginTypes";
 
 const initialState = {
@@ -13,6 +13,9 @@ const initialState = {
         email: '',
         password: '',
         passwordConfirm: '',
+        platform: '',
+        accessToken: '',
+        refreshToken: '',
         firstName: '',
         lastName: '',
         phone: '',
@@ -29,6 +32,9 @@ const initialState = {
 export default function(state = initialState, action) {
     switch(action.type) {
         
+        case LOGOUT_LOGIN:
+            return initialState;
+
         case CHANGE_EMAIL:
             return {
                 ...state,
@@ -46,6 +52,18 @@ export default function(state = initialState, action) {
                 ...state,
                 email: '',
                 password: '',
+            }
+
+        case SUBMIT_SOCIAL:
+            return {
+                ...state,
+                newUserInfo: {
+                    ...state.newUserInfo,
+                    email: action.payload.email,
+                    platform: action.payload.platform,
+                    accessToken: action.payload.accessToken,
+                    refreshToken: action.payload.refreshToken,
+                }
             }
 
         case CHANGE_NEW_EMAIL:
@@ -162,10 +180,8 @@ export default function(state = initialState, action) {
                 }
             }
 
-        case SUBMIT_PASSWORD_SIGNUP:
-            return {
-                ...state,
-            }
+        case SUBMIT_SIGNUP:
+            return initialState;
 
         default:
             return state;

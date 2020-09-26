@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
 import {
-    fetchOrderHistory
+    resetProfile, fetchOrderHistory
 } from '../../reducers/actions/profileActions';
+import { resetSubsription } from '../../reducers/actions/subscriptionActions';
+import { resetLogin } from '../../reducers/actions/loginActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faBell, faPen, faShareAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faBell, faPen, faShareAlt, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 import styles from './profile.module.css';
 
@@ -52,12 +54,27 @@ class Profile extends React.Component {
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItemContainer}>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                        <div
+                            className={styles.headerItem}
+                            onClick={() => {
+                                this.props.resetProfile();
+                                this.props.resetSubsription();
+                                this.props.resetLogin(() => {
+                                    // Reroute to log in page
+                                    this.props.history.push('/')
+                                });
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faSignOutAlt} className={"headerIcon"}/>
+                        </div>
+                    </div>
                     <div className='title'>
-                        <h4 className='mainTitle'>USER PROFILE</h4>
+                        <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
                         <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
                     </div>
                 </div>
@@ -132,6 +149,7 @@ class Profile extends React.Component {
 };
 
 Profile.propTypes = {
+    resetProfile: PropTypes.func.isRequired,
     fetchOrderHistory: PropTypes.func.isRequired,
     orderHistory: PropTypes.array.isRequired,
 }
@@ -140,4 +158,11 @@ const mapStateToProps = state => ({
     orderHistory: state.profile.orderHistory,
 })
 
-export default connect(mapStateToProps, { fetchOrderHistory } )(withRouter(Profile));
+const functionList = {
+    resetLogin,
+    resetProfile,
+    resetSubsription,
+    fetchOrderHistory,
+}
+
+export default connect(mapStateToProps, functionList )(withRouter(Profile));
