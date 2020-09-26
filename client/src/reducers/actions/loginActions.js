@@ -395,8 +395,7 @@ export const submitSocialSignUp = (
                 longitude: long,
                 referral_source: 'Website',
                 role: 'customer',
-                // social: platform,
-                social: 'TRUE',
+                social: platform,
             }
             console.log(JSON.stringify(object));
             axios
