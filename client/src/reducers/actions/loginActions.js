@@ -166,11 +166,10 @@ export const socialLoginAttempt = (email, accessToken, refreshToken, platform, s
 }
 
 export const bypassLogin = (email, hashedPassword, callback) => dispatch => {
-    let sanitizedPassword = hashedPassword.replace(/['"]+/g, '');
     axios
     .post(API_URL+'login',{
         email: email,
-        password: sanitizedPassword,
+        password: hashedPassword,
     })
     .then((res) => {
         if(res.status === 200) {
