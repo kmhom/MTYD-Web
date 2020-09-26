@@ -101,8 +101,8 @@ export class MenuItemList extends Component {
     this.setState({
       selectValue: e.target.value,
     });
-    if (e.target.value == "Surprise") {
-      if (this.state.myDate !== "" && this.state.totalCount == 0) {
+    if (e.target.value === "Surprise") {
+      if (this.state.myDate !== "" && this.state.totalCount === 0) {
         const supriseData = [
           {
             qty: "",
@@ -130,7 +130,7 @@ export class MenuItemList extends Component {
             console.log(error);
           });
       }
-    } else if (e.target.value == "Skip") {
+    } else if (e.target.value === "Skip") {
       const skipData = [
         {
           qty: "",
@@ -166,6 +166,7 @@ export class MenuItemList extends Component {
           price: meal.meal_price,
           item_uid: meal.meal_uid,
         });
+        return meal;
       });
       console.log(myarr);
       const data = {

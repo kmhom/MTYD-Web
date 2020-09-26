@@ -6,6 +6,8 @@ import { withRouter } from 'react-router';
 import {
     resetProfile, fetchOrderHistory
 } from '../../reducers/actions/profileActions';
+import { resetSubsription } from '../../reducers/actions/subscriptionActions';
+import { resetLogin } from '../../reducers/actions/loginActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faBell, faPen, faShareAlt, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
@@ -61,7 +63,11 @@ class Profile extends React.Component {
                             className={styles.headerItem}
                             onClick={() => {
                                 this.props.resetProfile();
-                                console.log('hello')
+                                this.props.resetSubsription();
+                                this.props.resetLogin(() => {
+                                    // Reroute to log in page
+                                    this.props.history.push('/')
+                                });
                             }}
                         >
                             <FontAwesomeIcon icon={faSignOutAlt} className={"headerIcon"}/>
@@ -152,4 +158,11 @@ const mapStateToProps = state => ({
     orderHistory: state.profile.orderHistory,
 })
 
-export default connect(mapStateToProps, { resetProfile, fetchOrderHistory } )(withRouter(Profile));
+const functionList = {
+    resetLogin,
+    resetProfile,
+    resetSubsription,
+    fetchOrderHistory,
+}
+
+export default connect(mapStateToProps, functionList )(withRouter(Profile));
