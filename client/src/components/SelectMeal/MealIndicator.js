@@ -36,7 +36,6 @@ export default class MealIndicator extends Component {
         >
           <p
             style={{
-              display: displayCount,
               marginTop: "0.01rem",
               color: selectCount === 0 ? "white" : "black",
             }}

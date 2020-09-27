@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MenuItem from "./menuItem";
 import axios from "axios";
 import Header from "./header";
+import Cookies from "js-cookie";
 
 import { API_URL } from "../../reducers/constants";
 
@@ -14,7 +15,7 @@ export class MenuItemList extends Component {
       cartItems: [],
       meals: [],
       totalCount: 0,
-      displayCount: "none",
+
       deliveryDay: "",
     };
 
@@ -27,8 +28,10 @@ export class MenuItemList extends Component {
     )
       .then((response) => response.json())
       .then((json) => {
+        let menuData = [...json.result];
         this.setState({
-          data: [...json.result],
+          data: menuData,
+          myDate: menuData[0].menu_date,
         });
         console.log(this.state.data[0].length);
       })
@@ -191,13 +194,16 @@ export class MenuItemList extends Component {
   };
 
   loadMeals() {
-    fetch(API_URL + "customer_lplp?customer_uid=100-000001")
+    const customer_uid = Cookies.get("customer_uid");
+    fetch(API_URL + `customer_lplp?customer_uid=${customer_uid}`)
       .then((response) => response.json())
       .then((json) => {
+        let meals = [...json.result];
         this.setState({
-          meals: [...json.result],
+          meals: meals,
+          purchaseID: meals[0].purchase_id,
+          totalMeals: parseInt(meals[0].items.substr(23, 2)),
         });
-        // console.log(this.state.meals);
       })
       .catch((error) => {
         console.error(error);
@@ -246,6 +252,7 @@ export class MenuItemList extends Component {
         <Header
           data={this.state.data}
           dates={uniqueDates}
+          // dates={dates}
           filterDates={this.filterDates}
           meals={this.state.meals}
           mealsOnChange={this.mealsOnChange}
