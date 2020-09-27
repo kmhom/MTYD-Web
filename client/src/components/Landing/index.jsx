@@ -10,7 +10,6 @@ import {
 } from "../../reducers/actions/loginActions";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -22,7 +21,6 @@ import {
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import AppleLogin from "react-apple-login";
-import Cookies from "js-cookie";
 import styles from "./landing.module.css";
 
 class Landing extends React.Component {
@@ -33,15 +31,12 @@ class Landing extends React.Component {
     };
   }
 
-  successLogin = () => {
-    let customerID = Cookies.get("customer_uid");
-    Axios.get(
-      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/customer_lplp?customer_uid=${customerID}`
-    ).then((response) => {
-      response.data.result[0].purchase_id
-        ? this.props.history.push("/select-meal")
-        : this.props.history.push("/choose-plan");
-    });
+  successLogin = (hasPurchases) => {
+    if(hasPurchases) {
+      this.props.history.push("/select-meal")
+    } else {
+        this.props.history.push("/choose-plan");
+    }
   };
 
   socialSignUp = () => {

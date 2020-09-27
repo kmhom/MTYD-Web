@@ -43,7 +43,7 @@ class PaymentDetails extends React.Component {
             .split('; ')
             .find((item) => item.startsWith('customer_social_media='))
             .split('=')[1];
-        if (socialMediaCookieValue === 'FALSE') {
+        if (socialMediaCookieValue === 'null') {
             loggedInByPassword = true;
         }
         let customerUid = document.cookie
@@ -200,7 +200,7 @@ class PaymentDetails extends React.Component {
                         className={styles.button}
                         onClick={() => {
                             this.props.submitPayment(
-                                customerEmail, customerUid, this.props.password,
+                                customerEmail, customerUid, socialMediaCookieValue, this.props.password,
                                 this.props.firstName, this.props.lastName, this.props.phone,
                                 this.props.street, this.props.unit,
                                 this.props.city, this.props.state, this.props.zip,

@@ -155,125 +155,210 @@ export const changePaymentPassword = (newPassword, callback) => dispatch => {
 }
 
 export const submitPayment = (
-    customerEmail, customerUid, customerPassword, deliveryFirstName, deliveryLastName, deliveryPhone, 
+    customerEmail, customerUid, loginMethod, customerPassword, deliveryFirstName, deliveryLastName, deliveryPhone, 
     deliveryAddress, deliveryUnit, deliveryCity, deliveryState, deliveryZip,
     deliveryInstructions, selectedPlan, callback
 ) => dispatch => {
-    // Prepare to login
-    axios
-    .get(API_URL+'accountsalt',{
-        params: {
-            email: customerEmail,
-        }
-    })
-    .then((res) => {
-        let saltObject = res;
-        if(saltObject.status === 200) {
-            let hashAlg = saltObject.data.result[0].password_algorithm;
-            let salt = saltObject.data.result[0].password_salt;
-            //Get hash algorithm
-            switch(hashAlg) {
-                case 'SHA512':
-                    hashAlg = 'SHA-512';
-                    break;
-
-                default:
-                    break;
+    if(loginMethod === 'null'){
+        // Prepare to login
+        axios
+        .get(API_URL+'accountsalt',{
+            params: {
+                email: customerEmail,
             }
-            let saltedPassword = customerPassword + salt;
-            // Encode salted password to prepare for hashing
-            const encoder = new TextEncoder();
-            const data = encoder.encode(saltedPassword);
-            // Hash salted password
-            crypto.subtle.digest(hashAlg,data)
-            .then((res) => {
-                // Decode hash with hex digest
-                let hash = res;
-                let hashArray = Array.from(new Uint8Array(hash));
-                let hashedPassword = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
-                axios 
-                .get(BING_LCOATION_API_URL,{
-                    params: {
-                        CountryRegion: 'US',
-                        adminDistrict: deliveryState,
-                        locality: deliveryCity,
-                        postalCode: deliveryZip,
-                        addressLine: deliveryAddress,
-                        key: process.env.REACT_APP_BING_LOCATION_KEY,
-                    }
-                })
+        })
+        .then((res) => {
+            let saltObject = res;
+            if(saltObject.status === 200) {
+                let hashAlg = saltObject.data.result[0].password_algorithm;
+                let salt = saltObject.data.result[0].password_salt;
+                //Get hash algorithm
+                switch(hashAlg) {
+                    case 'SHA512':
+                        hashAlg = 'SHA-512';
+                        break;
+
+                    default:
+                        break;
+                }
+                let saltedPassword = customerPassword + salt;
+                // Encode salted password to prepare for hashing
+                const encoder = new TextEncoder();
+                const data = encoder.encode(saltedPassword);
+                // Hash salted password
+                crypto.subtle.digest(hashAlg,data)
                 .then((res) => {
-                    let locationApiResult = res.data;
-                    if(locationApiResult.statusCode === 200) {
-                        let locations = locationApiResult.resourceSets[0].resources;
-                        /* Possible improvement: choose better location in case first one not desired
-                        */
-                        let location = locations[0];
-                        let lat = location.geocodePoints[0].coordinates[0];
-                        let long = location.geocodePoints[0].coordinates[1];
-                        if(location.geocodePoints.length === 2) {
-                            lat = location.geocodePoints[1].coordinates[0];
-                            long = location.geocodePoints[1].coordinates[1];
+                    // Decode hash with hex digest
+                    let hash = res;
+                    let hashArray = Array.from(new Uint8Array(hash));
+                    let hashedPassword = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+                    axios 
+                    .get(BING_LCOATION_API_URL,{
+                        params: {
+                            CountryRegion: 'US',
+                            adminDistrict: deliveryState,
+                            locality: deliveryCity,
+                            postalCode: deliveryZip,
+                            addressLine: deliveryAddress,
+                            key: process.env.REACT_APP_BING_LOCATION_KEY,
                         }
-                        console.log(selectedPlan);
-                        let purchasedItem = [{
-                            'qty': '1',
-                            'name': selectedPlan.item_name,
-                            'price': selectedPlan.item_price,
-                            'item_uid': selectedPlan.item_uid,
-                        }]
-                        console.log(purchasedItem);
-                        let object = {
-                            customer_uid: customerUid,
-                            salt: hashedPassword,
-                            business_uid: '200-000001',
-                            delivery_first_name: deliveryFirstName,
-                            delivery_last_name: deliveryLastName,
-                            delivery_email: customerEmail,
-                            delivery_phone: deliveryPhone,
-                            delivery_address: deliveryAddress,
-                            delivery_unit: deliveryUnit,
-                            delivery_city: deliveryCity,
-                            delivery_state: deliveryState,
-                            delivery_zip: deliveryZip,
-                            delivery_instructions: deliveryInstructions,
-                            delivery_longitude: long.toString(),
-                            delivery_latitude: lat.toString(),
-                            items: purchasedItem,
-                            amount_due: selectedPlan.item_price.toString(),
-                            amount_discount: '0',
-                            amount_paid: 0,
-                            cc_num: '4242424242424242',
-                            cc_exp_month: '04',
-                            cc_exp_year: '2024',
-                            cc_cvv: '424',
-                            cc_zip: '95120'
-                        }
-                        console.log(JSON.stringify(object));
-                        axios
-                            .post(API_URL+'checkout',object)
-                            .then((res) => {
-                                console.log(res);
-                                dispatch({
-                                    type: SUBMIT_PAYMENT,   
+                    })
+                    .then((res) => {
+                        let locationApiResult = res.data;
+                        if(locationApiResult.statusCode === 200) {
+                            let locations = locationApiResult.resourceSets[0].resources;
+                            /* Possible improvement: choose better location in case first one not desired
+                            */
+                            let location = locations[0];
+                            let lat = location.geocodePoints[0].coordinates[0];
+                            let long = location.geocodePoints[0].coordinates[1];
+                            if(location.geocodePoints.length === 2) {
+                                lat = location.geocodePoints[1].coordinates[0];
+                                long = location.geocodePoints[1].coordinates[1];
+                            }
+                            console.log(selectedPlan);
+                            let purchasedItem = [{
+                                'qty': '1',
+                                'name': selectedPlan.item_name,
+                                'price': selectedPlan.item_price,
+                                'item_uid': selectedPlan.item_uid,
+                            }]
+                            console.log(purchasedItem);
+                            let object = {
+                                customer_uid: customerUid,
+                                salt: hashedPassword,
+                                business_uid: '200-000001',
+                                delivery_first_name: deliveryFirstName,
+                                delivery_last_name: deliveryLastName,
+                                delivery_email: customerEmail,
+                                delivery_phone: deliveryPhone,
+                                delivery_address: deliveryAddress,
+                                delivery_unit: deliveryUnit,
+                                delivery_city: deliveryCity,
+                                delivery_state: deliveryState,
+                                delivery_zip: deliveryZip,
+                                delivery_instructions: deliveryInstructions,
+                                delivery_longitude: long.toString(),
+                                delivery_latitude: lat.toString(),
+                                items: purchasedItem,
+                                amount_due: selectedPlan.item_price.toString(),
+                                amount_discount: '0',
+                                amount_paid: 0,
+                                cc_num: '4242424242424242',
+                                cc_exp_month: '04',
+                                cc_exp_year: '2024',
+                                cc_cvv: '424',
+                                cc_zip: '95120'
+                            }
+                            console.log(JSON.stringify(object));
+                            axios
+                                .post(API_URL+'checkout',object)
+                                .then((res) => {
+                                    console.log(res);
+                                    dispatch({
+                                        type: SUBMIT_PAYMENT,   
+                                    })
+                                    callback();
                                 })
-                                callback();
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                                if(err.response) {
-                                    console.log(err.response);
-                                }
-                            })
-                    }
+                                .catch((err) => {
+                                    console.log(err);
+                                    if(err.response) {
+                                        console.log(err.response);
+                                    }
+                                })
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        if(err.response) {
+                            console.log(err.response);
+                        }
+                    })
                 })
-                .catch((err) => {
-                    console.log(err);
-                    if(err.response) {
-                        console.log(err.response);
-                    }
-                })
-            })
-        }
-    })
+            }
+        })
+    } else {
+        // Skip sign in part
+        axios 
+        .get(BING_LCOATION_API_URL,{
+            params: {
+                CountryRegion: 'US',
+                adminDistrict: deliveryState,
+                locality: deliveryCity,
+                postalCode: deliveryZip,
+                addressLine: deliveryAddress,
+                key: process.env.REACT_APP_BING_LOCATION_KEY,
+            }
+        })
+        .then((res) => {
+            let locationApiResult = res.data;
+            if(locationApiResult.statusCode === 200) {
+                let locations = locationApiResult.resourceSets[0].resources;
+                /* Possible improvement: choose better location in case first one not desired
+                */
+                let location = locations[0];
+                let lat = location.geocodePoints[0].coordinates[0];
+                let long = location.geocodePoints[0].coordinates[1];
+                if(location.geocodePoints.length === 2) {
+                    lat = location.geocodePoints[1].coordinates[0];
+                    long = location.geocodePoints[1].coordinates[1];
+                }
+                console.log(selectedPlan);
+                let purchasedItem = [{
+                    'qty': '1',
+                    'name': selectedPlan.item_name,
+                    'price': selectedPlan.item_price,
+                    'item_uid': selectedPlan.item_uid,
+                }]
+                console.log(purchasedItem);
+                let object = {
+                    customer_uid: customerUid,
+                    business_uid: '200-000001',
+                    delivery_first_name: deliveryFirstName,
+                    delivery_last_name: deliveryLastName,
+                    delivery_email: customerEmail,
+                    delivery_phone: deliveryPhone,
+                    delivery_address: deliveryAddress,
+                    delivery_unit: deliveryUnit,
+                    delivery_city: deliveryCity,
+                    delivery_state: deliveryState,
+                    delivery_zip: deliveryZip,
+                    delivery_instructions: deliveryInstructions,
+                    delivery_longitude: long.toString(),
+                    delivery_latitude: lat.toString(),
+                    items: purchasedItem,
+                    amount_due: selectedPlan.item_price.toString(),
+                    amount_discount: '0',
+                    amount_paid: 0,
+                    cc_num: '4242424242424242',
+                    cc_exp_month: '04',
+                    cc_exp_year: '2024',
+                    cc_cvv: '424',
+                    cc_zip: '95120'
+                }
+                console.log(JSON.stringify(object));
+                axios
+                    .post(API_URL+'checkout',object)
+                    .then((res) => {
+                        console.log(res);
+                        dispatch({
+                            type: SUBMIT_PAYMENT,   
+                        })
+                        callback();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        if(err.response) {
+                            console.log(err.response);
+                        }
+                    })
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            if(err.response) {
+                console.log(err.response);
+            }
+        })
+    }
 }

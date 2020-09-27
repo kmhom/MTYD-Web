@@ -10,6 +10,27 @@ import {
 
 import { API_URL, BING_LCOATION_API_URL} from '../constants'
 
+// Auxillary functions
+
+export const preCallback = (customer_uid, callback) => {
+    axios
+    .get(API_URL+'customer_lplp',{
+        params: {
+            customer_uid: customer_uid,
+        }
+    })
+    .then((res) => {
+        console.log(res.data.result === undefined);
+        callback(res.data.result !== undefined);
+    })
+    .catch((err) => {
+        console.log(err);
+        if(err.response) {
+            console.log(err.response);
+        }
+    })
+}
+
 export const resetLogin = (callback) => dispatch => {
     document.cookie = 'customer_uid=1;max-age=0';
     document.cookie = 'customer_last_name=1;max-age=0';
@@ -87,17 +108,17 @@ export const loginAttempt = (email, password, callback) => dispatch => {
                         if(res.status === 200) {
                             let customerInfo = res.data.result;
                             // console.log(customerInfo);
-                            // console.log('cookie',document.cookie)
+                            console.log('cookie',document.cookie)
                             document.cookie = 'customer_uid=' + customerInfo.customer_uid;
                             document.cookie = 'customer_last_name=' + customerInfo.customer_last_name;
                             document.cookie = 'customer_first_name=' + customerInfo.customer_first_name;
                             document.cookie = 'customer_email=' + customerInfo.customer_email;
                             document.cookie = 'customer_social_media=' + customerInfo.user_social_media;
-                            // console.log('cookie',document.cookie)
+                            console.log('cookie',document.cookie)
                             dispatch({
                                 type: SUBMIT_PASSWORD,
                             })
-                            callback();
+                            preCallback(customerInfo.customer_uid,callback);
                         }
                     })
                     .catch((err) => {
@@ -140,9 +161,10 @@ export const socialLoginAttempt = (email, accessToken, refreshToken, platform, s
             document.cookie = 'customer_uid=' + customerInfo.customer_uid;
             document.cookie = 'customer_last_name=' + customerInfo.customer_last_name;
             document.cookie = 'customer_first_name=' + customerInfo.customer_first_name;
-            document.cookie = 'customer_email=' + customerInfo.customer_email
+            document.cookie = 'customer_email=' + customerInfo.customer_email;
+            document.cookie = 'customer_social_media=' + customerInfo.user_social_media;
             console.log('cookie',document.cookie)
-            successCallback();
+            preCallback(customerInfo.customer_uid,successCallback);
         }
     })
     .catch((err) => {
@@ -179,9 +201,10 @@ export const bypassLogin = (email, hashedPassword, callback) => dispatch => {
             document.cookie = 'customer_uid=' + customerInfo.customer_uid;
             document.cookie = 'customer_last_name=' + customerInfo.customer_last_name;
             document.cookie = 'customer_first_name=' + customerInfo.customer_first_name;
-            document.cookie = 'customer_email=' + customerInfo.customer_email
+            document.cookie = 'customer_email=' + customerInfo.customer_email;
+            document.cookie = 'customer_social_media=' + customerInfo.user_social_media;
             console.log('cookie',document.cookie)
-            callback();
+            preCallback(customerInfo.customer_uid,callback);
         }
     })
     .catch((err) => {
