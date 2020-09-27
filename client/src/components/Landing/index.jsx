@@ -21,6 +21,7 @@ import {
 
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
+import AppleLogin from "react-apple-login";
 import Cookies from "js-cookie";
 import styles from "./landing.module.css";
 
@@ -90,7 +91,6 @@ class Landing extends React.Component {
   };
 
   responseFacebook = (response) => {
-    console.log("Hello");
     console.log(response);
     if (response.email) {
       console.log("Facebook Login successful");
@@ -110,6 +110,10 @@ class Landing extends React.Component {
       console.log("Facebook Login failed");
     }
   };
+
+  responseApple = (response) => {
+    console.log(response)
+  }
 
   render() {
     if (!this.state.mounted) {
@@ -207,6 +211,15 @@ class Landing extends React.Component {
             autoLoad={false}
             fields={"name,email,picture"}
             callback={this.responseFacebook}
+            className={styles.loginSectionInput}
+          />
+        </div>
+        <div className={styles.socialLoginItem}>
+          <AppleLogin
+            clientId={"com.infiniteoptions.PrepToYourDoorWeb"}
+            redirectURI={"https://mealtoyourdoor.netlify.app"}
+            responseMode={"query"}
+            callback={this.responseApple}
             className={styles.loginSectionInput}
           />
         </div>
