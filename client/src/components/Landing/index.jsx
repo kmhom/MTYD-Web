@@ -219,6 +219,7 @@ class Landing extends React.Component {
           <AppleLogin
             clientId={"com.infiniteoptions.PrepToYourDoorWeb"}
             redirectURI={"https://mealtoyourdoor.netlify.app"}
+            autoLoad={false}
             responseMode={"query"}
             callback={this.responseApple}
             className={styles.loginSectionInput}
