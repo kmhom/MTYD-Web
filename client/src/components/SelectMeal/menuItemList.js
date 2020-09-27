@@ -15,7 +15,7 @@ export class MenuItemList extends Component {
       cartItems: [],
       meals: [],
       totalCount: 0,
-      displayCount: "none",
+
       deliveryDay: "",
     };
 
@@ -201,6 +201,7 @@ export class MenuItemList extends Component {
         this.setState({
           meals: meals,
           purchaseID: meals[0].purchase_id,
+          totalMeals: parseInt(meals[0].items.substr(23, 2)),
         });
       })
       .catch((error) => {

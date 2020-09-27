@@ -157,7 +157,6 @@ export class Header extends Component {
           <MealIndicator
             totalCount={this.props.totalCount}
             totalMeals={this.props.totalMeals}
-            displayCount={this.props.displayCount}
           />
         </div>
       </React.Fragment>
