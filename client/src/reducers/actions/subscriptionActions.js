@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import {
+    LOGOUT_SUBSCRIPTION,
     FETCH_PLAN_INFO, CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION, GET_TOTAL_PAYMENT,
     CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
     CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
@@ -8,6 +9,12 @@ import {
 } from "../actions/subscriptionTypes";
 
 import { API_URL, BING_LCOATION_API_URL } from '../constants'
+
+export const resetSubsription = () => dispatch => {
+    dispatch({
+        type: LOGOUT_SUBSCRIPTION,
+    })
+}
 
 export const fetchPlans = () => dispatch => {
     axios
@@ -161,7 +168,7 @@ export const submitPayment = (
     })
     .then((res) => {
         let saltObject = res;
-        if(saltObject.status = 200) {
+        if(saltObject.status === 200) {
             let hashAlg = saltObject.data.result[0].password_algorithm;
             let salt = saltObject.data.result[0].password_salt;
             //Get hash algorithm

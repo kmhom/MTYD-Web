@@ -3,8 +3,7 @@ import { Provider } from "react-redux";
 import store from "./reducers/store";
 import {
   BrowserRouter as Router,
-  Route,
-  Redirect,
+  // Route, Redirect,
   Switch,
 } from "react-router-dom";
 import AppliedRoute from "./components/AppliedRoute";
@@ -21,45 +20,45 @@ import "./App.css";
 import AuthApi from "./components/AuthApi";
 import Cookies from "js-cookie";
 
-const ProtectedRoute = ({ auth, component: Component, ...rest }) => {
-  return (
-    <Route
-      {...rest}
-      render={() => (auth ? <Component /> : <Redirect to='/' />)}
-    />
-  );
-};
+// const ProtectedRoute = ({ auth, component: Component, ...rest }) => {
+//   return (
+//     <Route
+//       {...rest}
+//       render={() => (auth ? <Component /> : <Redirect to='/' />)}
+//     />
+//   );
+// };
 
-const Routes = () => {
-  const Auth = React.useContext(AuthApi);
+// const Routes = () => {
+//   const Auth = React.useContext(AuthApi);
 
-  return (
-    <Switch>
-      <AppliedRoute exact path='/' component={Landing} auth={Auth.auth} />
-      <AppliedRoute
-        exact
-        path='/choose-plan'
-        component={ChoosePlan}
-        auth={Auth.auth}
-      />
-      <AppliedRoute exact path='/payment-details' component={PaymentDetails} />
-      <AppliedRoute exact path='/profile' component={Profile} />
-      <ProtectedRoute
-        auth={Auth.auth}
-        exact
-        path='/select-meal'
-        component={SelectMeal}
-      />
-      <AppliedRoute path='*' component={NotFound} />
-    </Switch>
-  );
-};
+//   return (
+//     <Switch>
+//       <AppliedRoute exact path='/' component={Landing} auth={Auth.auth} />
+//       <AppliedRoute
+//         exact
+//         path='/choose-plan'
+//         component={ChoosePlan}
+//         auth={Auth.auth}
+//       />
+//       <AppliedRoute exact path='/payment-details' component={PaymentDetails} />
+//       <AppliedRoute exact path='/profile' component={Profile} />
+//       <ProtectedRoute
+//         auth={Auth.auth}
+//         exact
+//         path='/select-meal'
+//         component={SelectMeal}
+//       />
+//       <AppliedRoute path='*' component={NotFound} />
+//     </Switch>
+//   );
+// };
 
 function App() {
   const [auth, setAuth] = React.useState(false);
   const readCookie = () => {
     const customer = Cookies.get("customer_uid");
-    console.log(customer);
+    // console.log(customer);
     if (customer) {
       setAuth(true);
     }

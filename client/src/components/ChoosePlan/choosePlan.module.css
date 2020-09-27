@@ -5,11 +5,14 @@
 }
 
 .mealHeader {
+    background-color: #ebebeb;
+}
+
+.headerItemContainer {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    background-color: #ebebeb;
     flex-wrap: wrap;
 }
 

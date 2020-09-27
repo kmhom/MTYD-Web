@@ -10,8 +10,9 @@ import {
     changeNewCity,
     changeNewState,
     changeNewZip,
-    submitPasswordSignUp,
+    submitSocialSignUp,
   } from "../../reducers/actions/loginActions";
+  import { withRouter } from "react-router";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,16 +25,26 @@ import {
 import styles from './socialSignup.module.css'
 
 class SocialSignUp extends React.Component {
+
+    signUpSuccess = () => {
+        this.props.history.push('/');
+    }
+
     render() {
+        if(this.props.email === '' || this.props.refreshToken === '') {
+            this.props.history.push('sign-up');
+        }
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
-                    <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    <div className={styles.headerItemContainer}>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+                    </div>
                     <div className='title'>
-                        <h4 className='mainTitle'>Sign Up</h4>
+                        <h4 className='mainTitle'>SOCIAL SIGN UP</h4>
                         <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
                     </div>
                 </div>
@@ -135,11 +146,11 @@ class SocialSignUp extends React.Component {
                     <button
                         className={styles.button}
                         onClick={() => {
-                            this.props.submitPasswordSignUp(
-                                this.props.email, this.props.password, this.props.passwordConfirm,
+                            this.props.submitSocialSignUp(
+                                this.props.email, this.props.platform, this.props.accessToken, this.props.refreshToken,
                                 this.props.firstName, this.props.lastName, this.props.phone,
                                 this.props.street, this.props.unit, this.props.city, this.props.state,
-                                this.props.zip
+                                this.props.zip,this.signUpSuccess
                             );
                         }}
                     >
@@ -160,10 +171,11 @@ SocialSignUp.propTypes = {
     changeNewCity: PropTypes.func.isRequired,
     changeNewState: PropTypes.func.isRequired,
     changeNewZip: PropTypes.func.isRequired,
-    submitPasswordSignUp: PropTypes.func.isRequired,
+    submitSocialSignUp: PropTypes.func.isRequired,
     email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-    passwordConfirm: PropTypes.string.isRequired,
+    platform: PropTypes.string.isRequired,
+    accessToken: PropTypes.string.isRequired,
+    refreshToken: PropTypes.string.isRequired,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
     phone: PropTypes.string.isRequired,
@@ -175,6 +187,10 @@ SocialSignUp.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
+    email: state.login.newUserInfo.email,
+    platform: state.login.newUserInfo.platform,
+    accessToken: state.login.newUserInfo.accessToken,
+    refreshToken: state.login.newUserInfo.refreshToken,
     firstName: state.login.newUserInfo.firstName,
     lastName: state.login.newUserInfo.lastName,
     phone: state.login.newUserInfo.phone,
@@ -194,7 +210,7 @@ const functionList = {
     changeNewCity,
     changeNewState,
     changeNewZip,
-    submitPasswordSignUp,
+    submitSocialSignUp
 }
 
-export default connect(mapStateToProps, functionList)(SocialSignUp);
+export default connect(mapStateToProps, functionList)(withRouter(SocialSignUp));

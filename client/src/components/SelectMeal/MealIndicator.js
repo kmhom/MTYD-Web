@@ -28,7 +28,7 @@ export default class MealIndicator extends Component {
             margin: "0rem 1rem",
             width: "100%",
             backgroundImage: `linear-gradient(to right, ${
-              selectCount == 0
+              selectCount === 0
                 ? (indicatorColor = "#42d4a8")
                 : (indicatorColor = "#e09d51")
             } ${percentage}%, white 0%)`,
@@ -37,10 +37,10 @@ export default class MealIndicator extends Component {
           <p
             style={{
               marginTop: "0.01rem",
-              color: selectCount == 0 ? "white" : "black",
+              color: selectCount === 0 ? "white" : "black",
             }}
           >
-            {selectCount == 0
+            {selectCount === 0
               ? "All Meals Selected!"
               : `select ${selectCount} meals`}
           </p>

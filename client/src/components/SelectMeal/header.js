@@ -29,7 +29,7 @@ export class Header extends Component {
           key={dayselector}
           value={dayselector}
           className={
-            this.props.deliveryDay != dayselector ||
+            this.props.deliveryDay !== dayselector ||
             this.props.deliveryDay === ""
               ? deselectedMealButton
               : selectedMealButton
@@ -55,8 +55,8 @@ export class Header extends Component {
           id={selectionOptions}
           value={selectionOptions}
           className={
-            this.props.selectValue == "" ||
-            this.props.selectValue != selectionOptions
+            this.props.selectValue === "" ||
+            this.props.selectValue !== selectionOptions
               ? deselectedMealButton
               : selectedMealButton
           }

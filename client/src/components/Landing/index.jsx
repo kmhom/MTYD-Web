@@ -10,7 +10,7 @@ import {
 } from "../../reducers/actions/loginActions";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
+import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -21,9 +21,8 @@ import {
 
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-
+import Cookies from "js-cookie";
 import styles from "./landing.module.css";
-import Axios from "axios";
 
 class Landing extends React.Component {
   constructor() {
@@ -34,7 +33,18 @@ class Landing extends React.Component {
   }
 
   successLogin = () => {
-    this.props.history.push("choose-plan");
+    let customerID = Cookies.get("customer_uid");
+    Axios.get(
+      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/customer_lplp?customer_uid=${customerID}`
+    ).then((response) => {
+      response.data.result[0].purchase_id
+        ? this.props.history.push("/select-meal")
+        : this.props.history.push("/choose-plan");
+    });
+  };
+
+  socialSignUp = () => {
+    this.props.history.push("social-sign-up");
   };
 
   componentDidMount() {
@@ -64,7 +74,15 @@ class Landing extends React.Component {
       let email = response.profileObj.email;
       let accessToken = response.accessToken;
       let refreshToken = response.googleId;
-      this.props.socialLoginAttempt(email, refreshToken, this.successLogin);
+      // console.log(email,accessToken,refreshToken)
+      this.props.socialLoginAttempt(
+        email,
+        accessToken,
+        refreshToken,
+        "GOOGLE",
+        this.successLogin,
+        this.socialSignUp
+      );
     } else {
       // Google Login unsuccessful
       console.log("Google Login failed");
@@ -72,13 +90,21 @@ class Landing extends React.Component {
   };
 
   responseFacebook = (response) => {
+    console.log("Hello");
     console.log(response);
     if (response.email) {
       console.log("Facebook Login successful");
       let email = response.email;
       let accessToken = response.accessToken;
       let refreshToken = response.id;
-      this.props.socialLoginAttempt(email, refreshToken, this.successLogin);
+      this.props.socialLoginAttempt(
+        email,
+        accessToken,
+        refreshToken,
+        "FACEBOOK",
+        this.successLogin,
+        this.socialSignUp
+      );
     } else {
       // Facebook Login unsuccessful
       console.log("Facebook Login failed");
@@ -89,25 +115,29 @@ class Landing extends React.Component {
     if (!this.state.mounted) {
       return null;
     }
-
     return (
       <div className={styles.root}>
         <div className={styles.mealHeader}>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faBars} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faBell} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"} />{" "}
-          </div>
-          <div className={styles.headerItem}>
-            {" "}
-            <FontAwesomeIcon icon={faSearch} className={"headerIcon"} />{" "}
+          <div className={styles.headerItemContainer}>
+            <div className={styles.headerItem}>
+              {" "}
+              <FontAwesomeIcon icon={faBars} className={"headerIcon"} />{" "}
+            </div>
+            <div className={styles.headerItem}>
+              {" "}
+              <FontAwesomeIcon icon={faBell} className={"headerIcon"} />{" "}
+            </div>
+            <div className={styles.headerItem}>
+              {" "}
+              <FontAwesomeIcon
+                icon={faShareAlt}
+                className={"headerIcon"}
+              />{" "}
+            </div>
+            <div className={styles.headerItem}>
+              {" "}
+              <FontAwesomeIcon icon={faSearch} className={"headerIcon"} />{" "}
+            </div>
           </div>
           <div className='title'>
             <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
@@ -146,16 +176,7 @@ class Landing extends React.Component {
                 this.props.loginAttempt(
                   this.props.email,
                   this.props.password,
-                  () => {
-                    let customerID = Cookies.get("customer_uid");
-                    Axios.get(
-                      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/customer_lplp?customer_uid=${customerID}`
-                    ).then((response) => {
-                      response.data.result[0].purchase_id
-                        ? this.props.history.push("/select-meal")
-                        : this.props.history.push("/choose-plan");
-                    });
-                  }
+                  this.successLogin
                 );
               }}
             >
