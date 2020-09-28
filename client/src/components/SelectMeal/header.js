@@ -18,7 +18,6 @@ export class Header extends Component {
       str = myarr[0];
       temp = str.replace(/[^a-zA-Z ]/g, "").split(" ");
     }
-
     let deselectedMealButton = "selection-styles";
     let selectedMealButton = "selection-styles selected-days";
     let mealdays = [];
@@ -30,7 +29,8 @@ export class Header extends Component {
           value={dayselector}
           className={
             this.props.deliveryDay !== dayselector ||
-            this.props.deliveryDay === ""
+            this.props.deliveryDay === "" ||
+            this.props.saveButton
               ? deselectedMealButton
               : selectedMealButton
           }
@@ -56,7 +56,8 @@ export class Header extends Component {
           value={selectionOptions}
           className={
             this.props.selectValue === "" ||
-            this.props.selectValue !== selectionOptions
+            this.props.selectValue !== selectionOptions ||
+            this.props.saveButton
               ? deselectedMealButton
               : selectedMealButton
           }
@@ -81,38 +82,21 @@ export class Header extends Component {
       }
     }
 
-    //To disable and enable Surprise button
-    if (document.getElementById("Surprise") !== null) {
-      if (
-        this.props.myDate === "" ||
-        document.getElementById("meal-plan-picker").value === null ||
-        totalCount > 0
-      ) {
-        document.getElementById("Surprise").disabled = true;
-      } else {
-        document.getElementById("Surprise").disabled = false;
-      }
-    }
-
-    //To disable and enable Skip button
-    if (document.getElementById("Skip") !== null) {
-      if (
-        this.props.myDate === "" ||
-        document.getElementById("meal-plan-picker").value === null ||
-        totalCount > 0
-      ) {
-        document.getElementById("Skip").disabled = true;
-      } else {
-        document.getElementById("Skip").disabled = false;
-      }
-    }
-
     //To disable and enable date picker
     if (document.getElementById("date") !== null) {
-      if (totalCount > 0) {
+      if (totalCount > 0 && totalCount != totalMeals) {
         document.getElementById("date").disabled = true;
       } else {
         document.getElementById("date").disabled = false;
+      }
+    }
+
+    //To disable and enable meal-plan picker
+    if (document.getElementById("meal-plan-picker") !== null) {
+      if (totalCount > 0 && totalCount != totalMeals) {
+        document.getElementById("meal-plan-picker").disabled = true;
+      } else {
+        document.getElementById("meal-plan-picker").disabled = false;
       }
     }
 
@@ -130,7 +114,6 @@ export class Header extends Component {
         </div>
         <div className='sticky-header'>
           <select
-            onClick={this.props.checkSave}
             onChange={this.props.mealsOnChange}
             className='pickers'
             id='meal-plan-picker'
