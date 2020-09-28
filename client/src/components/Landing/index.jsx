@@ -212,8 +212,8 @@ class Landing extends React.Component {
         </div>
         <div className={styles.socialLoginItem}>
           <AppleLogin
-            clientId={"com.infiniteoptions.PrepToYourDoorWeb"}
-            redirectURI={"https://mealtoyourdoor.netlify.app"}
+            clientId={process.env.REACT_APP_APPLE_CLIENT_ID}
+            redirectURI={process.env.REACT_APP_APPLE_REDIRECT_URI}
             autoLoad={false}
             responseMode={"query"}
             callback={this.responseApple}
