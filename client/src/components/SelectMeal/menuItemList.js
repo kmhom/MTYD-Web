@@ -15,8 +15,8 @@ export class MenuItemList extends Component {
       cartItems: [],
       meals: [],
       totalCount: 0,
-
       deliveryDay: "",
+      saveButton: false,
     };
 
     this.loadMeals = this.loadMeals.bind(this);
@@ -218,6 +218,7 @@ export class MenuItemList extends Component {
       if (meal.name === planCount) {
         this.setState({
           purchaseID: mealItem.purchase_id,
+          saveButton: true,
         });
       }
       return mealItem;
@@ -235,12 +236,6 @@ export class MenuItemList extends Component {
     return this.setState({
       deliveryDay: deliver,
     });
-  };
-
-  checkSave = (e) => {
-    if (this.state.totalCount === 0) {
-      console.log(e.target.value);
-    }
   };
 
   render() {
@@ -267,6 +262,7 @@ export class MenuItemList extends Component {
           deliveryDay={this.state.deliveryDay}
           makeSelection={this.makeSelection}
           selectValue={this.state.selectValue}
+          saveButton={this.state.saveButton}
         />
 
         <div className='menu-items-wrapper'>
