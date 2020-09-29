@@ -20,7 +20,6 @@ import {
 
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-import AppleLogin from "react-apple-login";
 import styles from "./landing.module.css";
 
 class Landing extends React.Component {
@@ -59,6 +58,11 @@ class Landing extends React.Component {
       this.setState({
         mounted: true,
       });
+      window.AppleID.auth.init({
+        clientId : process.env.REACT_APP_APPLE_CLIENT_ID,
+        scope : 'email',
+        redirectURI : process.env.REACT_APP_APPLE_REDIRECT_URI
+    });
     }
   }
 
@@ -211,14 +215,12 @@ class Landing extends React.Component {
           />
         </div>
         <div className={styles.socialLoginItem}>
-          <AppleLogin
-            clientId={process.env.REACT_APP_APPLE_CLIENT_ID}
-            redirectURI={process.env.REACT_APP_APPLE_REDIRECT_URI}
-            autoLoad={false}
-            responseMode={"query"}
-            callback={this.responseApple}
+          <button
+            onClick={() => window.AppleID.auth.signIn()}
             className={styles.loginSectionInput}
-          />
+          >
+            Apple Login
+          </button>
         </div>
       </div>
     );
