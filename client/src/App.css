@@ -1,6 +1,6 @@
 .root {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   --navBarWidth: 80px;
   --navBarHeight: 0px;
 }
@@ -14,9 +14,9 @@
 }
 
 .mainApp {
-  margin-left: var(--navBarWidth);
-  width: calc(100vw - var(--navBarWidth));
-  height: calc(100vh - var(--navBarHeight));
+  padding-left: 0;
+  width: 100vw - var(--navBarWidth);
+  height: 100vh - var(--navBarHeight);
 }
 
 .headerIcon {
@@ -442,10 +442,10 @@
     background-color: #2a82a5;
     color: white;
   }
-  .mainApp {
+  /* .mainApp {
     width: 60rem;
     padding-left: 20%;
-  }
+  } */
   .indicator-wrapper {
     width: 400px;
   }

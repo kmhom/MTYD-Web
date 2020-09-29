@@ -47,13 +47,27 @@ class Landing extends React.Component {
     let urlParams = new URLSearchParams(queryString);
     // Clear Query parameters
     window.history.pushState({}, document.title, window.location.pathname);
-    // Automatic log in
     if (urlParams.has("email") && urlParams.has("hashed")) {
+      // Automatic log in
       this.props.bypassLogin(
         urlParams.get("email"),
         urlParams.get("hashed"),
         this.successLogin
       );
+    } else if (urlParams.has("email") && urlParams.has("token")) {
+      // User has just signed in with Apple
+      this.props.socialLoginAttempt(
+        urlParams.get("email"),
+        "Access Token",
+        urlParams.get("token"),
+        "APPLE",
+        this.successLogin,
+        this.socialSignUp
+      )
+      // Allow page to load if Apple Sign in with MTYD not succcessful
+      this.setState({
+        mounted: true,
+      });
     } else {
       this.setState({
         mounted: true,
@@ -62,7 +76,7 @@ class Landing extends React.Component {
         clientId : process.env.REACT_APP_APPLE_CLIENT_ID,
         scope : 'email',
         redirectURI : process.env.REACT_APP_APPLE_REDIRECT_URI
-    });
+      });
     }
   }
 
@@ -216,7 +230,9 @@ class Landing extends React.Component {
         </div>
         <div className={styles.socialLoginItem}>
           <button
-            onClick={() => window.AppleID.auth.signIn()}
+            onClick={() => {
+              window.AppleID.auth.signIn();
+            }}
             className={styles.loginSectionInput}
           >
             Apple Login
