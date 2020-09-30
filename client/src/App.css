@@ -14,7 +14,7 @@
 }
 
 .mainApp {
-  padding-left: 0;
+  padding-left: var(--navBarWidth);
   width: calc(100vw - var(--navBarWidth));
   height: calc(100vh - var(--navBarHeight));
 }
