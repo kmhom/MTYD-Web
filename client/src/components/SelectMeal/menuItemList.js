@@ -3,7 +3,6 @@ import MenuItem from "./menuItem";
 import axios from "axios";
 import Header from "./header";
 import Cookies from "js-cookie";
-
 import { API_URL } from "../../reducers/constants";
 
 export class MenuItemList extends Component {
@@ -15,11 +14,15 @@ export class MenuItemList extends Component {
       cartItems: [],
       meals: [],
       totalCount: 0,
-      deliveryDay: "",
+      selectValue: "Surprise",
       saveButton: false,
     };
+  }
 
-    this.loadMeals = this.loadMeals.bind(this);
+  componentDidMount() {
+    this.loadMenuItems();
+    this.loadMeals();
+    this.selectedMeals();
   }
 
   loadMenuItems = () => {
@@ -30,27 +33,81 @@ export class MenuItemList extends Component {
       .then((json) => {
         let menuData = [...json.result];
         this.setState({
+          deliveryDay: "Sunday",
           data: menuData,
           myDate: menuData[0].menu_date,
         });
-        console.log(this.state.data[0].length);
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  componentDidMount() {
-    this.loadMenuItems();
-    this.loadMeals();
-  }
+  selectedMeals = () => {
+    let cust_id = Cookies.get("customer_uid");
+    fetch(
+      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selected?customer_uid=${cust_id}`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        let mealSelected = [...json.result];
+        this.setState({
+          mealSelected,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   filterDates = (event) => {
-    this.setState({
+    let cust_id = Cookies.get("customer_uid");
+    fetch(
+      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selected?customer_uid=${cust_id}`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        let mealSelected = [...json.result];
+        this.setState({
+          deliveryDay: "Sunday",
+          mealSelected,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    let cartItemsArr = [];
+    let myCounter = 0;
+    let pulledSelection = this.state.mealSelected.filter(
+      (item) =>
+        item.sel_purchase_id === this.state.purchaseID &&
+        item.sel_menu_date === event.target.value
+    );
+    if (pulledSelection.length > 0) {
+      let selection = JSON.parse(pulledSelection[0].meal_selection);
+      selection.map((myItem) => {
+        let required_Id = myItem.item_uid;
+        let menuItemCur = this.state.data.filter(
+          (dateCheck) =>
+            dateCheck.menu_date === event.target.value &&
+            dateCheck.meal_uid === required_Id
+        );
+        let spreadObj = { ...menuItemCur };
+        let pushingObj = {
+          count: myItem.qty,
+          ...spreadObj[0],
+        };
+        if (myItem.name !== "SKIP" && myItem.name !== "SURPRISE") {
+          cartItemsArr.push(pushingObj);
+          myCounter = myCounter + myItem.qty;
+        }
+      });
+    }
+
+    return this.setState({
       myDate: event.target.value,
-      cartItems: [],
-      totalCount: 0,
-      deliveryDay: "",
+      cartItems: [...cartItemsArr],
+      totalCount: myCounter,
     });
   };
 
@@ -105,7 +162,7 @@ export class MenuItemList extends Component {
       selectValue: e.target.value,
     });
     if (e.target.value === "Surprise") {
-      if (this.state.myDate !== "" && this.state.totalCount === 0) {
+      if (this.state.myDate !== "") {
         const supriseData = [
           {
             qty: "",
@@ -121,6 +178,7 @@ export class MenuItemList extends Component {
           menu_date: this.state.myDate,
           delivery_day: this.state.deliveryDay,
         };
+
         axios
           .post(
             "https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selection",
@@ -132,6 +190,10 @@ export class MenuItemList extends Component {
           .catch((error) => {
             console.log(error);
           });
+        return this.setState({
+          totalCount: 0,
+          cartItems: [],
+        });
       }
     } else if (e.target.value === "Skip") {
       const skipData = [
@@ -160,6 +222,10 @@ export class MenuItemList extends Component {
         .catch((error) => {
           console.log(error);
         });
+      return this.setState({
+        totalCount: 0,
+        cartItems: [],
+      });
     } else {
       const myarr = [];
       this.state.cartItems.map((meal) => {
@@ -171,7 +237,7 @@ export class MenuItemList extends Component {
         });
         return meal;
       });
-      console.log(myarr);
+
       const data = {
         is_addon: false,
         items: myarr,
@@ -211,22 +277,77 @@ export class MenuItemList extends Component {
   }
 
   mealsOnChange = (e) => {
-    let planCount = e.target.value;
-    let mystr = planCount.toString().slice(0, 2).replace(/\s/g, "");
-    this.state.meals.map((mealItem) => {
-      let meal = JSON.parse(mealItem.items)[0];
-      if (meal.name === planCount) {
+    let cust_id = Cookies.get("customer_uid");
+    fetch(
+      `https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selected?customer_uid=${cust_id}`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        let mealSelected = [...json.result];
         this.setState({
+          mealSelected,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    let planName = e.target.value;
+    this.state.meals.map((mealItem) => {
+      if (mealItem.purchase_id === planName) {
+        let meal = JSON.parse(mealItem.items)[0];
+        let mystr = meal.name.toString().slice(0, 2).replace(/\s/g, "");
+        this.setState({
+          totalMeals: mystr,
           purchaseID: mealItem.purchase_id,
           saveButton: true,
         });
       }
-      return mealItem;
     });
+    let cartItemsArr = [];
+    let delivery_Day = "";
+    let myCounter = 0;
+    let pulledSelection = this.state.mealSelected.filter(
+      (item) =>
+        item.sel_purchase_id === planName &&
+        item.sel_menu_date === this.state.myDate
+    );
+
+    if (pulledSelection.length > 0) {
+      let selection = JSON.parse(pulledSelection[0].meal_selection);
+      delivery_Day = pulledSelection[0].delivery_day;
+      selection.map((myItem) => {
+        let required_Id = myItem.item_uid;
+        let menuItemCur = this.state.data.filter(
+          (dateCheck) =>
+            dateCheck.menu_date === this.state.myDate &&
+            dateCheck.meal_uid === required_Id
+        );
+
+        let spreadObj = { ...menuItemCur };
+        let pushingObj = {
+          count: myItem.qty,
+          ...spreadObj[0],
+        };
+
+        if (myItem.name !== "SKIP" && myItem.name !== "SURPRISE") {
+          cartItemsArr.push(pushingObj);
+          myCounter = myCounter + myItem.qty;
+          return this.setState({ selectValue: "Save" });
+        } else {
+          let select_val = myItem.name;
+          let myoutput =
+            select_val[0].toUpperCase() +
+            select_val.substring(1, select_val.length).toLowerCase();
+          return this.setState({ selectValue: myoutput });
+        }
+      });
+    }
+
     return this.setState({
-      totalMeals: mystr,
-      cartItems: [],
-      totalCount: 0,
+      deliveryDay: delivery_Day !== "" ? delivery_Day : "Sunday",
+      cartItems: [...cartItemsArr],
+      totalCount: myCounter,
       displayCount: "block",
     });
   };
@@ -247,7 +368,6 @@ export class MenuItemList extends Component {
         <Header
           data={this.state.data}
           dates={uniqueDates}
-          // dates={dates}
           filterDates={this.filterDates}
           meals={this.state.meals}
           mealsOnChange={this.mealsOnChange}
@@ -263,6 +383,8 @@ export class MenuItemList extends Component {
           makeSelection={this.makeSelection}
           selectValue={this.state.selectValue}
           saveButton={this.state.saveButton}
+          purchaseID={this.state.purchaseID}
+          mealSelected={this.state.mealSelected}
         />
 
         <div className='menu-items-wrapper'>
@@ -272,6 +394,8 @@ export class MenuItemList extends Component {
             data={this.state.data}
             myDate={this.state.myDate}
             cartItems={this.state.cartItems}
+            mealSelected={this.state.mealSelected}
+            purchaseID={this.state.purchaseID}
           />
         </div>
       </div>

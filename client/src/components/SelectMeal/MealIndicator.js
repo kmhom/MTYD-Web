@@ -8,7 +8,6 @@ export default class MealIndicator extends Component {
     const { totalMeals } = this.props;
     const { displayCount } = this.props;
     const selectCount = totalMeals - totalCount;
-    console.log(selectCount);
     let temp = 100 / totalMeals;
     const percentage = totalCount * temp;
     const myarr = [];

@@ -29,8 +29,7 @@ export class Header extends Component {
           value={dayselector}
           className={
             this.props.deliveryDay !== dayselector ||
-            this.props.deliveryDay === "" ||
-            this.props.saveButton
+            this.props.deliveryDay === ""
               ? deselectedMealButton
               : selectedMealButton
           }
@@ -56,8 +55,7 @@ export class Header extends Component {
           value={selectionOptions}
           className={
             this.props.selectValue === "" ||
-            this.props.selectValue !== selectionOptions ||
-            this.props.saveButton
+            this.props.selectValue !== selectionOptions
               ? deselectedMealButton
               : selectedMealButton
           }
@@ -93,7 +91,11 @@ export class Header extends Component {
 
     //To disable and enable meal-plan picker
     if (document.getElementById("meal-plan-picker") !== null) {
-      if (totalCount > 0 && totalCount != totalMeals) {
+      if (
+        totalCount > 0 &&
+        totalCount != totalMeals &&
+        this.props.selectValue !== "Skip"
+      ) {
         document.getElementById("meal-plan-picker").disabled = true;
       } else {
         document.getElementById("meal-plan-picker").disabled = false;
@@ -120,7 +122,7 @@ export class Header extends Component {
           >
             {meals.map((mealItem) => {
               let meal = JSON.parse(mealItem.items)[0];
-              return <option>{meal.name}</option>;
+              return <option value={mealItem.purchase_id}>{meal.name}</option>;
             })}
           </select>
           <FontAwesomeIcon icon={["far", "fa-angle-down"]} />
