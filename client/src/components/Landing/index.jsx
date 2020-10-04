@@ -124,11 +124,6 @@ class Landing extends React.Component {
     }
   };
 
-  responseApple = (response) => {
-    console.log('Test')
-    console.log(response)
-  }
-
   render() {
     if (!this.state.mounted) {
       return null;
