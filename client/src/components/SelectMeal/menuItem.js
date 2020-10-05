@@ -6,10 +6,11 @@ class MenuItem extends React.Component {
     let x = this.props.data.filter(
       (date) => date.menu_date === this.props.myDate
     );
+
     return (
       <React.Fragment>
         {x.map((menuitem) => (
-          <div className='menuitem-individual'>
+          <div key={menuitem.meal_uid} className='menuitem-individual'>
             <div
               style={{
                 backgroundImage: `url(${menuitem.meal_photo_URL})`,

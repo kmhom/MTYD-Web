@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import MealIndicator from "./MealIndicator";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export class Header extends Component {
+class Header extends Component {
   showDeliveryDay = () => {
     const mySet = new Set();
     this.props.data.map((menuitem) => {
@@ -18,6 +17,7 @@ export class Header extends Component {
       str = myarr[0];
       temp = str.replace(/[^a-zA-Z ]/g, "").split(" ");
     }
+
     let deselectedMealButton = "selection-styles";
     let selectedMealButton = "selection-styles selected-days";
     let mealdays = [];
@@ -52,6 +52,7 @@ export class Header extends Component {
       selections.push(
         <button
           id={selectionOptions}
+          key={selectionOptions}
           value={selectionOptions}
           className={
             this.props.selectValue === "" ||
@@ -71,6 +72,7 @@ export class Header extends Component {
   render() {
     const { meals, totalCount, totalMeals } = this.props;
     let mealsCount = parseInt(totalMeals);
+
     //To disable and enable save button
     if (document.getElementById("Save") !== null) {
       if (totalCount !== mealsCount) {
@@ -105,10 +107,10 @@ export class Header extends Component {
     return (
       <React.Fragment>
         <div className='meal-header'>
-          <i class='fa fa-bars headericon'></i>
-          <i class='fas fa-bell headericon'></i>
-          <i class='fa fa-share-alt headericon'></i>
-          <i class='fa fa-search headericon'></i>
+          <i className='fa fa-bars headericon'></i>
+          <i className='fas fa-bell headericon'></i>
+          <i className='fa fa-share-alt headericon'></i>
+          <i className='fa fa-search headericon'></i>
         </div>
         <div className='title'>
           <p id='chooseYourPlan'>MENU THIS WEEK</p>
@@ -125,7 +127,7 @@ export class Header extends Component {
               return <option value={mealItem.purchase_id}>{meal.name}</option>;
             })}
           </select>
-          <FontAwesomeIcon icon={["far", "fa-angle-down"]} />
+
           <select
             onChange={this.props.filterDates}
             value={this.props.date}
@@ -134,7 +136,9 @@ export class Header extends Component {
             className='pickers'
           >
             {this.props.dates.map((date) => (
-              <option value={date}>{date}</option>
+              <option key={date} value={date}>
+                {date}
+              </option>
             ))}
           </select>
           <div className='delivery-days'>{this.showDeliveryDay()}</div>
