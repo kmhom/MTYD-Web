@@ -72,7 +72,6 @@ export class MenuItemList extends Component {
       .then((json) => {
         let mealSelected = [...json.result];
         this.setState({
-          deliveryDay: "Sunday",
           mealSelected,
         });
       })
@@ -80,6 +79,7 @@ export class MenuItemList extends Component {
         console.error(error);
       });
     let cartItemsArr = [];
+    let delivery_Day = "";
     let myCounter = 0;
     let pulledSelection = this.state.mealSelected.filter(
       (item) =>
@@ -88,6 +88,7 @@ export class MenuItemList extends Component {
     );
     if (pulledSelection.length > 0) {
       let selection = JSON.parse(pulledSelection[0].meal_selection);
+      delivery_Day = pulledSelection[0].delivery_day;
       selection.map((myItem) => {
         let required_Id = myItem.item_uid;
         let menuItemCur = this.state.data.filter(
@@ -103,11 +104,24 @@ export class MenuItemList extends Component {
         if (myItem.name !== "SKIP" && myItem.name !== "SURPRISE") {
           cartItemsArr.push(pushingObj);
           myCounter = myCounter + myItem.qty;
+          return this.setState({ selectValue: "Save" });
+        } else {
+          let select_val = myItem.name;
+          let myoutput =
+            select_val[0].toUpperCase() +
+            select_val.substring(1, select_val.length).toLowerCase();
+          return this.setState({ selectValue: myoutput });
         }
+      });
+    } else {
+      this.setState({
+        deliveryDay: "Sunday",
+        selectValue: "Surprise",
       });
     }
 
     return this.setState({
+      deliveryDay: delivery_Day !== "" ? delivery_Day : "Sunday",
       myDate: event.target.value,
       cartItems: [...cartItemsArr],
       totalCount: myCounter,
@@ -395,8 +409,10 @@ export class MenuItemList extends Component {
         deliveryDay: deliver,
         selectValue: "Save",
       });
-    } else if (this.state.selectValue === "Surprise") {
-      if (this.state.myDate !== "") {
+    }
+    // } else if (this.state.selectValue === "Surprise") {
+    else {
+      if (this.state.myDate !== "" && this.state.selectValue === "Surprise") {
         const supriseData = [
           {
             qty: "",
@@ -430,39 +446,40 @@ export class MenuItemList extends Component {
           cartItems: [],
         });
       }
-    } else {
-      const skipData = [
-        {
-          qty: "",
-          name: "SKIP",
-          price: "",
-          item_uid: "",
-        },
-      ];
-      const data2 = {
-        is_addon: false,
-        items: skipData,
-        purchase_id: this.state.purchaseID,
-        menu_date: this.state.myDate,
-        delivery_day: deliver,
-      };
-      axios
-        .post(
-          "https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selection",
-          data2
-        )
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      return this.setState({
-        deliveryDay: deliver,
-        totalCount: 0,
-        cartItems: [],
-      });
     }
+    // } else {
+    //   const skipData = [
+    //     {
+    //       qty: "",
+    //       name: "SKIP",
+    //       price: "",
+    //       item_uid: "",
+    //     },
+    //   ];
+    //   const data2 = {
+    //     is_addon: false,
+    //     items: skipData,
+    //     purchase_id: this.state.purchaseID,
+    //     menu_date: this.state.myDate,
+    //     delivery_day: deliver,
+    //   };
+    //   axios
+    //     .post(
+    //       "https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selection",
+    //       data2
+    //     )
+    //     .then((response) => {
+    //       console.log(response);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    //   return this.setState({
+    //     deliveryDay: deliver,
+    //     totalCount: 0,
+    //     cartItems: [],
+    //   });
+    // }
 
     return this.setState({
       deliveryDay: deliver,
