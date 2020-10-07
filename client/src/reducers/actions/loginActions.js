@@ -74,7 +74,7 @@ export const loginAttempt = (email, password, callback) => dispatch => {
         if(saltObject.status === 200) {
             let hashAlg = saltObject.data.result[0].password_algorithm;
             let salt = saltObject.data.result[0].password_salt;
-            if(hashAlg && hashAlg !== '' && salt && salt !== '')  {
+            if(hashAlg !== null && hashAlg !== '' && salt !== null && salt !== '')  {
                 //Get hash algorithm
                 switch(hashAlg) {
                     case 'SHA512':
