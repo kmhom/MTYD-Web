@@ -4,7 +4,7 @@ import axios from "axios";
 import Header from "./header";
 import Cookies from "js-cookie";
 import { API_URL } from "../../reducers/constants";
-
+import styles from "./selectmeal.module.css";
 export class MenuItemList extends Component {
   constructor() {
     super();
@@ -491,7 +491,7 @@ export class MenuItemList extends Component {
     const uniqueDates = Array.from(new Set(dates));
 
     return (
-      <div className='mealMenuWrapper'>
+      <div className={styles.mealMenuWrapper}>
         <Header
           data={this.state.data}
           dates={uniqueDates}
@@ -514,7 +514,7 @@ export class MenuItemList extends Component {
           mealSelected={this.state.mealSelected}
         />
 
-        <div className='menu-items-wrapper'>
+        <div className={styles.menuItemsWrapper}>
           <MenuItem
             addToCart={this.addToCart}
             removeFromCart={this.removeFromCart}
