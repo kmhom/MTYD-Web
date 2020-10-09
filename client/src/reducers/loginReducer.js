@@ -1,6 +1,6 @@
 import {
     LOGOUT_LOGIN, CHANGE_EMAIL, CHANGE_PASSWORD, SUBMIT_PASSWORD, SUBMIT_SOCIAL,
-    CHANGE_NEW_EMAIL, CHANGE_NEW_PASSWORD, CHANGE_NEW_PASSWORD_CONFIRM,
+    START_APPLE_SIGNUP, CHANGE_NEW_EMAIL, CHANGE_NEW_PASSWORD, CHANGE_NEW_PASSWORD_CONFIRM,
     CHANGE_NEW_FIRST_NAME, CHANGE_NEW_LAST_NAME, CHANGE_NEW_PHONE,
     CHANGE_NEW_STREET, CHANGE_NEW_UNIT, CHANGE_NEW_CITY,
     CHANGE_NEW_STATE, CHANGE_NEW_ZIP, SUBMIT_SIGNUP,
@@ -10,6 +10,8 @@ const initialState = {
     email: '',
     password: '',
     newUserInfo: {
+        AppleSignUp: false,
+        customerId: '',
         email: '',
         password: '',
         passwordConfirm: '',
@@ -63,6 +65,19 @@ export default function(state = initialState, action) {
                     platform: action.payload.platform,
                     accessToken: action.payload.accessToken,
                     refreshToken: action.payload.refreshToken,
+                }
+            }
+
+        case START_APPLE_SIGNUP:
+            return {
+                ...state,
+                newUserInfo: {
+                    ...state.newUserInfo,
+                    AppleSignUp: true,
+                    platform: 'APPLE',
+                    customerId: action.payload.customerId,
+                    email: action.payload.email,
+                    refreshToken: action.payload.refreshToken
                 }
             }
 

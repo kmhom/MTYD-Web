@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {
     LOGOUT_LOGIN, CHANGE_EMAIL, CHANGE_PASSWORD, SUBMIT_PASSWORD, SUBMIT_SOCIAL,
-    CHANGE_NEW_EMAIL, CHANGE_NEW_PASSWORD, CHANGE_NEW_PASSWORD_CONFIRM,
+    START_APPLE_SIGNUP, CHANGE_NEW_EMAIL, CHANGE_NEW_PASSWORD, CHANGE_NEW_PASSWORD_CONFIRM,
     CHANGE_NEW_FIRST_NAME, CHANGE_NEW_LAST_NAME, CHANGE_NEW_PHONE,
     CHANGE_NEW_STREET, CHANGE_NEW_UNIT, CHANGE_NEW_CITY,
     CHANGE_NEW_STATE, CHANGE_NEW_ZIP, SUBMIT_SIGNUP,
@@ -20,7 +20,7 @@ export const preCallback = (customer_uid, callback) => {
         }
     })
     .then((res) => {
-        console.log(res.data.result === undefined);
+        console.log(res);
         callback(res.data.result !== undefined);
     })
     .catch((err) => {
@@ -71,10 +71,11 @@ export const loginAttempt = (email, password, callback) => dispatch => {
     })
     .then((res) => {
         let saltObject = res;
-        if(saltObject.status === 200) {
+        console.log(saltObject);
+        if(!(saltObject.data.code && saltObject.data.code !== 200)) {
             let hashAlg = saltObject.data.result[0].password_algorithm;
             let salt = saltObject.data.result[0].password_salt;
-            if(hashAlg !== null && hashAlg !== '' && salt !== null && salt !== '')  {
+            if(hashAlg !== null && salt !== null)  {
                 //Get hash algorithm
                 switch(hashAlg) {
                     case 'SHA512':
@@ -105,20 +106,23 @@ export const loginAttempt = (email, password, callback) => dispatch => {
                         password: hashedPassword,
                     })
                     .then((res) => {
-                        if(res.status === 200) {
-                            let customerInfo = res.data.result;
-                            // console.log(customerInfo);
+                        // Handle successful Login
+                        if(res.data.code === 200) {
+                            let customerInfo = res.data.result[0];
+                            console.log(customerInfo);
                             console.log('cookie',document.cookie)
                             document.cookie = 'customer_uid=' + customerInfo.customer_uid;
-                            document.cookie = 'customer_last_name=' + customerInfo.customer_last_name;
-                            document.cookie = 'customer_first_name=' + customerInfo.customer_first_name;
-                            document.cookie = 'customer_email=' + customerInfo.customer_email;
-                            document.cookie = 'customer_social_media=' + customerInfo.user_social_media;
                             console.log('cookie',document.cookie)
                             dispatch({
                                 type: SUBMIT_PASSWORD,
                             })
                             preCallback(customerInfo.customer_uid,callback);
+                        } else if (res.data.code === 406 || res.data.code === 404) {
+                            console.log('Invalid credentials')
+                        } else if (res.data.code === 401) {
+                            console.log('Need to log in by social media')
+                        } else {
+                            console.log('Unknown login error')
                         }
                     })
                     .catch((err) => {
@@ -129,14 +133,37 @@ export const loginAttempt = (email, password, callback) => dispatch => {
                     })
                 });
             } else {
-                // Did not find email
-                console.log('No account found')
+                // No hash/salt information, probably need to sign in by socail media
+                console.log('Salt not found')
+                // Try to login anyway to confirm
+                axios
+                .post(API_URL+'login',{
+                    email: email,
+                    password: 'test',
+                })
+                .then((res) => {
+                    // Don't expect success, checking for need to log in by social media
+                    if (res.data.code === 401) {
+                        console.log('Need to log in by social media')
+                    } else {
+                        console.log('Unknown login error')
+                    }
+                })
+                // Catch unkown Login errors
+                .catch((err) => {
+                    console.log(err);
+                    if(err.response) {
+                        console.log(err.response);
+                    }
+                })
             }
+        // No information from Account Salt endpoint, probably invalid credentials
         } else {
             // Status not 200
-            console.log(res)
+            console.log('Invalid credentials')
         }
     })
+    // Error for Account Salt endpoint
     .catch((err) => {
         console.log(err)
         if(err.response) {
@@ -154,35 +181,31 @@ export const socialLoginAttempt = (email, accessToken, refreshToken, platform, s
     })
     .then((res) => {
         console.log(res);
-        if(res.status === 200) {
-            let customerInfo = res.data.result;
+        if(!(res.data.code && res.data.code !== 200)) {
+            let customerInfo = res.data.result[0];
             console.log(customerInfo);
             console.log('cookie',document.cookie)
             document.cookie = 'customer_uid=' + customerInfo.customer_uid;
-            document.cookie = 'customer_last_name=' + customerInfo.customer_last_name;
-            document.cookie = 'customer_first_name=' + customerInfo.customer_first_name;
-            document.cookie = 'customer_email=' + customerInfo.customer_email;
-            document.cookie = 'customer_social_media=' + customerInfo.user_social_media;
             console.log('cookie',document.cookie)
             preCallback(customerInfo.customer_uid,successCallback);
+        } else if(res.data.code === 404) {
+            dispatch({
+                type: SUBMIT_SOCIAL,
+                payload: {
+                    email: email,
+                    platform: platform,
+                    accessToken: accessToken,
+                    refreshToken: refreshToken,
+                }
+            })
+            signupCallback();
         }
     })
+    // Catch Login endpoint error
     .catch((err) => {
-        dispatch({
-            type: SUBMIT_SOCIAL,
-            payload: {
-                email: email,
-                platform: platform,
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-            }
-        })
         console.log(err);
         if(err.response) {
             console.log(err.response);
-            if(err.response.data.message === 'Email Not Found') {
-                signupCallback();
-            }
         }
     })
 }
@@ -194,15 +217,11 @@ export const bypassLogin = (email, hashedPassword, callback) => dispatch => {
         password: hashedPassword,
     })
     .then((res) => {
-        if(res.status === 200) {
+        if(!(res.data.code && res.data.code !== 200)) {
             let customerInfo = res.data.result;
             console.log(customerInfo);
             console.log('cookie',document.cookie)
             document.cookie = 'customer_uid=' + customerInfo.customer_uid;
-            document.cookie = 'customer_last_name=' + customerInfo.customer_last_name;
-            document.cookie = 'customer_first_name=' + customerInfo.customer_first_name;
-            document.cookie = 'customer_email=' + customerInfo.customer_email;
-            document.cookie = 'customer_social_media=' + customerInfo.user_social_media;
             console.log('cookie',document.cookie)
             preCallback(customerInfo.customer_uid,callback);
         }
@@ -216,6 +235,32 @@ export const bypassLogin = (email, hashedPassword, callback) => dispatch => {
 }
 
 // Actions for Sign Up Page
+
+export const initAppleSignUp = (newId, callback) => dispatch => {
+    axios
+    .get(API_URL+'Profile/'+newId)
+    .then((res) => {
+        console.log(res);
+        let newUserInfo = res.data.result[0];
+        let email = newUserInfo.customer_email;
+        let refreshToken = newUserInfo.user_refresh_token;
+        dispatch({
+            type: START_APPLE_SIGNUP,
+            payload: {
+                customerId: newId,
+                email: email,
+                refreshToken: refreshToken,
+            }
+        });
+        callback()
+    })
+    .catch((err) => {
+        console.log(err);
+        if(err.response) {
+            console.log(err.response);
+        }
+    })
+}
 
 export const changeNewEmail = (newEmail) => dispatch => {
     dispatch({
@@ -335,11 +380,13 @@ export const submitPasswordSignUp = (
                     city: city,
                     state: state,
                     zip_code: zip,
-                    latitude: lat,
-                    longitude: long,
-                    referral_source: 'Website',
-                    role: 'customer',
+                    latitude: lat.toString(),
+                    longitude: long.toString(),
+                    referral_source: 'WEB',
+                    role: 'CUSTOMER',
                     social: false,
+                    access_token: 'NULL',
+                    refresh_token: 'NULL',
                 }
                 console.log(JSON.stringify(object));
                 axios
@@ -373,6 +420,7 @@ export const submitPasswordSignUp = (
 }
 
 export const submitSocialSignUp = (
+    isApple, customerId,
     email, platform, accessToken, refreshToken, firstName, lastName, phone,
     street, unit, city, state, zip, callback
 ) => dispatch => {
@@ -401,23 +449,46 @@ export const submitSocialSignUp = (
                 lat = location.geocodePoints[1].coordinates[0];
                 long = location.geocodePoints[1].coordinates[1];
             }
-            let object = {
-                email: email,
-                access_token: accessToken,
-                refresh_token: refreshToken,
-                first_name: firstName,
-                last_name: lastName,
-                phone_number: phone,
-                address: street,
-                unit: unit,
-                city: city,
-                state: state,
-                zip_code: zip,
-                latitude: lat,
-                longitude: long,
-                referral_source: 'Website',
-                role: 'customer',
-                social: platform,
+            let object = {};
+            if(!isApple) {
+                object = {
+                    email: email,
+                    access_token: accessToken,
+                    refresh_token: refreshToken,
+                    first_name: firstName,
+                    last_name: lastName,
+                    phone_number: phone,
+                    address: street,
+                    unit: unit,
+                    city: city,
+                    state: state,
+                    zip_code: zip,
+                    latitude: lat.toString(),
+                    longitude: long.toString(),
+                    referral_source: 'Website',
+                    role: 'customer',
+                    social: platform,
+                }
+            } else {
+                object = {
+                    cust_id: customerId,
+                    email: email,
+                    access_token: accessToken,
+                    refresh_token: refreshToken,
+                    first_name: firstName,
+                    last_name: lastName,
+                    phone_number: phone,
+                    address: street,
+                    unit: unit,
+                    city: city,
+                    state: state,
+                    zip_code: zip,
+                    latitude: lat.toString(),
+                    longitude: long.toString(),
+                    referral_source: 'Website',
+                    role: 'customer',
+                    social: platform,
+                }
             }
             console.log(JSON.stringify(object));
             axios
