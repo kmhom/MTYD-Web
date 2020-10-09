@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import {
+    initAppleSignUp,
     changeNewFirstName,
     changeNewLastName,
     changeNewPhone,
@@ -26,11 +27,40 @@ import styles from './socialSignup.module.css'
 
 class SocialSignUp extends React.Component {
 
+    constructor() {
+        super();
+        this.state = {
+            mounted: false,
+        }
+    }
+
+    componentDidMount() {
+        let queryString = this.props.location.search;
+        let urlParams = new URLSearchParams(queryString);
+        // Clear Query parameters
+        window.history.pushState({}, document.title, window.location.pathname);
+        // Set state for id
+        if (urlParams.has("id")) {
+            this.props.initAppleSignUp(urlParams.get("id"),() => {
+                this.setState({
+                    mounted: true,
+                })
+            })
+        } else {
+            this.setState({
+                mounted: true,
+            })
+        }
+    }
+
     signUpSuccess = () => {
         this.props.history.push('/');
     }
 
     render() {
+        if(!this.state.mounted) {
+            return null;
+        }
         if(this.props.email === '' || this.props.refreshToken === '') {
             this.props.history.push('sign-up');
         }
@@ -147,6 +177,7 @@ class SocialSignUp extends React.Component {
                         className={styles.button}
                         onClick={() => {
                             this.props.submitSocialSignUp(
+                                this.props.AppleSignUp, this.props.customerId,
                                 this.props.email, this.props.platform, this.props.accessToken, this.props.refreshToken,
                                 this.props.firstName, this.props.lastName, this.props.phone,
                                 this.props.street, this.props.unit, this.props.city, this.props.state,
@@ -172,6 +203,8 @@ SocialSignUp.propTypes = {
     changeNewState: PropTypes.func.isRequired,
     changeNewZip: PropTypes.func.isRequired,
     submitSocialSignUp: PropTypes.func.isRequired,
+    AppleSignUp: PropTypes.bool.isRequired,
+    customerId: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     platform: PropTypes.string.isRequired,
     accessToken: PropTypes.string.isRequired,
@@ -187,6 +220,8 @@ SocialSignUp.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
+    AppleSignUp: state.login.newUserInfo.AppleSignUp,
+    customerId: state.login.newUserInfo.customerId,
     email: state.login.newUserInfo.email,
     platform: state.login.newUserInfo.platform,
     accessToken: state.login.newUserInfo.accessToken,
@@ -202,6 +237,7 @@ const mapStateToProps = (state) => ({
 });
 
 const functionList = {
+    initAppleSignUp,
     changeNewFirstName,
     changeNewLastName,
     changeNewPhone,

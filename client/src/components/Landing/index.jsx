@@ -54,20 +54,6 @@ class Landing extends React.Component {
         urlParams.get("hashed"),
         this.successLogin
       );
-    } else if (urlParams.has("email") && urlParams.has("token")) {
-      // User has just signed in with Apple
-      this.props.socialLoginAttempt(
-        urlParams.get("email"),
-        "Access Token",
-        urlParams.get("token"),
-        "APPLE",
-        this.successLogin,
-        this.socialSignUp
-      )
-      // Allow page to load if Apple Sign in with MTYD not succcessful
-      this.setState({
-        mounted: true,
-      });
     } else {
       this.setState({
         mounted: true,
