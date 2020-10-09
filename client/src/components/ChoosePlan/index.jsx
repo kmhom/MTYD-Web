@@ -11,15 +11,7 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
 import styles from "./choosePlan.module.css";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faBell,
-  faShareAlt,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
-
+import takeaway from './take-away.svg'
 class ChoosePlan extends React.Component {
   constructor() {
     super();
@@ -112,37 +104,52 @@ class ChoosePlan extends React.Component {
     return (
       <div className={styles.root}>
         <div className={styles.mealHeader}>
-            <div className={styles.headerItemContainer}>
-                <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
-                <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
-                <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
-                <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
-            </div>
-            <div className='title'>
-                <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
-                <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
-            </div>
+        <p
+            style={{
+              flex: "6",
+              textAlign: "center",
+              fontSize: "22px",
+              color: "black",
+              fontWeight: "bold",
+              paddingLeft: "50px",
+            }}
+          >
+            CHOOSE MEAL PLAN
+          </p>
+
+          {/* <p id={styles.local}>LOCAL. ORGANIC. RESPONSIBLE.</p> */}
+          <div className={styles.avatar}></div>
         </div>
+        <div style={{ alignSelf:"center", marginTop:"1rem", paddingBottom:"15px", margin:"2rem", borderRadius:"15px", boxShadow:"1px 1px 1px 2px #d3d3d3 "}}>
         <div className={styles.mealSelectMenu}>
-          <h6 className={styles.mealDays}>
-            MEALS DELIVERIES ARE MONDAY,WEDNESDAY,FRIDAY
+          <div style={{display:"flex", flexDirection:"row", marginTop:"1rem", padding:"10px"}}>
+          <img style={{height:"50px", width:"50px"}} src={takeaway} alt="React Logo" />
+          <div style={{display:"flex", flexDirection:"column"}}>
+          <h6 style={{margin:"0px 2px"}}>
+            MEALS DELIVERIES ARE
           </h6>
+          <h6 style={{margin:"0px 2px", color:"#FF9E19"}}>
+            MONDAY,WEDNESDAY,FRIDAY
+          </h6>
+          </div>
+          </div>
+          <div style={{textAlign:"center"}}>
           <h6 className={styles.subTitle}>NUMBER OF MEALS PER DELIVERY</h6>
+
+          </div>
           <div className={styles.mealNumber}>
             <div className={styles.buttonWrapper}>{this.mealsDelivery()}</div>
           </div>
-          <p className={styles.subTitle2}>PAYMENT FREQUENCY</p>
+          <hr style={{color:"#FFBA00"}}/>
+          <p className={styles.subTitle2}>PRE PAY OPTIONS</p>
           <div className={styles.paymentWrapper}>{this.paymentFrequency()}</div>
           <div className={styles.amount}>
-            <div className={styles.amountItem}>
-              <p> $$ TOTAL {this.props.selectedPlan.item_price} </p>
-            </div>
-            <div className={styles.amountItem}>
+              <p style={{padding:"11px 0px 0px 0px", height:"40px" ,textAlign:"center", backgroundColor:"#FFF0C6", fontSize:"large", fontWeight:"600", color:"black"}} className={styles.amountItem}> $$ TOTAL {this.props.selectedPlan.item_price} </p>
               <Link to='/payment-details'>
-                <button>DONE</button>
+                <button style={{textAlign:"center", backgroundColor:"#FF9E19", fontSize:"large", fontWeight:"400", color:"white"}} className={styles.amountItem}>PROCEED</button>
               </Link>
-            </div>
           </div>
+        </div>
         </div>
       </div>
     );
