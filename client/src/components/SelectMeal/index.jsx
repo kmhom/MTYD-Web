@@ -5,7 +5,7 @@ import MenuItemList from "./menuItemList";
 class ChoosePlan extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{ backgroundColor: "black" }}>
         <MenuItemList />
       </div>
     );

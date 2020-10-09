@@ -5,6 +5,7 @@ import Header from "./header";
 import Cookies from "js-cookie";
 import { API_URL } from "../../reducers/constants";
 import styles from "./selectmeal.module.css";
+import Burgermenu from "./example";
 export class MenuItemList extends Component {
   constructor() {
     super();
@@ -14,7 +15,7 @@ export class MenuItemList extends Component {
       cartItems: [],
       meals: [],
       totalCount: 0,
-      selectValue: "Surprise",
+      selectValue: "SURPRISE",
       saveButton: false,
     };
   }
@@ -104,19 +105,19 @@ export class MenuItemList extends Component {
         if (myItem.name !== "SKIP" && myItem.name !== "SURPRISE") {
           cartItemsArr.push(pushingObj);
           myCounter = myCounter + myItem.qty;
-          return this.setState({ selectValue: "Save" });
+          return this.setState({ selectValue: "SAVE" });
         } else {
           let select_val = myItem.name;
           let myoutput =
             select_val[0].toUpperCase() +
-            select_val.substring(1, select_val.length).toLowerCase();
+            select_val.substring(1, select_val.length).toUpperCase();
           return this.setState({ selectValue: myoutput });
         }
       });
     } else {
       this.setState({
         deliveryDay: "Sunday",
-        selectValue: "Surprise",
+        selectValue: "SURPRISE",
       });
     }
 
@@ -142,7 +143,14 @@ export class MenuItemList extends Component {
         cartItems.push({ ...menuitem, count: 1 });
       }
 
-      this.setState({ cartItems, totalCount: this.state.totalCount + 1 });
+      this.setState({
+        cartItems,
+        totalCount: this.state.totalCount + 1,
+        selectValue:
+          this.state.totalCount != this.state.totalMeals &&
+          this.state.totalCount != 0 &&
+          "",
+      });
     }
   };
 
@@ -156,7 +164,14 @@ export class MenuItemList extends Component {
             // alreadyInCart_1 = true;
             item.count--;
           }
-          this.setState({ cartItems, totalCount: this.state.totalCount - 1 });
+          this.setState({
+            cartItems,
+            totalCount: this.state.totalCount - 1,
+            selectValue:
+              this.state.totalCount != this.state.totalMeals &&
+              this.state.totalCount != 0 &&
+              "",
+          });
         }
       }
     });
@@ -178,7 +193,7 @@ export class MenuItemList extends Component {
     this.setState({
       selectValue: e.target.value,
     });
-    if (e.target.value === "Surprise") {
+    if (e.target.value === "SURPRISE") {
       if (this.state.myDate !== "") {
         const supriseData = [
           {
@@ -212,7 +227,7 @@ export class MenuItemList extends Component {
           cartItems: [],
         });
       }
-    } else if (e.target.value === "Skip") {
+    } else if (e.target.value === "SKIP") {
       const skipData = [
         {
           qty: "",
@@ -320,7 +335,7 @@ export class MenuItemList extends Component {
           saveButton: true,
         });
       } else {
-        return this.setState({ selectValue: "Surprise" });
+        return this.setState({ selectValue: "SURPRISE" });
       }
     });
     let cartItemsArr = [];
@@ -352,12 +367,12 @@ export class MenuItemList extends Component {
         if (myItem.name !== "SKIP" && myItem.name !== "SURPRISE") {
           cartItemsArr.push(pushingObj);
           myCounter = myCounter + myItem.qty;
-          return this.setState({ selectValue: "Save" });
+          return this.setState({ selectValue: "SAVE" });
         } else {
           let select_val = myItem.name;
           let myoutput =
             select_val[0].toUpperCase() +
-            select_val.substring(1, select_val.length).toLowerCase();
+            select_val.substring(1, select_val.length).toUpperCase();
 
           return this.setState({ selectValue: myoutput });
         }
@@ -407,12 +422,12 @@ export class MenuItemList extends Component {
         });
       return this.setState({
         deliveryDay: deliver,
-        selectValue: "Save",
+        selectValue: "SAVE",
       });
     }
     // } else if (this.state.selectValue === "Surprise") {
     else {
-      if (this.state.myDate !== "" && this.state.selectValue === "Surprise") {
+      if (this.state.myDate !== "" && this.state.selectValue === "SURPRISE") {
         const supriseData = [
           {
             qty: "",
@@ -447,39 +462,7 @@ export class MenuItemList extends Component {
         });
       }
     }
-    // } else {
-    //   const skipData = [
-    //     {
-    //       qty: "",
-    //       name: "SKIP",
-    //       price: "",
-    //       item_uid: "",
-    //     },
-    //   ];
-    //   const data2 = {
-    //     is_addon: false,
-    //     items: skipData,
-    //     purchase_id: this.state.purchaseID,
-    //     menu_date: this.state.myDate,
-    //     delivery_day: deliver,
-    //   };
-    //   axios
-    //     .post(
-    //       "https://ht56vci4v9.execute-api.us-west-1.amazonaws.com/dev/api/v2/meals_selection",
-    //       data2
-    //     )
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    //   return this.setState({
-    //     deliveryDay: deliver,
-    //     totalCount: 0,
-    //     cartItems: [],
-    //   });
-    // }
+
 
     return this.setState({
       deliveryDay: deliver,
@@ -492,6 +475,7 @@ export class MenuItemList extends Component {
 
     return (
       <div className={styles.mealMenuWrapper}>
+ 
         <Header
           data={this.state.data}
           dates={uniqueDates}

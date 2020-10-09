@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MealIndicator from "./MealIndicator";
-import styles from "./selectmeal.modules.css";
+import styles from "./selectmeal.module.css";
 class Header extends Component {
   showDeliveryDay = () => {
     const mySet = new Set();
@@ -29,7 +29,7 @@ class Header extends Component {
             this.props.deliveryDay !== dayselector ||
             this.props.deliveryDay === ""
               ? styles.selectionStyles
-              : styles.selectionStylesSelectedDays
+              : styles.selectionStyles && styles.selectedDays
           }
           onClick={(e) => this.props.setDeliveryDay(e)}
         >
@@ -41,7 +41,7 @@ class Header extends Component {
   };
 
   showSelectionOptions = () => {
-    let options = ["Surprise", "Skip", "Save"];
+    let options = ["SURPRISE", "SKIP", "SAVE"];
     let selections = [];
     for (const day of options) {
       let selectionOptions = day;
@@ -54,7 +54,7 @@ class Header extends Component {
             this.props.selectValue === "" ||
             this.props.selectValue !== selectionOptions
               ? styles.selectionStyles
-              : styles.selectionStylesSelectedDays
+              : styles.selectionStyles && styles.selectedDays
           }
           onClick={(e) => this.props.makeSelection(e)}
         >
@@ -103,15 +103,32 @@ class Header extends Component {
     return (
       <React.Fragment>
         <div className={styles.mealHeader}>
-          <i className='fa fa-bars headericon'></i>
-          <i className='fas fa-bell headericon'></i>
-          <i className='fa fa-share-alt headericon'></i>
-          <i className='fa fa-search headericon'></i>
+          {/* <i
+            style={{
+              flex: "1",
+              fontSize: "20px",
+              paddingLeft: "0.8rem",
+              width: "0px",
+            }}
+            className='fa fa-bars'
+          ></i> */}
+          <p
+            style={{
+              flex: "6",
+              textAlign: "center",
+              fontSize: "24px",
+              color: "black",
+              fontWeight: "bold",
+              paddingLeft: "50px",
+            }}
+          >
+            MENU THIS WEEK
+          </p>
+
+          {/* <p id={styles.local}>LOCAL. ORGANIC. RESPONSIBLE.</p> */}
+          <div className={styles.avatar}></div>
         </div>
-        <div className={styles.title}>
-          <p id={styles.chooseYourPlan}>MENU THIS WEEK</p>
-          <p id={styles.local}>LOCAL. ORGANIC. RESPONSIBLE.</p>
-        </div>
+
         <div className={styles.stickyHeader}>
           <select
             onChange={this.props.mealsOnChange}
@@ -120,7 +137,12 @@ class Header extends Component {
           >
             {meals.map((mealItem) => {
               let meal = JSON.parse(mealItem.items)[0];
-              return <option value={mealItem.purchase_id}>{meal.name}</option>;
+              let mealName = meal.name;
+              return (
+                <option value={mealItem.purchase_id}>
+                  {mealName.toUpperCase()}
+                </option>
+              );
             })}
           </select>
 

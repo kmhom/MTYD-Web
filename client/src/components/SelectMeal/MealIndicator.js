@@ -22,21 +22,21 @@ export default class MealIndicator extends Component {
             border: "1px solid #ebebeb",
             borderColor: "#dbcd65",
             borderRadius: "50px 0px 50px 0px",
-            padding: "0px 0px 0px 14px",
+            padding: "0px 0px 0px 16px",
             height: "2rem",
-            margin: "0rem 1rem",
+            margin: "0.3rem 2.5rem",
             width: "100%",
             backgroundImage: `linear-gradient(to right, ${
               selectCount === 0
                 ? (indicatorColor = "#42d4a8")
-                : (indicatorColor = "#e09d51")
-            } ${percentage}%, white 0%)`,
+                : (indicatorColor = "#FF9E19")
+            } ${percentage}%, #70642a 0%)`,
           }}
         >
           <p
             style={{
-              marginTop: "0.01rem",
-              color: selectCount === 0 ? "white" : "black",
+              marginTop: "0.36rem",
+              color: "white",
             }}
           >
             {selectCount === 0
