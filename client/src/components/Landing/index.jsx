@@ -20,7 +20,6 @@ import {
 
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-import AppleLogin from "react-apple-login";
 import styles from "./landing.module.css";
 
 class Landing extends React.Component {
@@ -48,16 +47,35 @@ class Landing extends React.Component {
     let urlParams = new URLSearchParams(queryString);
     // Clear Query parameters
     window.history.pushState({}, document.title, window.location.pathname);
-    // Automatic log in
     if (urlParams.has("email") && urlParams.has("hashed")) {
+      // Automatic log in
       this.props.bypassLogin(
         urlParams.get("email"),
         urlParams.get("hashed"),
         this.successLogin
       );
+    } else if (urlParams.has("email") && urlParams.has("token")) {
+      // User has just signed in with Apple
+      this.props.socialLoginAttempt(
+        urlParams.get("email"),
+        "Access Token",
+        urlParams.get("token"),
+        "APPLE",
+        this.successLogin,
+        this.socialSignUp
+      )
+      // Allow page to load if Apple Sign in with MTYD not succcessful
+      this.setState({
+        mounted: true,
+      });
     } else {
       this.setState({
         mounted: true,
+      });
+      window.AppleID.auth.init({
+        clientId : process.env.REACT_APP_APPLE_CLIENT_ID,
+        scope : 'email',
+        redirectURI : process.env.REACT_APP_APPLE_REDIRECT_URI
       });
     }
   }
@@ -105,11 +123,6 @@ class Landing extends React.Component {
       console.log("Facebook Login failed");
     }
   };
-
-  responseApple = (response) => {
-    console.log('Test')
-    console.log(response)
-  }
 
   render() {
     if (!this.state.mounted) {
@@ -211,14 +224,14 @@ class Landing extends React.Component {
           />
         </div>
         <div className={styles.socialLoginItem}>
-          <AppleLogin
-            clientId={process.env.REACT_APP_APPLE_CLIENT_ID}
-            redirectURI={process.env.REACT_APP_APPLE_REDIRECT_URI}
-            autoLoad={false}
-            responseMode={"query"}
-            callback={this.responseApple}
+          <button
+            onClick={() => {
+              window.AppleID.auth.signIn();
+            }}
             className={styles.loginSectionInput}
-          />
+          >
+            Apple Login
+          </button>
         </div>
       </div>
     );

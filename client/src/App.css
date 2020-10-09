@@ -456,7 +456,7 @@
     display: none;
   }
   .bottomNavBar {
-    display: block;
+    display: none;
     position: absolute;
     bottom: 0px;
     width: inherit;
