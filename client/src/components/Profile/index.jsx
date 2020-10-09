@@ -47,10 +47,6 @@ class Profile extends React.Component {
                 null
             )
         }
-        // Page if logged in
-        let firstName = document.cookie.split('; ').find(row => row.startsWith('customer_first_name')).split('=')[1];
-        let lastName= document.cookie.split('; ').find(row => row.startsWith('customer_last_name')).split('=')[1];
-        let email = document.cookie.split('; ').find(row => row.startsWith('customer_email')).split('=')[1];
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -87,8 +83,8 @@ class Profile extends React.Component {
                     </div>
                 </div>
                 <div className={styles.personalDetails}>
-                    <div> {firstName} {lastName} </div>
-                    <div> {email} </div>
+                    <div> First Last </div>
+                    <div> Email </div>
                 </div>
                 <div className={styles.headingContainer}>
                     <div className={styles.headingItem}>
