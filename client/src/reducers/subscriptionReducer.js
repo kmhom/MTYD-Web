@@ -1,13 +1,17 @@
 import {
-    LOGOUT_SUBSCRIPTION,
-    CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION, GET_TOTAL_PAYMENT,
-    CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
-    CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
-    CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, FETCH_PLAN_INFO, CHANGE_PAYMENT_PASSWORD,
+    LOGOUT_SUBSCRIPTION, FETCH_PLAN_INFO, CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION,
+    GET_TOTAL_PAYMENT, CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
+    FETCH_PROFILE_INFO, CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
+    CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, CHANGE_PAYMENT_PASSWORD, SUBMIT_PAYMENT,
 } from "./actions/subscriptionTypes";
 
 
 const initialState = {
+    profile: {
+        email: '',
+        socialMedia: '',
+        customerId: '',
+    },
     plans: [],
     numItems: [],
     paymentFrequency: [],
@@ -59,6 +63,17 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 selectedPlan: action.payload,
+            }
+
+        case FETCH_PROFILE_INFO:
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    email: action.payload.email,
+                    socialMedia: action.payload.socialMedia,
+                    customerId: action.payload.customerId,
+                }
             }
 
         case CHANGE_ADDRESS_FIRST_NAME:

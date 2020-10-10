@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-    changeAddressFirstName, changeAddressLastName, changeAddressStreet,
+    fetchProfileInformation, changeAddressFirstName, changeAddressLastName, changeAddressStreet,
     changeAddressUnit, changeAddressCity, changeAddressState, changeAddressZip,
     changeAddressPhone, changeDeliveryInstructions, changePaymentPassword, submitPayment
 } from '../../reducers/actions/subscriptionActions';
@@ -25,9 +25,14 @@ class PaymentDetails extends React.Component {
 
     componentDidMount() {
         if (document.cookie.split(';').some((item) => item.trim().startsWith('customer_uid='))) {
+            let customerUid = document.cookie
+            .split('; ')
+            .find((item) => item.startsWith('customer_uid='))
+            .split('=')[1];
             this.setState({
                 mounted: true,
             })
+            this.props.fetchProfileInformation(customerUid)
         } else {
             // Reroute to log in page
             this.props.history.push('/')
@@ -39,21 +44,9 @@ class PaymentDetails extends React.Component {
             return null;
         }
         let loggedInByPassword = false;
-        let socialMediaCookieValue = document.cookie
-            .split('; ')
-            .find((item) => item.startsWith('customer_social_media='))
-            .split('=')[1];
-        if (socialMediaCookieValue === 'null') {
+        if (this.props.socialMedia === 'NULL') {
             loggedInByPassword = true;
         }
-        let customerUid = document.cookie
-            .split('; ')
-            .find((item) => item.startsWith('customer_uid='))
-            .split('=')[1];
-        let customerEmail = document.cookie
-            .split('; ')
-            .find((item) => item.startsWith('customer_email='))
-            .split('=')[1];
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
@@ -200,7 +193,7 @@ class PaymentDetails extends React.Component {
                         className={styles.button}
                         onClick={() => {
                             this.props.submitPayment(
-                                customerEmail, customerUid, socialMediaCookieValue, this.props.password,
+                                this.props.email, this.props.customerId, this.props.socialMedia, this.props.password,
                                 this.props.firstName, this.props.lastName, this.props.phone,
                                 this.props.street, this.props.unit,
                                 this.props.city, this.props.state, this.props.zip,
@@ -243,6 +236,9 @@ PaymentDetails.propTypes = {
 }
 
 const mapStateToProps = state => ({
+    customerId: state.subscribe.profile.customerId,
+    socialMedia: state.subscribe.profile.socialMedia,
+    email: state.subscribe.profile.email,
     firstName: state.subscribe.addressInfo.firstName,
     lastName: state.subscribe.addressInfo.lastName,
     street: state.subscribe.address.street,
@@ -257,6 +253,7 @@ const mapStateToProps = state => ({
 })
 
 const functionList = {
+    fetchProfileInformation,
     changeAddressFirstName,
     changeAddressLastName,
     changeAddressStreet,
