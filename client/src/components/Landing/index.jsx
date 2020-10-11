@@ -10,14 +10,6 @@ import {
 } from "../../reducers/actions/loginActions";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faBell,
-  faShareAlt,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
-
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import styles from "./landing.module.css";
@@ -37,6 +29,15 @@ class Landing extends React.Component {
         this.props.history.push("/choose-plan");
     }
   };
+
+ viewPassword() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  } 
 
   socialSignUp = () => {
     this.props.history.push("social-sign-up");
@@ -117,37 +118,15 @@ class Landing extends React.Component {
     return (
       <div className={styles.root}>
         <div className={styles.mealHeader}>
-          <div className={styles.headerItemContainer}>
-            <div className={styles.headerItem}>
-              {" "}
-              <FontAwesomeIcon icon={faBars} className={"headerIcon"} />{" "}
-            </div>
-            <div className={styles.headerItem}>
-              {" "}
-              <FontAwesomeIcon icon={faBell} className={"headerIcon"} />{" "}
-            </div>
-            <div className={styles.headerItem}>
-              {" "}
-              <FontAwesomeIcon
-                icon={faShareAlt}
-                className={"headerIcon"}
-              />{" "}
-            </div>
-            <div className={styles.headerItem}>
-              {" "}
-              <FontAwesomeIcon icon={faSearch} className={"headerIcon"} />{" "}
-            </div>
-          </div>
-          <div className='title'>
-            <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
-            <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
-          </div>
+         <p>NUTRITION MADE EASY</p>
+         <p>LOCAL.ORGANIC.RESPONSIBLE</p>
         </div>
+        <div style={{backgroundColor:"#00000054", height:"100%"}}>
         <div className={styles.loginSectionContainer}>
           <div className={styles.loginSectionItem}>
             <input
               type='text'
-              placeholder='email'
+              placeholder='USER NAME'
               className={styles.loginSectionInput}
               value={this.props.email}
               onChange={(e) => {
@@ -157,18 +136,22 @@ class Landing extends React.Component {
           </div>
           <div className={styles.loginSectionItem}>
             <input
+            style={{marginBottom:"0px"}}
               type='password'
-              placeholder='password'
+              id="password"
+              placeholder='PASSWORD'
               className={styles.loginSectionInput}
               value={this.props.password}
               onChange={(e) => {
                 this.props.changePassword(e.target.value);
               }}
             />
+          <i class="far fa-eye" id="togglePassword" onClick={this.viewPassword}></i>
           </div>
+          <p style={{marginLeft:"9rem",fontSize:"1rem",color:"white", float:"right"}}>Forgot Password?</p>
         </div>
         <div className={styles.buttonContainer}>
-          <div className={styles.buttonContainerItem}>
+          
             <button
               className={styles.button}
               onClick={() => {
@@ -179,37 +162,30 @@ class Landing extends React.Component {
                 );
               }}
             >
-              Sign In
+              LOGIN
             </button>
-          </div>
-          <div className={styles.buttonContainerItem}>
             <Link to='sign-up'>
-              <button className={styles.button}>Sign Up</button>
+              <button className={styles.button}>SIGNUP</button>
             </Link>
-          </div>
         </div>
-        <div className={styles.socialLoginItem}>
-          <GoogleLogin
+        <hr style={{marginTop:"2rem",color:"#E392409D", width:"300px"}}></hr>
+        <p style={{color:"white", textAlign:"center", fontSize:"1rem", paddingTop:"1.2rem"}}>LOGIN OR SIGNUP WITH</p>
+              <div style={{marginTop:"20px", display:"flex", flexDirection:"column", alignItems:"center"}}>
+              <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
             buttonText='Login with Google'
             onSuccess={this.responseGoogle}
             onFailure={this.responseGoogle}
             isSignedIn={false}
-            disabled={false}
+            disabled= {false} 
             cookiePolicy={"single_host_origin"}
-            className={styles.loginSectionInput}
           />
-        </div>
-        <div className={styles.socialLoginItem}>
           <FacebookLogin
             appId={process.env.REACT_APP_FACEBOOK_APP_ID}
             autoLoad={false}
             fields={"name,email,picture"}
             callback={this.responseFacebook}
-            className={styles.loginSectionInput}
           />
-        </div>
-        <div className={styles.socialLoginItem}>
           <button
             onClick={() => {
               window.AppleID.auth.signIn();
@@ -218,6 +194,8 @@ class Landing extends React.Component {
           >
             Apple Login
           </button>
+              </div>
+          
         </div>
       </div>
     );

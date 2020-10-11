@@ -1,6 +1,4 @@
-// import { number } from "prop-types";
 import React, { Component } from "react";
-// import mealicon from "../ChoosePlan/dish.png";
 
 export default class MealIndicator extends Component {
   render() {
@@ -28,15 +26,16 @@ export default class MealIndicator extends Component {
             width: "100%",
             backgroundImage: `linear-gradient(to right, ${
               selectCount === 0
-                ? (indicatorColor = "#42d4a8")
-                : (indicatorColor = "#FF9E19")
+                ? (indicatorColor = "#FF9E19")
+                : (indicatorColor = "#FFF0C6")
             } ${percentage}%, #70642a 0%)`,
           }}
         >
           <p
             style={{
               marginTop: "0.36rem",
-              color: "white",
+              color: "black",
+              fontSize:"1rem"
             }}
           >
             {selectCount === 0

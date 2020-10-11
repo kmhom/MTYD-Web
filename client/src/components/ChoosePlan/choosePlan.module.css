@@ -131,17 +131,15 @@
 
 .paymentButton {
   color: #5a5a5a;
-  border: 2px solid #d3d3d3;
-  background-color: #ffffff;
+  border: none;
   -moz-border-radius: 50%;
   border-radius: 50%;
   margin: 10px;
-  padding: 20px;
+  padding: 2px;
 }
 
 .paymentButtonSelected {
-  background-color: green;
-  color: white;
+  background-color: #ffba00;
 }
 
 .amount {

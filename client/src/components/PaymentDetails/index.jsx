@@ -54,53 +54,40 @@ class PaymentDetails extends React.Component {
     if (!this.state.mounted) {
       return null;
     }
-    let loggedInByPassword = false;
-    let socialMediaCookieValue = document.cookie
-      .split("; ")
-      .find((item) => item.startsWith("customer_social_media="))
-      .split("=")[1];
-    if (socialMediaCookieValue === "null") {
-      loggedInByPassword = true;
-    }
+    let loggedInByPassword = true;
+    let socialMediaCookieValue = ""
+    //   .split("; ")
+    //   .find((item) => item.startsWith("customer_social_media="))
+    //   .split("=")[1];
+    // if (socialMediaCookieValue === "null") {
+    //   loggedInByPassword = true;
+    // }
     let customerUid = document.cookie
       .split("; ")
       .find((item) => item.startsWith("customer_uid="))
       .split("=")[1];
-    let customerEmail = document.cookie
-      .split("; ")
-      .find((item) => item.startsWith("customer_email="))
-      .split("=")[1];
+    let customerEmail = "rocktejas44@gmail.com"
     return (
       <div className={styles.root}>
         <div className={styles.mealHeader}>
-          <div className={styles.headerItemContainer}>
-            <div className={styles.headerItem}>
-              {" "}
-              <FontAwesomeIcon icon={faBars} className={"headerIcon"} />{" "}
-            </div>
-            <div className={styles.headerItem}>
-              {" "}
-              <FontAwesomeIcon icon={faBell} className={"headerIcon"} />{" "}
-            </div>
-            <div className={styles.headerItem}>
-              {" "}
-              <FontAwesomeIcon
-                icon={faShareAlt}
-                className={"headerIcon"}
-              />{" "}
-            </div>
-            <div className={styles.headerItem}>
-              {" "}
-              <FontAwesomeIcon icon={faSearch} className={"headerIcon"} />{" "}
-            </div>
-          </div>
-          <div className='title'>
-            <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
-            <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
-          </div>
+        <p
+            style={{
+              flex: "6",
+              textAlign: "center",
+              fontSize: "1.6rem",
+              color: "black",
+              fontWeight: "bold",
+              paddingLeft: "50px",
+            }}
+          >
+            DELIVERY INFO
+          </p>
+
+          <div className={styles.avatar}></div>
         </div>
+        <div style={{ alignSelf:"center", marginTop:"1rem", paddingBottom:"15px", margin:"2rem", borderRadius:"15px", boxShadow:"1px 1px 1px 2px #d3d3d3 "}}>
         <div className={styles.topHeading}>
-          <h6 className={styles.subHeading}> Payment Options </h6>
+          <h6 className={styles.subHeading}> DELIVERY ADDRESS </h6>
         </div>
         <div className={styles.cardContainer}>
           <div className={styles.cardItem}></div>
@@ -108,12 +95,12 @@ class PaymentDetails extends React.Component {
           <div className={styles.cardItem}></div>
           <div className={styles.cardItem}></div>
         </div>
-        <h6 className={styles.subHeading}> Address Details </h6>
+        {/* <h6 className={styles.subHeading}> Address Details </h6> */}
         <div className={styles.inputContainer}>
           <div className={styles.inputItem}>
             <input
               type='text'
-              placeholder='First Name'
+              placeholder='First Name*'
               className={styles.input}
               value={this.props.firstName}
               onChange={(e) => {
@@ -124,7 +111,7 @@ class PaymentDetails extends React.Component {
           <div className={styles.inputItem}>
             <input
               type='text'
-              placeholder='Last Name'
+              placeholder='Last Name*'
               className={styles.input}
               value={this.props.lastName}
               onChange={(e) => {
@@ -135,7 +122,7 @@ class PaymentDetails extends React.Component {
           <div className={styles.inputItem}>
             <input
               type='text'
-              placeholder='Address'
+              placeholder='Address*'
               className={styles.input}
               value={this.props.street}
               onChange={(e) => {
@@ -143,10 +130,20 @@ class PaymentDetails extends React.Component {
               }}
             />
           </div>
+          <div style={{flexBasis:"100%"}} className={styles.inputItem}>
+            <input
+              type='email'
+              placeholder='Email**'
+              className={styles.input}
+              // value={this.props.street}
+             
+            />
+          </div>
+          
           <div className={styles.inputItem}>
             <input
               type='text'
-              placeholder='Unit'
+              placeholder='Unit*'
               className={styles.input}
               value={this.props.unit}
               onChange={(e) => {
@@ -157,7 +154,7 @@ class PaymentDetails extends React.Component {
           <div className={styles.inputItem}>
             <input
               type='text'
-              placeholder='City'
+              placeholder='City*'
               className={styles.input}
               value={this.props.city}
               onChange={(e) => {
@@ -168,7 +165,7 @@ class PaymentDetails extends React.Component {
           <div className={styles.inputItem}>
             <input
               type='text'
-              placeholder='State'
+              placeholder='State*'
               className={styles.input}
               value={this.props.state}
               onChange={(e) => {
@@ -179,7 +176,7 @@ class PaymentDetails extends React.Component {
           <div className={styles.inputItem}>
             <input
               type='text'
-              placeholder='Zip'
+              placeholder='Zip*'
               className={styles.input}
               value={this.props.zip}
               onChange={(e) => {
@@ -190,7 +187,7 @@ class PaymentDetails extends React.Component {
           <div className={styles.inputItem}>
             <input
               type='text'
-              placeholder='Phone Number'
+              placeholder='Phone Number*'
               className={styles.input}
               value={this.props.phone}
               onChange={(e) => {
@@ -199,9 +196,10 @@ class PaymentDetails extends React.Component {
             />
           </div>
           <div className={styles.inputItem}>
-            <textarea
+            <textarea rows="7" cols="42"
               placeholder='Delivery Instructions'
-              className={styles.input}
+              style={{border: "none",
+              backgroundColor: "#fff0c6",borderRadius: "18px"}}
               value={this.props.instructions}
               onChange={(e) => {
                 this.props.changeDeliveryInstructions(e.target.value);
@@ -221,6 +219,43 @@ class PaymentDetails extends React.Component {
               />
             </div>
           )}
+          
+        </div>
+        <div style={{marginTop:"2rem"}} className={styles.topHeading}>
+          <h6 className={styles.subHeading}> BILLING INFORMATION </h6>
+        </div>
+        <div className={styles.inputContainer}>
+          <div style={{flexBasis:"100%"}} className={styles.inputItem}>
+            <input
+              type='text'
+              placeholder='Credit Card Number'
+              className={styles.input}
+            />
+          </div>
+          <div style={{flexBasis:"25%"}} className={styles.inputItem}>
+            <input
+              type='text'
+              placeholder='CVC/CVV'
+              className={styles.input}
+            />
+          </div>
+          <div style={{flexBasis:"25%"}} className={styles.inputItem}>
+            <input
+              type='text'
+              placeholder='Zip'
+              className={styles.input}
+            />
+          </div>
+          <div style={{flexBasis:"40%"}} className={styles.inputItem}>
+            <select 
+              className={styles.input}
+            > <option>Month </option></select>
+          </div>
+          <div style={{flexBasis:"40%"}} className={styles.inputItem}>
+          <select 
+              className={styles.input}
+            > <option>Year </option></select>
+          </div>
         </div>
         <div className={styles.buttonContainer}>
           <button
@@ -247,8 +282,9 @@ class PaymentDetails extends React.Component {
               );
             }}
           >
-            DONE
+            SAVE
           </button>
+        </div>
         </div>
       </div>
     );

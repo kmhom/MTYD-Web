@@ -9,9 +9,12 @@ import {
 
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-
 import styles from "./choosePlan.module.css";
 import takeaway from './take-away.svg'
+import paymentOption1 from './Group 2016.svg'
+import paymentOption2 from './Group 2029.svg'
+import paymentOption3 from './Group 2030.svg'
+
 class ChoosePlan extends React.Component {
   constructor() {
     super();
@@ -43,6 +46,7 @@ class ChoosePlan extends React.Component {
       styles.mealButton + " " + styles.mealButtonSelected;
     let mealButtons = [];
     for (const plan of this.props.numItems) {
+      
       let planStr = plan.toString();
       mealButtons.push(
         <button
@@ -68,14 +72,16 @@ class ChoosePlan extends React.Component {
   };
 
   paymentFrequency = () => {
+    let myArr = [paymentOption1, paymentOption2, paymentOption3 ]
     let deselectedPaymentOption = styles.paymentButton;
     let selectedPaymentOption =
       styles.paymentButton + " " + styles.paymentButtonSelected;
     let paymentOptionButtons = [];
-    for (const option of this.props.paymentFrequency) {
+    for (const [i,option] of this.props.paymentFrequency.entries()) {
+      
       let optionStr = option.toString();
       paymentOptionButtons.push(
-        <button
+        <img src={myArr[i]}
           key={optionStr}
           className={
             this.props.paymentOption === optionStr
@@ -90,8 +96,8 @@ class ChoosePlan extends React.Component {
             )
           }
         >
-          {optionStr}
-        </button>
+          {/* {optionStr} */}
+        </img>
       );
     }
     return paymentOptionButtons;
@@ -141,7 +147,7 @@ class ChoosePlan extends React.Component {
             <div className={styles.buttonWrapper}>{this.mealsDelivery()}</div>
           </div>
           <hr style={{color:"#FFBA00"}}/>
-          <p className={styles.subTitle2}>PRE PAY OPTIONS</p>
+          <p style={{color:"black", fontSize:"1.3rem",fontWeight:"600", margin:"0rem", paddingLeft:"0.7rem"}} >PRE PAY OPTIONS</p>
           <div className={styles.paymentWrapper}>{this.paymentFrequency()}</div>
           <div className={styles.amount}>
               <p style={{padding:"11px 0px 0px 0px", height:"40px" ,textAlign:"center", backgroundColor:"#FFF0C6", fontSize:"large", fontWeight:"600", color:"black"}} className={styles.amountItem}> $$ TOTAL {this.props.selectedPlan.item_price} </p>
