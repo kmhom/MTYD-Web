@@ -121,7 +121,7 @@ class Landing extends React.Component {
          <p>NUTRITION MADE EASY</p>
          <p>LOCAL.ORGANIC.RESPONSIBLE</p>
         </div>
-        <div style={{backgroundColor:"#00000054", height:"100%"}}>
+        <div style={{ backgroundColor:"#00000054", height:"100%"}}>
         <div className={styles.loginSectionContainer}>
           <div className={styles.loginSectionItem}>
             <input
