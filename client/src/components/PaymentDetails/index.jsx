@@ -8,7 +8,6 @@ import {
 } from '../../reducers/actions/subscriptionActions';
 
 import { withRouter } from 'react-router';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faBell, faShareAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -48,167 +47,226 @@ class PaymentDetails extends React.Component {
             loggedInByPassword = true;
         }
         return (
-            <div className={styles.root}>
-                <div className={styles.mealHeader}>
-                    <div className={styles.headerItemContainer}>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
-                    </div>
-                    <div className='title'>
-                        <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
-                        <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
-                    </div>
-                </div>
-                <div className={styles.topHeading}>
-                    <h6 className={styles.subHeading}> Payment Options </h6>
-                </div>
-                <div className={styles.cardContainer}>
-                    <div className={styles.cardItem}>
-                    </div>
-                    <div className={styles.cardItem}>
-                    </div>
-                    <div className={styles.cardItem}>
-                    </div>
-                    <div className={styles.cardItem}>
-                    </div>
-                </div>
-                <h6 className={styles.subHeading}> Address Details </h6>
-                <div className={styles.inputContainer}>
-                    <div className={styles.inputItem}>
-                        <input
-                            type="text"
-                            placeholder="First Name"
-                            className={styles.input}
-                            value={this.props.firstName}
-                            onChange={(e) => {
-                                this.props.changeAddressFirstName(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.inputItem}>
-                        <input
-                            type="text"
-                            placeholder="Last Name"
-                            className={styles.input}
-                            value={this.props.lastName}
-                            onChange={(e) => {
-                                this.props.changeAddressLastName(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.inputItem}>
-                        <input
-                            type="text"
-                            placeholder="Address"
-                            className={styles.input}
-                            value={this.props.street}
-                            onChange={(e) => {
-                                this.props.changeAddressStreet(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.inputItem}>
-                        <input
-                            type="text"
-                            placeholder="Unit"
-                            className={styles.input}
-                            value={this.props.unit}
-                            onChange={(e) => {
-                                this.props.changeAddressUnit(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.inputItem}>
-                        <input
-                            type="text"
-                            placeholder="City"
-                            className={styles.input}
-                            value={this.props.city}
-                            onChange={(e) => {
-                                this.props.changeAddressCity(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.inputItem}>
-                        <input
-                            type="text"
-                            placeholder="State"
-                            className={styles.input}
-                            value={this.props.state}
-                            onChange={(e) => {
-                                this.props.changeAddressState(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.inputItem}>
-                        <input
-                            type="text"
-                            placeholder="Zip"
-                            className={styles.input}
-                            value={this.props.zip}
-                            onChange={(e) => {
-                                this.props.changeAddressZip(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.inputItem}>
-                        <input
-                            type="text"
-                            placeholder="Phone Number"
-                            className={styles.input}
-                            value={this.props.phone}
-                            onChange={(e) => {
-                                this.props.changeAddressPhone(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className={styles.inputItem}>
-                        <textarea
-                            placeholder="Delivery Instructions"
-                            className={styles.input}
-                            value={this.props.instructions}
-                            onChange={(e) => {
-                                this.props.changeDeliveryInstructions(e.target.value);
-                            }}
-                        />
-                    </div>
-                    {loggedInByPassword &&
-                    <div className={styles.inputItem}>
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            className={styles.input}
-                            value={this.props.password}
-                            onChange={(e) => {
-                                this.props.changePaymentPassword(e.target.value);
-                            }}
-                        />
-                    </div>
-                    }
-                </div>
-                <div className={styles.buttonContainer}>
-                    <button
-                        className={styles.button}
-                        onClick={() => {
-                            this.props.submitPayment(
-                                this.props.email, this.props.customerId, this.props.socialMedia, this.props.password,
-                                this.props.firstName, this.props.lastName, this.props.phone,
-                                this.props.street, this.props.unit,
-                                this.props.city, this.props.state, this.props.zip,
-                                this.props.instructions, this.props.selectedPlan,
-                                () => {
-                                    this.props.history.push('/select-meal')
-                                }
-                            );
-                        }}
-                    >
-                        DONE
-                    </button>
-                </div>
+          <div className={styles.root}>
+          <div className={styles.mealHeader}>
+          <p
+              style={{
+                flex: "6",
+                textAlign: "center",
+                fontSize: "1.6rem",
+                color: "black",
+                fontWeight: "bold",
+                paddingLeft: "50px",
+              }}
+            >
+              DELIVERY INFO
+            </p>
+  
+            <div className={styles.avatar}></div>
+          </div>
+          <div style={{ alignSelf:"center", marginTop:"1rem", paddingBottom:"15px", margin:"2rem", borderRadius:"15px", boxShadow:"1px 1px 1px 2px #d3d3d3 "}}>
+          <div className={styles.topHeading}>
+            <h6 className={styles.subHeading}> DELIVERY ADDRESS </h6>
+          </div>
+          <div className={styles.cardContainer}>
+            <div className={styles.cardItem}></div>
+            <div className={styles.cardItem}></div>
+            <div className={styles.cardItem}></div>
+            <div className={styles.cardItem}></div>
+          </div>
+          {/* <h6 className={styles.subHeading}> Address Details </h6> */}
+          <div className={styles.inputContainer}>
+            <div className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='First Name*'
+                className={styles.input}
+                value={this.props.firstName}
+                onChange={(e) => {
+                  this.props.changeAddressFirstName(e.target.value);
+                }}
+              />
             </div>
-        );
+            <div className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='Last Name*'
+                className={styles.input}
+                value={this.props.lastName}
+                onChange={(e) => {
+                  this.props.changeAddressLastName(e.target.value);
+                }}
+              />
+            </div>
+            <div className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='Address*'
+                className={styles.input}
+                value={this.props.street}
+                onChange={(e) => {
+                  this.props.changeAddressStreet(e.target.value);
+                }}
+              />
+            </div>
+            <div style={{flexBasis:"100%"}} className={styles.inputItem}>
+              <input
+                type='email'
+                placeholder='Email**'
+                className={styles.input}
+                // value={this.props.street}
+               
+              />
+            </div>
+            
+            <div className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='Unit*'
+                className={styles.input}
+                value={this.props.unit}
+                onChange={(e) => {
+                  this.props.changeAddressUnit(e.target.value);
+                }}
+              />
+            </div>
+            <div className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='City*'
+                className={styles.input}
+                value={this.props.city}
+                onChange={(e) => {
+                  this.props.changeAddressCity(e.target.value);
+                }}
+              />
+            </div>
+            <div className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='State*'
+                className={styles.input}
+                value={this.props.state}
+                onChange={(e) => {
+                  this.props.changeAddressState(e.target.value);
+                }}
+              />
+            </div>
+            <div className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='Zip*'
+                className={styles.input}
+                value={this.props.zip}
+                onChange={(e) => {
+                  this.props.changeAddressZip(e.target.value);
+                }}
+              />
+            </div>
+            <div className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='Phone Number*'
+                className={styles.input}
+                value={this.props.phone}
+                onChange={(e) => {
+                  this.props.changeAddressPhone(e.target.value);
+                }}
+              />
+            </div>
+            <div className={styles.inputItem}>
+              <textarea rows="7" cols="42"
+                placeholder='Delivery Instructions'
+                style={{border: "none",
+                backgroundColor: "#fff0c6",borderRadius: "18px"}}
+                value={this.props.instructions}
+                onChange={(e) => {
+                  this.props.changeDeliveryInstructions(e.target.value);
+                }}
+              />
+            </div>
+            {loggedInByPassword && (
+              <div className={styles.inputItem}>
+                <input
+                  type='password'
+                  placeholder='Password'
+                  className={styles.input}
+                  value={this.props.password}
+                  onChange={(e) => {
+                    this.props.changePaymentPassword(e.target.value);
+                  }}
+                />
+              </div>
+            )}
+            
+          </div>
+          <div style={{marginTop:"2rem"}} className={styles.topHeading}>
+            <h6 className={styles.subHeading}> BILLING INFORMATION </h6>
+          </div>
+          <div className={styles.inputContainer}>
+            <div style={{flexBasis:"100%"}} className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='Credit Card Number'
+                className={styles.input}
+              />
+            </div>
+            <div style={{flexBasis:"25%"}} className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='CVC/CVV'
+                className={styles.input}
+              />
+            </div>
+            <div style={{flexBasis:"25%"}} className={styles.inputItem}>
+              <input
+                type='text'
+                placeholder='Zip'
+                className={styles.input}
+              />
+            </div>
+            <div style={{flexBasis:"40%"}} className={styles.inputItem}>
+              <select 
+                className={styles.input}
+              > <option>Month </option></select>
+            </div>
+            <div style={{flexBasis:"40%"}} className={styles.inputItem}>
+            <select 
+                className={styles.input}
+              > <option>Year </option></select>
+            </div>
+          </div>
+          <div className={styles.buttonContainer}>
+            <button
+              className={styles.button}
+              onClick={() => {
+                this.props.submitPayment(
+                  this.props.email, 
+                  this.props.customerId, 
+                  this.props.socialMedia,
+                  this.props.password,
+                  this.props.firstName,
+                  this.props.lastName,
+                  this.props.phone,
+                  this.props.street,
+                  this.props.unit,
+                  this.props.city,
+                  this.props.state,
+                  this.props.zip,
+                  this.props.instructions,
+                  this.props.selectedPlan,
+                  () => {
+                    this.props.history.push("/select-meal");
+                  }
+                );
+              }}
+            >
+              SAVE
+            </button>
+          </div>
+          </div>
+        </div>
+      );
     }
 }
 

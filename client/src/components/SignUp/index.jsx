@@ -16,14 +16,6 @@ import {
     submitPasswordSignUp,
   } from "../../reducers/actions/loginActions";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faBell,
-  faShareAlt,
-  faSearch,
-} from "@fortawesome/free-solid-svg-icons";
-
 import styles from './signup.module.css'
 
 class SignUp extends React.Component {
@@ -36,17 +28,13 @@ class SignUp extends React.Component {
         return (
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
-                    <div className={styles.headerItemContainer}>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
-                    </div>
-                    <div className='title'>
-                        <h4 className='mainTitle'>SIGN UP</h4>
-                        <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
-                    </div>
+                <p>NUTRITION MADE EASY</p>
+                <p>LOCAL.ORGANIC.RESPONSIBLE</p>
                 </div>
+                <div style={{backgroundColor: "#00000074"}}>
+
+               
+                <div style={{border:"2px solid #FFA500",alignSelf:"center", margin:"0rem 2rem 2rem 2rem", paddingBottom:"15px", borderRadius:"15px", boxShadow:"1px 1px 1px 2px #d3d3d3 ",backgroundColor:"white", height:"70%"}}>
                 <h6 className={styles.subHeading}> User Information </h6>
                 <div className={styles.inputContainer}>
                     <div className={styles.inputItem}>
@@ -188,6 +176,8 @@ class SignUp extends React.Component {
                     >
                         SIGN UP
                     </button>
+                </div>
+                </div>
                 </div>
             </div>
         )

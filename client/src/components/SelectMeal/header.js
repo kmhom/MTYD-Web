@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import MealIndicator from "./MealIndicator";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-export class Header extends Component {
+import styles from "./selectmeal.module.css";
+class Header extends Component {
+  
   showDeliveryDay = () => {
     const mySet = new Set();
     this.props.data.map((menuitem) => {
@@ -18,8 +18,7 @@ export class Header extends Component {
       str = myarr[0];
       temp = str.replace(/[^a-zA-Z ]/g, "").split(" ");
     }
-    let deselectedMealButton = "selection-styles";
-    let selectedMealButton = "selection-styles selected-days";
+
     let mealdays = [];
     for (const day of temp) {
       let dayselector = day;
@@ -29,10 +28,9 @@ export class Header extends Component {
           value={dayselector}
           className={
             this.props.deliveryDay !== dayselector ||
-            this.props.deliveryDay === "" ||
-            this.props.saveButton
-              ? deselectedMealButton
-              : selectedMealButton
+            this.props.deliveryDay === ""
+              ? styles.selectionStyles
+              : styles.selectionStyles && styles.selectedDays
           }
           onClick={(e) => this.props.setDeliveryDay(e)}
         >
@@ -44,22 +42,20 @@ export class Header extends Component {
   };
 
   showSelectionOptions = () => {
-    let deselectedMealButton = "selection-styles";
-    let selectedMealButton = "selection-styles selected-days";
-    let options = ["Surprise", "Skip", "Save"];
+    let options = ["SURPRISE", "SKIP", "SAVE"];
     let selections = [];
     for (const day of options) {
       let selectionOptions = day;
       selections.push(
         <button
           id={selectionOptions}
+          key={selectionOptions}
           value={selectionOptions}
           className={
             this.props.selectValue === "" ||
-            this.props.selectValue !== selectionOptions ||
-            this.props.saveButton
-              ? deselectedMealButton
-              : selectedMealButton
+            this.props.selectValue !== selectionOptions
+              ? styles.selectionStyles
+              : styles.selectionStyles && styles.selectedDays
           }
           onClick={(e) => this.props.makeSelection(e)}
         >
@@ -73,6 +69,7 @@ export class Header extends Component {
   render() {
     const { meals, totalCount, totalMeals } = this.props;
     let mealsCount = parseInt(totalMeals);
+
     //To disable and enable save button
     if (document.getElementById("Save") !== null) {
       if (totalCount !== mealsCount) {
@@ -93,7 +90,11 @@ export class Header extends Component {
 
     //To disable and enable meal-plan picker
     if (document.getElementById("meal-plan-picker") !== null) {
-      if (totalCount > 0 && totalCount != totalMeals) {
+      if (
+        totalCount > 0 &&
+        totalCount != totalMeals &&
+        this.props.selectValue !== "Skip"
+      ) {
         document.getElementById("meal-plan-picker").disabled = true;
       } else {
         document.getElementById("meal-plan-picker").disabled = false;
@@ -102,41 +103,67 @@ export class Header extends Component {
 
     return (
       <React.Fragment>
-        <div className='meal-header'>
-          <i class='fa fa-bars headericon'></i>
-          <i class='fas fa-bell headericon'></i>
-          <i class='fa fa-share-alt headericon'></i>
-          <i class='fa fa-search headericon'></i>
+        <div className={styles.mealHeader}>
+          {/* <i
+            style={{
+              flex: "1",
+              fontSize: "20px",
+              paddingLeft: "0.8rem",
+              width: "0px",
+            }}
+            className='fa fa-bars'
+          ></i> */}
+          <p
+            style={{
+              flex: "6",
+              textAlign: "center",
+              fontSize: "24px",
+              color: "black",
+              fontWeight: "bold",
+              paddingLeft: "50px",
+            }}
+          >
+            MENU THIS WEEK
+          </p>
+
+          {/* <p id={styles.local}>LOCAL. ORGANIC. RESPONSIBLE.</p> */}
+          <div className={styles.avatar}></div>
         </div>
-        <div className='title'>
-          <p id='chooseYourPlan'>MENU THIS WEEK</p>
-          <p id='local'>LOCAL. ORGANIC. RESPONSIBLE.</p>
-        </div>
-        <div className='sticky-header'>
+
+        <div className={styles.stickyHeader}>
           <select
             onChange={this.props.mealsOnChange}
-            className='pickers'
-            id='meal-plan-picker'
+            className={styles.pickers}
+            id={styles.mealPlanPicker}
           >
             {meals.map((mealItem) => {
               let meal = JSON.parse(mealItem.items)[0];
-              return <option>{meal.name}</option>;
+              let mealName = meal.name;
+              return (
+                <option value={mealItem.purchase_id}>
+                  {mealName.toUpperCase()}
+                </option>
+              );
             })}
           </select>
-          <FontAwesomeIcon icon={["far", "fa-angle-down"]} />
+
           <select
             onChange={this.props.filterDates}
             value={this.props.date}
             name='date'
-            id='date'
-            className='pickers'
+            id={styles.date}
+            className={styles.pickers}
           >
             {this.props.dates.map((date) => (
-              <option value={date}>{date}</option>
+              <option key={date} value={date}>
+                {date}
+              </option>
             ))}
           </select>
-          <div className='delivery-days'>{this.showDeliveryDay()}</div>
-          <div className='suprise-skip-save'>{this.showSelectionOptions()}</div>
+          <div className={styles.deliveryDays}>{this.showDeliveryDay()}</div>
+          <div className={styles.supriseSkipSave}>
+            {this.showSelectionOptions()}
+          </div>
           <MealIndicator
             totalCount={this.props.totalCount}
             totalMeals={this.props.totalMeals}
