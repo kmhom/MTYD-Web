@@ -218,7 +218,7 @@ export const bypassLogin = (email, hashedPassword, callback) => dispatch => {
     })
     .then((res) => {
         if(!(res.data.code && res.data.code !== 200)) {
-            let customerInfo = res.data.result;
+            let customerInfo = res.data.result[0];
             console.log(customerInfo);
             console.log('cookie',document.cookie)
             document.cookie = 'customer_uid=' + customerInfo.customer_uid;

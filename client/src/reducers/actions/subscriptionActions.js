@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 import {
-    LOGOUT_SUBSCRIPTION,
-    FETCH_PLAN_INFO, CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION, GET_TOTAL_PAYMENT,
-    CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
-    CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
+    LOGOUT_SUBSCRIPTION, FETCH_PLAN_INFO, CHOOSE_MEALS_EACH_DELIVERY, CHOOSE_PAYMENT_OPTION,
+    GET_TOTAL_PAYMENT, CHANGE_ADDRESS_FIRST_NAME, CHANGE_ADDRESS_LAST_NAME, CHANGE_ADDRESS_STREET,
+    FETCH_PROFILE_INFO, CHANGE_ADDRESS_UNIT, CHANGE_ADDRESS_CITY, CHANGE_ADDRESS_STATE, CHANGE_ADDRESS_ZIP,
     CHANGE_ADDRESS_PHONE, CHANGE_DELIVERY_INSTRUCTIONS, CHANGE_PAYMENT_PASSWORD, SUBMIT_PAYMENT,
 } from "../actions/subscriptionTypes";
 
@@ -79,6 +78,32 @@ const calculateTotalPayment = (dispatch, plans,meal,options) => {
             })
         }
     }
+}
+
+export const fetchProfileInformation = (customerId) => dispatch => {
+    axios
+    .get(API_URL + 'Profile/' + customerId)
+    .then((res) => {
+        console.log(res);
+        let customerInfo = res.data.result[0];
+        let email = customerInfo.customer_email;
+        let socialMedia = customerInfo.user_social_media !== null ? customerInfo.user_social_media : 'NULL';
+        console.log(socialMedia);
+        dispatch({
+            type: FETCH_PROFILE_INFO,
+            payload: {
+                customerId: customerId,
+                email: email,
+                socialMedia: socialMedia,
+            }
+        })
+    })
+    .catch((err) => {
+        console.log(err);
+        if(err.response) {
+            console.log(err.response);
+        }
+    })
 }
 
 export const changeAddressFirstName = (newFirstName) => dispatch => {
@@ -159,7 +184,8 @@ export const submitPayment = (
     deliveryAddress, deliveryUnit, deliveryCity, deliveryState, deliveryZip,
     deliveryInstructions, selectedPlan, callback
 ) => dispatch => {
-    if(loginMethod === 'null'){
+    console.log(customerEmail,customerUid,loginMethod)
+    if(loginMethod === 'NULL'){
         // Prepare to login
         axios
         .get(API_URL+'accountsalt',{
@@ -243,7 +269,7 @@ export const submitPayment = (
                                 items: purchasedItem,
                                 amount_due: selectedPlan.item_price.toString(),
                                 amount_discount: '0',
-                                amount_paid: 0,
+                                amount_paid: '0',
                                 cc_num: '4242424242424242',
                                 cc_exp_month: '04',
                                 cc_exp_year: '2024',
@@ -329,7 +355,7 @@ export const submitPayment = (
                     items: purchasedItem,
                     amount_due: selectedPlan.item_price.toString(),
                     amount_discount: '0',
-                    amount_paid: 0,
+                    amount_paid: '0',
                     cc_num: '4242424242424242',
                     cc_exp_month: '04',
                     cc_exp_year: '2024',
