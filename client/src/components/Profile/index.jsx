@@ -79,7 +79,7 @@ class Profile extends React.Component {
                         <h6 className={styles.subHeading}> Personal Details </h6>
                     </div>
                     <div className={styles.headingItem}>
-                        <FontAwesomeIcon icon={faPen} className={styles.editIcon}/>
+                        <FontAwesomeIcon icon={faPen} style={{color:"#FF9E19"}} className={styles.editIcon}/>
                     </div>
                 </div>
                 <div className={styles.personalDetails}>
@@ -91,7 +91,7 @@ class Profile extends React.Component {
                         <h6 className={styles.subHeading}> Payment Cards </h6>
                     </div>
                     <div className={styles.headingItem}>
-                        <FontAwesomeIcon icon={faPen} className={styles.editIcon}/>
+                        <FontAwesomeIcon icon={faPen} style={{color:"#FF9E19"}} className={styles.editIcon}/>
                     </div>
                 </div>
                 <div className={styles.cardContainer}>
@@ -107,7 +107,7 @@ class Profile extends React.Component {
                         <h6 className={styles.subHeading}> Billing Address </h6>
                     </div>
                     <div className={styles.headingItem}>
-                        <FontAwesomeIcon icon={faPen} className={styles.editIcon}/>
+                        <FontAwesomeIcon icon={faPen} style={{color:"#FF9E19"}} className={styles.editIcon}/>
                     </div>
                 </div>
                 <div className={styles.billingAddress}>
