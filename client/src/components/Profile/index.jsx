@@ -10,7 +10,7 @@ import { resetSubsription } from '../../reducers/actions/subscriptionActions';
 import { resetLogin } from '../../reducers/actions/loginActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faBell, faPen, faShareAlt, faSearch, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faBell, faPen, faShareAlt, faSearch, faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import styles from './profile.module.css';
 
@@ -41,6 +41,7 @@ class Profile extends React.Component {
     }
 
     render() {
+        
         // Return nothing before login checked
         if(!this.state.mounted) {
             return (
@@ -51,10 +52,12 @@ class Profile extends React.Component {
             <div className={styles.root}>
                 <div className={styles.mealHeader}>
                     <div className={styles.headerItemContainer}>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBars} className={"headerIcon"}/> </div>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
+                        <div className={styles.headerItem} > 
+                            <FontAwesomeIcon icon={faBars} className={"headerIcon"} />
+                        </div>
+                        {/*<div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
                         <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
-                        <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
+        <div className={styles.headerItem}> <FontAwesomeIcon icon={faSearch} className={"headerIcon"}/> </div>
                         <div
                             className={styles.headerItem}
                             onClick={() => {
@@ -68,52 +71,52 @@ class Profile extends React.Component {
                         >
                             <FontAwesomeIcon icon={faSignOutAlt} className={"headerIcon"}/>
                         </div>
-                    </div>
-                    <div className='title'>
-                        <h4 className='mainTitle'>NUTRITION MADE EASY</h4>
-                        <h6 className='subTitle'>LOCAL. ORGANIC. RESPONSIBLE.</h6>
+                        */}
+                        <div className='title'>
+                            <h4 className='mainTitle' className={styles.profileTitle}>USER PROFILE</h4>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.headingContainer}>
                     <div className={styles.headingItem}>
-                        <h6 className={styles.subHeading}> Personal Details </h6>
-                    </div>
-                    <div className={styles.headingItem}>
-                        <FontAwesomeIcon icon={faPen} style={{color:"#FF9E19"}} className={styles.editIcon}/>
-                    </div>
-                </div>
-                <div className={styles.personalDetails}>
-                    <div> First Last </div>
-                    <div> Email </div>
-                </div>
-                <div className={styles.headingContainer}>
-                    <div className={styles.headingItem}>
-                        <h6 className={styles.subHeading}> Payment Cards </h6>
-                    </div>
-                    <div className={styles.headingItem}>
-                        <FontAwesomeIcon icon={faPen} style={{color:"#FF9E19"}} className={styles.editIcon}/>
+                        <h6 className={styles.subHeading}> CHOOSE PAYMENT METHOD </h6>
                     </div>
                 </div>
                 <div className={styles.cardContainer}>
                     <div className={styles.cardItem}>
+                        <FontAwesomeIcon icon={faPlus} className={styles.addPayment}/>
                     </div>
                     <div className={styles.cardItem}>
+                        <FontAwesomeIcon icon={faPlus} className={styles.addPayment}/>
                     </div>
                     <div className={styles.cardItem}>
+                        <FontAwesomeIcon icon={faPlus} className={styles.addPayment}/>
+                    </div>
+                    <div className={styles.cardItem}>
+                        <FontAwesomeIcon icon={faPlus} className={styles.addPayment}/>
                     </div>
                 </div>
                 <div className={styles.headingContainer}>
                     <div className={styles.headingItem}>
-                        <h6 className={styles.subHeading}> Billing Address </h6>
+                        <h6 className={styles.subHeading}> CHOOSE YOUR ADDRESS </h6>
+                    </div>
+                </div>
+                <div className={styles.personalDetails}>
+                    <div> First Name </div>
+                    <div> Email </div>
+                </div>
+                <div className={styles.headingContainer}>
+                    <div className={styles.headingItem}>
+                        <h6 className={styles.subHeading}> FIRST NAME LAST NAME </h6>
                     </div>
                     <div className={styles.headingItem}>
-                        <FontAwesomeIcon icon={faPen} style={{color:"#FF9E19"}} className={styles.editIcon}/>
+                        <FontAwesomeIcon icon={faPen} className={styles.editIcon}/>
                     </div>
                 </div>
                 <div className={styles.billingAddress}>
-                    <div>Lorem Ipsum</div>
-                    <div>Lorem Ipsum</div>
-                    <div>Lorem Ipsum</div>
+                    <div>Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sedo</div>
+                    <div>Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sedo</div>
+                    <div>Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sedo</div>
                 </div>
                 <div className={styles.headingContainer}>
                     <div className={styles.headingItem}>

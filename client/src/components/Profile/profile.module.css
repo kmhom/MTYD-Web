@@ -5,7 +5,9 @@
 }
 
 .mealHeader {
-    background-color: #ebebeb;
+    background-color: #FF9E19;
+    border-radius: 0px 0px 20px 20px;
+    height: 91px;
 }
 
 .headerItemContainer {
@@ -13,15 +15,15 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    flex-wrap: wrap;
 }   
 
 .headerItem {
-    flex: 1;
+    flex-direction: row;
+    flex: 2;
 }
 
-.headerItem:nth-of-type(1) {
-    flex: 3;
+.barsIcon{
+    color: #FFFFFF;
 }
 
 .headingContainer {
@@ -31,20 +33,24 @@
 }
 
 .headingItem {
-    flex: 1;
+    
 }
 
 .subHeading {
     font-weight: bold;
     color: black;
-    font-size: 15px;
+    font-size: 18px;
     padding-left: 20px;
     margin: 0;
+    font-family:'Roboto';
+    text-align: left;
 }
 
 .editIcon {
     float: right;
     margin: 1rem;
+    color:#FF9E19;
+
 }
 
 .personalDetails {
@@ -63,12 +69,16 @@
 .cardItem {
     flex: 1 20%;
     margin: 0 15px;
-    height: 40px;
+    height: 35px;
     border: none;
-    border-radius: 15px;
-    background-color: #e2e2e2;
+    border-radius: 5px;
+    background-color: #F4F2F2;
     color: black;
-    max-width: 70px;
+    max-width: 64px; 
+    text-align:center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cardItem:nth-of-type(3) {
@@ -77,9 +87,11 @@
 
 .billingAddress {
     font-weight: normal;
-    color: black;
-    font-size: 15px;
+    color:#00000099;
+    width: 167px;
+    font-size: 16px;
     padding-left: 20px;
+    font-family: 'Roboto', 'Regular';
 }
 
 .orderHistoryContainer {
@@ -102,4 +114,13 @@
 .orderHistorySubItem {
     flex: 1;
     height: 70px;
+}
+
+.addPayment {
+    color: #3C3C43B4;
+}
+
+.profileTitle{
+    font-weight: bold;
+    font-size: 24px;
 }
