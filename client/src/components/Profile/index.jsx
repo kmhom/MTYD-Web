@@ -53,7 +53,7 @@ class Profile extends React.Component {
                 <div className={styles.mealHeader}>
                     <div className={styles.headerItemContainer}>
                         <div className={styles.headerItem} > 
-                            <FontAwesomeIcon icon={faBars} className={"headerIcon"} />
+                            <FontAwesomeIcon icon={faBars} className={"headerIcon"}/>
                         </div>
                         {/*<div className={styles.headerItem}> <FontAwesomeIcon icon={faBell} className={"headerIcon"}/> </div>
                         <div className={styles.headerItem}> <FontAwesomeIcon icon={faShareAlt} className={"headerIcon"}/> </div>
@@ -73,7 +73,7 @@ class Profile extends React.Component {
                         </div>
                         */}
                         <div className='title'>
-                            <h4 className='mainTitle' className={styles.profileTitle}>USER PROFILE</h4>
+                            <h4 className={styles.profileTitle}>USER PROFILE</h4>
                         </div>
                     </div>
                 </div>
@@ -101,9 +101,16 @@ class Profile extends React.Component {
                         <h6 className={styles.subHeading}> CHOOSE YOUR ADDRESS </h6>
                     </div>
                 </div>
-                <div className={styles.personalDetails}>
-                    <div> First Name </div>
-                    <div> Email </div>
+                <div className={styles.headingContainer}>
+                    <div className={styles.headingItem}>
+                        <h6 className={styles.subHeading}> FIRST NAME LAST NAME </h6>
+                    </div>
+                    <div className={styles.headingItem}>
+                        <FontAwesomeIcon icon={faPen} className={styles.editIcon}/>
+                    </div>
+                </div>
+                <div className={styles.billingAddress}>
+                    <div>Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sedo</div>
                 </div>
                 <div className={styles.headingContainer}>
                     <div className={styles.headingItem}>
@@ -115,32 +122,21 @@ class Profile extends React.Component {
                 </div>
                 <div className={styles.billingAddress}>
                     <div>Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sedo</div>
-                    <div>Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sedo</div>
-                    <div>Lorem Ipsum dolor sit amet, consectetur adipiscing elit, sedo</div>
                 </div>
                 <div className={styles.headingContainer}>
                     <div className={styles.headingItem}>
-                        <h6 className={styles.subHeading}> Order History </h6>
+                        <h6 className={styles.subHeading}> Add Another Address </h6>
                     </div>
+                    <FontAwesomeIcon icon={faPlus} className={styles.addPayment}/>
                 </div>
                 <div className={styles.orderHistoryContainer}>
                     <div className={styles.orderHistoryItem}>
-                        <div className={styles.orderHistoryItemContianer}>
-                            <div className={styles.orderHistorySubItem}>
-                                {/* <img alt-="Menu Item"/> */}
-                                <div> Image </div>
-                            </div>
-                            <div className={styles.orderHistorySubItem}>
-                                <p> Title </p>
-                            </div>
-                            <div className={styles.orderHistorySubItem}>
-                                Quantity
-                            </div>
-                            <div className={styles.orderHistorySubItem}>
-                                Total
-                            </div>
-                        </div>
+                        <div className={styles.subHeading}>ENTER PASSWORD TO CONFIRM*</div>
                     </div>
+                </div>
+                <input type="text" className={styles.passwordText} placeholder="ENTER PASSWORD"/>
+                <div>
+                    <button className={styles.checkoutButton}>CHECKOUT</button>
                 </div>
             </div>
         )

@@ -11,7 +11,7 @@
 }
 
 .headerItemContainer {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
@@ -96,7 +96,7 @@
 
 .orderHistoryContainer {
     display: flex;
-    align-items: center;
+    
     justify-content: left;
 }
 
@@ -124,3 +124,26 @@
     font-weight: bold;
     font-size: 24px;
 }
+
+.passwordText {
+    height: 31px;
+    outline: none;
+    border: 1px #FFF0C6;
+    background-color: #FFF0C6;
+    font-size: 16px;
+    width: 247px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.checkoutButton{
+    width: 143px;
+    height: 52px;
+    border-radius: 25px;
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 18px;
+    background-color: #FF9400;
+    border: 1px  #FF9400;
+}
+
