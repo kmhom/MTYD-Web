@@ -249,7 +249,7 @@
 }
 
 #menuItemTitle {
-  font-size: 0.7rem;
+  font-size: 1rem;
   font-weight: bold;
   margin: 0px;
   padding-left: 5px;
@@ -259,7 +259,7 @@
 #menuItemDesc {
   margin: 0px;
   padding-left: 5px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   color: white;
   margin-top: 0px;
   padding-top: 0px;
@@ -275,10 +275,9 @@
 
 .menuElements {
   color: #000000;
-  font-size: 1.1rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-align: center;
-  position: absolute;
   margin: 0;
   position: absolute;
   margin: 0.3rem;
@@ -293,6 +292,7 @@
 }
 
 #mealCounter {
+  color: #000000;
   top: 0;
   right: 0;
   z-index: 2;
@@ -316,7 +316,7 @@
 }
 
 .menuitemIndividual {
-  height: 13rem;
+  height: 14rem;
   width: 10rem;
   overflow: auto;
   margin: 0.1rem 0.5rem;

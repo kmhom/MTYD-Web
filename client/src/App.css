@@ -319,12 +319,6 @@
   padding: 0rem;
 }
 
-#meal-counter {
-  top: 0;
-  right: 0;
-  z-index: 2;
-}
-
 #minus-button {
   bottom: 0;
   left: 0;
