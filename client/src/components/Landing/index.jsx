@@ -171,7 +171,7 @@ class Landing extends React.Component {
         </div>
         <hr style={{marginTop:"2rem",color:"#E392409D", width:"300px"}}></hr>
         <p style={{color:"white", textAlign:"center", fontSize:"1rem", paddingTop:"1.2rem"}}>LOGIN OR SIGNUP WITH</p>
-        <div style={{marginTop:"4rem", display:"flex", flexDirection:"row", alignContent:"center", textAlign:"center", justifyContent:"space-between", padding:"0rem 4rem"}}>
+        <div style={{marginTop:"3.7rem", display:"flex", flexDirection:"row", alignContent:"center", textAlign:"center", justifyContent:"space-between", padding:"0rem 8.5rem"}}>
               
               <GoogleLogin
               
@@ -190,10 +190,8 @@ class Landing extends React.Component {
             autoLoad={false}
             fields={"name,email,picture"}
             callback={this.responseFacebook}
-            cssClass="appleLogin"
-            render={renderProps => (
-              <button onClick={renderProps.onClick}>This is my custom FB button</button>
-            )}
+            cssClass={styles.fbLogin}
+            
           />
           <button
             onClick={() => {
