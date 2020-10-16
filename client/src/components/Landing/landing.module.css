@@ -9,7 +9,6 @@
   height: 200px;
   text-align: center;
   padding: 4.5rem 0rem 0rem 0rem;
-  background-color: #00000074;
 }
 
 p:nth-of-type(1) {
@@ -46,7 +45,45 @@ p:nth-of-type(2) {
   text-align: center;
   flex-wrap: wrap;
   padding: 55px 0px 0px 0px;
-  background-color: #00000017;
+}
+
+.googleBtn {
+  background-color: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0px;
+  height: 32.9px;
+  width: 32.9px;
+}
+
+.googleBtn::before {
+  content: url(./google-plus.svg);
+}
+
+.appleLogin {
+  background-color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0px;
+  height: 32.9px;
+  width: 32.9px;
+}
+
+.fbLogin {
+  background-color: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0px;
+  height: 32.9px;
+  width: 32.9px;
+  color: transparent;
+}
+
+.fbLogin::before {
+  content: url(./facebook.svg);
 }
 
 .loginSectionItem {

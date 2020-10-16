@@ -117,11 +117,12 @@ class Landing extends React.Component {
     }
     return (
       <div className={styles.root}>
+        <div style={{  backgroundColor: "#00000074"}}>
         <div className={styles.mealHeader}>
-         <p>NUTRITION MADE EASY</p>
-         <p>LOCAL.ORGANIC.RESPONSIBLE</p>
+          <p>NUTRITION MADE EASY</p>
+          <p>LOCAL.ORGANIC.RESPONSIBLE</p>
         </div>
-        <div style={{ backgroundColor:"#00000054", height:"100%"}}>
+        <div style={{height:"700px"}}>
         <div className={styles.loginSectionContainer}>
           <div className={styles.loginSectionItem}>
             <input
@@ -170,10 +171,14 @@ class Landing extends React.Component {
         </div>
         <hr style={{marginTop:"2rem",color:"#E392409D", width:"300px"}}></hr>
         <p style={{color:"white", textAlign:"center", fontSize:"1rem", paddingTop:"1.2rem"}}>LOGIN OR SIGNUP WITH</p>
-              <div style={{marginTop:"20px", display:"flex", flexDirection:"column", alignItems:"center"}}>
+        <div style={{marginTop:"3.7rem", display:"flex", flexDirection:"row", alignContent:"center", textAlign:"center", justifyContent:"space-between", padding:"0rem 8.5rem"}}>
+              
               <GoogleLogin
+              
             clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-            buttonText='Login with Google'
+            render={renderProps => (
+              <button className={styles.googleBtn} onClick={renderProps.onClick} disabled={renderProps.disabled}></button>
+            )}
             onSuccess={this.responseGoogle}
             onFailure={this.responseGoogle}
             isSignedIn={false}
@@ -185,17 +190,20 @@ class Landing extends React.Component {
             autoLoad={false}
             fields={"name,email,picture"}
             callback={this.responseFacebook}
+            cssClass={styles.fbLogin}
+            
           />
           <button
             onClick={() => {
               window.AppleID.auth.signIn();
             }}
-            className={styles.loginSectionInput}
+            className={styles.appleLogin}
           >
-            Apple Login
+            <i className="fa fa-apple" style={{fontSize:"28px", color:"white"}}></i>
           </button>
               </div>
           
+        </div>
         </div>
       </div>
     );

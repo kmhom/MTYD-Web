@@ -26,10 +26,7 @@ class MenuItem extends React.Component {
                 ? cartItems.map((item) => {
                     return (
                       item.menu_meal_id === menuitem.menu_meal_id && (
-                        <p
-                          id={styles.mealCounter}
-                          className={styles.menuElements}
-                        >
+                        <p style={{textAlign:"center",height:"30px",width:"30px",borderRadius:"50%",backgroundColor:"white",color:"black", fontSize:"large", padding:"0px", margin:"10px", position:"absolute"}} id={styles.mealCounter}>
                           {item.count}
                         </p>
                       )

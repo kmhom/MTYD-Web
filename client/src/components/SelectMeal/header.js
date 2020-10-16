@@ -104,15 +104,6 @@ class Header extends Component {
     return (
       <React.Fragment>
         <div className={styles.mealHeader}>
-          {/* <i
-            style={{
-              flex: "1",
-              fontSize: "20px",
-              paddingLeft: "0.8rem",
-              width: "0px",
-            }}
-            className='fa fa-bars'
-          ></i> */}
           <p
             style={{
               flex: "6",
@@ -125,11 +116,8 @@ class Header extends Component {
           >
             MENU THIS WEEK
           </p>
-
-          {/* <p id={styles.local}>LOCAL. ORGANIC. RESPONSIBLE.</p> */}
           <div className={styles.avatar}></div>
         </div>
-
         <div className={styles.stickyHeader}>
           <select
             onChange={this.props.mealsOnChange}

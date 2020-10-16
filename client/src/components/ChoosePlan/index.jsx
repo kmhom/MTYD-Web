@@ -126,7 +126,7 @@ class ChoosePlan extends React.Component {
           {/* <p id={styles.local}>LOCAL. ORGANIC. RESPONSIBLE.</p> */}
           <div className={styles.avatar}></div>
         </div>
-        <div style={{ alignSelf:"center", marginTop:"1rem", paddingBottom:"15px", margin:"2rem", borderRadius:"15px", boxShadow:"1px 1px 1px 2px #d3d3d3 "}}>
+        <div style={{ alignSelf:"center", marginTop:"1rem", paddingBottom:"6rem", margin:"2rem", borderRadius:"15px", boxShadow:"1px 1px 1px 2px #d3d3d3 "}}>
         <div className={styles.mealSelectMenu}>
           <div style={{display:"flex", flexDirection:"row", marginTop:"1rem", padding:"10px"}}>
           <img style={{height:"50px", width:"50px"}} src={takeaway} alt="React Logo" />
