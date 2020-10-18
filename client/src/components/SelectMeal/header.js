@@ -71,11 +71,11 @@ class Header extends Component {
     let mealsCount = parseInt(totalMeals);
 
     //To disable and enable save button
-    if (document.getElementById("Save") !== null) {
-      if (totalCount !== mealsCount) {
-        document.getElementById("Save").disabled = true;
+    if (document.getElementById("SAVE") !== null) {
+      if (totalCount !== totalMeals) {
+        document.getElementById("SAVE").disabled = true;
       } else {
-        document.getElementById("Save").disabled = false;
+        document.getElementById("SAVE").disabled = false;
       }
     }
 

@@ -64,10 +64,8 @@ export const changePassword = (newPassword) => dispatch => {
 export const loginAttempt = (email, password, callback) => dispatch => {
     // Get salt for account
     axios
-    .get(API_URL+'accountsalt',{
-        params: {
-            email: email,
-        }
+    .post(API_URL+'accountsalt',{
+        email: email,
     })
     .then((res) => {
         let saltObject = res;
