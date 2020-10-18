@@ -188,7 +188,7 @@ export const submitPayment = (
     if(loginMethod === 'NULL'){
         // Prepare to login
         axios
-        .get(API_URL+'accountsalt',{
+        .post(API_URL+'accountsalt',{
             params: {
                 email: customerEmail,
             }
