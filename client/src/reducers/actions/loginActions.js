@@ -468,6 +468,7 @@ export const submitSocialSignUp = (
                     referral_source: 'Website',
                     role: 'customer',
                     social: platform,
+                    social_timestamp:"2020-10-30 21:14:22" //TODO: needs to change
                 }
             } else {
                 object = {
@@ -488,6 +489,7 @@ export const submitSocialSignUp = (
                     referral_source: 'Website',
                     role: 'customer',
                     social: platform,
+                    social_timestamp:"2020-10-30 21:14:22"
                 }
             }
             console.log(JSON.stringify(object));
