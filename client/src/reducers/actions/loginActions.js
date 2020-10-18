@@ -385,6 +385,7 @@ export const submitPasswordSignUp = (
                     social: false,
                     access_token: 'NULL',
                     refresh_token: 'NULL',
+                    social_timestamp:"2020-10-30 21:14:22"
                 }
                 console.log(JSON.stringify(object));
                 axios
