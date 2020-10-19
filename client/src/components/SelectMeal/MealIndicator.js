@@ -1,6 +1,4 @@
-// import { number } from "prop-types";
 import React, { Component } from "react";
-// import mealicon from "../ChoosePlan/dish.png";
 
 export default class MealIndicator extends Component {
   render() {
@@ -8,7 +6,6 @@ export default class MealIndicator extends Component {
     const { totalMeals } = this.props;
     const { displayCount } = this.props;
     const selectCount = totalMeals - totalCount;
-    console.log(selectCount);
     let temp = 100 / totalMeals;
     const percentage = totalCount * temp;
     const myarr = [];
@@ -23,21 +20,22 @@ export default class MealIndicator extends Component {
             border: "1px solid #ebebeb",
             borderColor: "#dbcd65",
             borderRadius: "50px 0px 50px 0px",
-            padding: "0px 0px 0px 14px",
+            padding: "0px 0px 0px 16px",
             height: "2rem",
-            margin: "0rem 1rem",
+            margin: "0.3rem 2.5rem",
             width: "100%",
             backgroundImage: `linear-gradient(to right, ${
               selectCount === 0
-                ? (indicatorColor = "#42d4a8")
-                : (indicatorColor = "#e09d51")
-            } ${percentage}%, white 0%)`,
+                ? (indicatorColor = "#FF9E19")
+                : (indicatorColor = "#FFF0C6")
+            } ${percentage}%, #70642a 0%)`,
           }}
         >
           <p
             style={{
-              marginTop: "0.01rem",
-              color: selectCount === 0 ? "white" : "black",
+              marginTop: "0.36rem",
+              color: "black",
+              fontSize:"1rem"
             }}
           >
             {selectCount === 0

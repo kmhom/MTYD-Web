@@ -64,10 +64,8 @@ export const changePassword = (newPassword) => dispatch => {
 export const loginAttempt = (email, password, callback) => dispatch => {
     // Get salt for account
     axios
-    .get(API_URL+'accountsalt',{
-        params: {
-            email: email,
-        }
+    .post(API_URL+'accountsalt',{
+        email: email,
     })
     .then((res) => {
         let saltObject = res;
@@ -387,6 +385,7 @@ export const submitPasswordSignUp = (
                     social: false,
                     access_token: 'NULL',
                     refresh_token: 'NULL',
+                    social_timestamp:"2020-10-30 21:14:22"
                 }
                 console.log(JSON.stringify(object));
                 axios
@@ -468,6 +467,7 @@ export const submitSocialSignUp = (
                     referral_source: 'Website',
                     role: 'customer',
                     social: platform,
+                    social_timestamp:"2020-10-30 21:14:22" //TODO: needs to change
                 }
             } else {
                 object = {
@@ -488,6 +488,7 @@ export const submitSocialSignUp = (
                     referral_source: 'Website',
                     role: 'customer',
                     social: platform,
+                    social_timestamp:"2020-10-30 21:14:22"
                 }
             }
             console.log(JSON.stringify(object));

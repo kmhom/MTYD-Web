@@ -188,10 +188,8 @@ export const submitPayment = (
     if(loginMethod === 'NULL'){
         // Prepare to login
         axios
-        .get(API_URL+'accountsalt',{
-            params: {
-                email: customerEmail,
-            }
+        .post(API_URL+'accountsalt',{
+            email: customerEmail,
         })
         .then((res) => {
             let saltObject = res;
