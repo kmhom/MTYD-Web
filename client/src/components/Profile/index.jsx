@@ -13,10 +13,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faBell, faPen, faShareAlt, faSearch, faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons'
 
 import styles from './profile.module.css';
-import ReactModal from 'react-modal';
 import Modal from './modal.js'
 
-ReactModal.setAppElement('#root')
 class Profile extends React.Component {
 
     constructor(){

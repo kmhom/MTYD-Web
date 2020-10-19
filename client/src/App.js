@@ -21,20 +21,34 @@ import AuthApi from "./components/AuthApi";
 import Cookies from "js-cookie";
 
 
-function App() {
-  const [auth, setAuth] = React.useState(false);
-  const readCookie = () => {
-    const customer = Cookies.get("customer_uid");
-    // console.log(customer);
-    if (customer) {
-      setAuth(true);
-    }
+const viewportContext = React.createContext({});
+
+const ViewportProvider = ({ children }) => {
+  const [width, setWidth] = React.useState(window.innerWidth);
+  const [height, setHeight] = React.useState(window.innerHeight);
+  const handleWindowResize = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
   };
 
   React.useEffect(() => {
-    readCookie();
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
+  return (
+    <viewportContext.Provider value={{ width, height }}>
+      {children}
+    </viewportContext.Provider>
+  );
+};
+
+const useViewport = () => {
+  const { width, height } = React.useContext(viewportContext);
+  return { width, height };
+};
+
+const MobileComponent = () => {
   return (
     <Provider store={store}>
       <div className='root'>
@@ -68,6 +82,40 @@ function App() {
         </Router>
       </div>
     </Provider>
+  );
+};
+
+const DesktopComponent = () => {
+  return(
+    <p>"Wow, your screen is big!"</p>
+  );
+};
+
+const MyComponent = () => {
+  const { width } = useViewport();
+  const breakpoint = 620;
+
+  return width < breakpoint ? <MobileComponent /> : <DesktopComponent />;
+};
+
+function App() {
+  const [auth, setAuth] = React.useState(false);
+  const readCookie = () => {
+    const customer = Cookies.get("customer_uid");
+    // console.log(customer);
+    if (customer) {
+      setAuth(true);
+    }
+  };
+
+  React.useEffect(() => {
+    readCookie();
+  }, []);
+
+  return (
+    <ViewportProvider>
+      <MyComponent />
+    </ViewportProvider>
   );
 }
 
