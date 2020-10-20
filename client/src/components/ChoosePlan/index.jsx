@@ -24,6 +24,18 @@ class ChoosePlan extends React.Component {
   }
 
   componentDidMount() {
+    let queryString = this.props.location.search;
+    let urlParams = new URLSearchParams(queryString);
+    // Clear Query parameters
+    window.history.pushState({}, document.title, window.location.pathname);
+    // Logged in from Apple
+    if (urlParams.has("customer_uid")) {
+      document.cookie = 'customer_uid=' + urlParams.get("customer_uid");
+      this.props.fetchPlans();
+      this.setState({
+        mounted: true,
+      });
+    } else
     // Check for logged in
     if (
       document.cookie
