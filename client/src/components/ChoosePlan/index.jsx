@@ -7,6 +7,8 @@ import {
   choosePaymentOption,
 } from "../../reducers/actions/subscriptionActions";
 
+import axios from 'axios'
+import { API_URL } from '../../reducers/constants'
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import styles from "./choosePlan.module.css";
@@ -30,11 +32,30 @@ class ChoosePlan extends React.Component {
     window.history.pushState({}, document.title, window.location.pathname);
     // Logged in from Apple
     if (urlParams.has("customer_uid")) {
-      document.cookie = 'customer_uid=' + urlParams.get("customer_uid");
-      this.props.fetchPlans();
-      this.setState({
-        mounted: true,
-      });
+      let customer_uid = urlParams.get("customer_uid")
+      document.cookie = 'customer_uid=' + customer_uid;
+      axios
+      .get(API_URL+'customer_lplp',{
+          params: {
+              customer_uid: customer_uid,
+          }
+      })
+      .then((res) => {
+          console.log(res);
+          if(res.data.result !== undefined) {
+            this.props.history.push("/select-meal")
+          }
+          this.props.fetchPlans();
+          this.setState({
+            mounted: true,
+          });
+      })
+      .catch((err) => {
+          console.log(err);
+          if(err.response) {
+              console.log(err.response);
+          }
+      })
     } else
     // Check for logged in
     if (
