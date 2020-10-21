@@ -131,18 +131,17 @@ class Profile extends React.Component {
                                             className={styles.input}
                                             placeholder={"First name"}
                                             defaultValue={this.props.profileInfo.customer_first_name}
-                                            value={this.props.firstName}
                                             onChange={(e) => {
                                                 this.props.changeNewFirstName(e.target.value);
                                             }}
                                         />
                                 </div>
-                                <div class={styles.inputItem} >
+                                <div className={styles.inputItem} >
                                     <input
                                         type="text"
                                         className={styles.input}
                                         placeholder={"Last name"}
-                                        value={this.props.profileInfo.customer_last_name}
+                                        defaultvalue={this.props.profileInfo.customer_last_name}
                                         onChange={(e) => {
                                             this.props.changeNewLastName(e.target.value);
                                         }}
@@ -153,7 +152,8 @@ class Profile extends React.Component {
                                         type="text"
                                         className={styles.input}
                                         placeholder={"Email"}
-                                        value={this.props.profileInfo.customer_email}
+                                        defaultvalue={this.props.profileInfo.customer_email}
+                                        
                                         onChange={(e) => {
                                             this.props.changeNewEmail(e.target.value);
                                         }}
@@ -164,7 +164,7 @@ class Profile extends React.Component {
                                         type="text"
                                         className={styles.input}
                                         placeholder={"Phone"}
-                                        value={this.props.profileInfo.customer_phone_num}
+                                        defaultvalue={this.props.profileInfo.customer_phone_num}
                                         onChange={(e) => {
                                             this.props.changeNewPhone(e.target.value);
                                         }}
@@ -175,7 +175,7 @@ class Profile extends React.Component {
                                         type="text"
                                         placeholder="Address"
                                         className={styles.input}
-                                        value={this.props.profileInfo.customer_address}
+                                        defaultvalue={this.props.profileInfo.customer_address}
                                         onChange={(e) => {
                                             this.props.changeNewAddress(e.target.value);
                                         }}
@@ -186,7 +186,8 @@ class Profile extends React.Component {
                                         type="text"
                                         placeholder="Unit"
                                         className={styles.input}
-                                        value={this.props.profileInfo.customer_unit}
+                                        defaultvalue={this.props.profileInfo.customer_unit}
+                                        value={this.props.unit}
                                         onChange={(e) => {
                                             this.props.changeNewUnit(e.target.value);
                                         }}
@@ -197,7 +198,7 @@ class Profile extends React.Component {
                                         type="text"
                                         placeholder="City"
                                         className={styles.input}
-                                        value={this.props.profileInfo.customer_city}
+                                        defaultvalue={this.props.profileInfo.customer_city}
                                         onChange={(e) => {
                                             this.props.changeNewCity(e.target.value);
                                         }}
@@ -208,7 +209,7 @@ class Profile extends React.Component {
                                         type="text"
                                         placeholder="State"
                                         className={styles.input}
-                                        value={this.props.profileInfo.customer_state}
+                                        defaultvalue={this.props.profileInfo.customer_state}
                                         onChange={(e) => {
                                             this.props.changeNewState(e.target.value);
                                         }}
@@ -219,7 +220,7 @@ class Profile extends React.Component {
                                         type="text"
                                         placeholder="Zip"
                                         className={styles.input}
-                                        value={this.props.profileInfo.customer_zip}
+                                        defaultvalue={this.props.profileInfo.customer_zip}
                                         onChange={(e) => {
                                             this.props.changeNewZip(e.target.value);
                                         }}
@@ -228,7 +229,7 @@ class Profile extends React.Component {
                                 
                                 <button  onClick={() => {
                                     this.props.submitnewProfile(
-                                        this.props.email, this.props.firstName, this.props.lastName, this.props.phone,
+                                        this.props.firstName, this.props.lastName, this.props.email, this.props.phone,
                                         this.props.street, this.props.unit, this.props.city, this.props.state,
                                         this.props.zip,
                                     );
@@ -282,7 +283,7 @@ Profile.propTypes = {
     fetchOrderHistory: PropTypes.func.isRequired,
     orderHistory: PropTypes.array.isRequired,
     fetchProfile: PropTypes.func.isRequired,
-    profileInfo: PropTypes.array.isRequired,
+    profileInfo: PropTypes.object.isRequired,
     changeNewEmail: PropTypes.func.isRequired,
     changeNewFirstName: PropTypes.func.isRequired,
     changeNewLastName: PropTypes.func.isRequired,
@@ -324,9 +325,9 @@ const functionList = {
     resetSubsription,
     fetchOrderHistory,
     fetchProfile, 
-    changeNewEmail,
     changeNewFirstName,
     changeNewLastName,
+    changeNewEmail,
     changeNewPhone,
     changeNewAddress,
     changeNewUnit,

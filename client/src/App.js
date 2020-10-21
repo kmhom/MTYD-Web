@@ -53,9 +53,6 @@ const MobileComponent = () => {
     <Provider store={store}>
       <div className='root'>
         <Router>
-          <div className='sideNavBar'>
-            <SideNavBar />
-          </div>
           <div className='mainApp'>
             <Switch>
               <AppliedRoute exact path='/' component={Landing} />
@@ -76,9 +73,6 @@ const MobileComponent = () => {
               <AppliedRoute path='*' component={NotFound} />
             </Switch>
           </div>
-          <div className='bottomNavBar'>
-            <BottomNavBar />
-          </div>
         </Router>
       </div>
     </Provider>
@@ -87,7 +81,7 @@ const MobileComponent = () => {
 
 const DesktopComponent = () => {
   return(
-    <p>"Wow, your screen is big!"</p>
+    <div>"Wow, your screen is big!"</div>
   );
 };
 

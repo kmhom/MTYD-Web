@@ -10,10 +10,11 @@ import {
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import styles from "./choosePlan.module.css";
-import takeaway from './take-away.svg'
-import paymentOption1 from './Group 2016.svg'
-import paymentOption2 from './Group 2029.svg'
-import paymentOption3 from './Group 2030.svg'
+import takeaway from './take-away.svg';
+import paymentOption1 from './Group 2016.svg';
+import paymentOption2 from './Group 2029.svg';
+import paymentOption3 from './Group 2030.svg';
+import Burgermenu from "../SelectMeal/example";
 
 class ChoosePlan extends React.Component {
   constructor() {

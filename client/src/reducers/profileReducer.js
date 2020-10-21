@@ -13,7 +13,7 @@ const initialState = {
         lastName: '',
         phone: '',
         email: '',
-        address: '',
+        street: '',
         unit: '',
         city: '',
         state: '',
@@ -38,6 +38,25 @@ export default function (state=initialState, action) {
                 ...state,
                 profileInfo: action.payload
             }
+
+        case CHANGE_NEW_FIRST_NAME:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newProfileInfo,
+                    firstName: action.payload,
+                }
+            }
+
+        case CHANGE_NEW_LAST_NAME:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newProfileInfo,
+                    lastName: action.payload,
+                }
+            }
+
         case CHANGE_NEW_EMAIL:
             return {
                 ...state,
@@ -47,89 +66,71 @@ export default function (state=initialState, action) {
                 }
             }
 
-            case CHANGE_NEW_FIRST_NAME:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newProfileInfo,
-                        firstName: action.payload,
-                    }
+        case CHANGE_NEW_PHONE:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newProfileInfo,
+                    phone: action.payload,
                 }
+            }
+
+        case CHANGE_NEW_STREET:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newProfileInfo,
+                    address: action.payload,
+                }
+            }
+
+        case CHANGE_NEW_UNIT:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newProfileInfo,
+                    unit: action.payload,
+                }
+            }
+
+        case CHANGE_NEW_CITY:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newProfileInfo,
+                    city: action.payload
+                }
+            }
+
+        case CHANGE_NEW_STATE:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newProfileInfo,
+                    state: action.payload
+                }
+            }
+
+        case CHANGE_NEW_ZIP:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newProfileInfo,
+                    zip: action.payload
+                }
+            }
     
-            case CHANGE_NEW_LAST_NAME:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newProfileInfo,
-                        lastName: action.payload,
-                    }
+        case SUBMIT_PROFILE_CHANGES:
+            return {
+                ...state,
+                newProfileInfo: {
+                    ...state.newUserInfo,
+                    email: action.payload.email,
+                    platform: action.payload.platform,
+                    accessToken: action.payload.accessToken,
+                    refreshToken: action.payload.refreshToken,
                 }
-    
-            case CHANGE_NEW_PHONE:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newProfileInfo,
-                        phone: action.payload,
-                    }
-                }
-    
-            case CHANGE_NEW_STREET:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newProfileInfo,
-                        address: action.payload,
-                    }
-                }
-    
-            case CHANGE_NEW_UNIT:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newProfileInfo,
-                        unit: action.payload,
-                    }
-                }
-    
-            case CHANGE_NEW_CITY:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newProfileInfo,
-                        city: action.payload
-                    }
-                }
-    
-            case CHANGE_NEW_STATE:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newProfileInfo,
-                        state: action.payload
-                    }
-                }
-    
-            case CHANGE_NEW_ZIP:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newProfileInfo,
-                        zip: action.payload
-                    }
-                }
-        
-            case SUBMIT_PROFILE_CHANGES:
-                return {
-                    ...state,
-                    newProfileInfo: {
-                        ...state.newUserInfo,
-                        email: action.payload.email,
-                        platform: action.payload.platform,
-                        accessToken: action.payload.accessToken,
-                        refreshToken: action.payload.refreshToken,
-                    }
-                }
+            }
         
         default:
             return state;

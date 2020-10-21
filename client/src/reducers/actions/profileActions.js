@@ -20,10 +20,10 @@ export const changeNewEmail = (newEmail) => dispatch => {
     })
 }
 
-export const changeNewFirstName = (firstName) => dispatch => {
+export const changeNewFirstName = (newfirstName) => dispatch => {
     dispatch({
         type: CHANGE_NEW_FIRST_NAME,
-        payload: firstName,
+        payload: newfirstName,
     })
 }
 
@@ -126,16 +126,16 @@ export const submitnewProfile = (
     street, unit, city, state, zip, callback
 ) => dispatch => {
     let object = {
-        uid:"100-000082",
+        uid:customerId,
         first_name: firstName,
-        last_name: "lastName",
-        phone: "phone",
-        email: "email",
-        address: "street",
-        unit: "unit",
-        city: "city",
-        state: "state",
-        zip: "zip",
+        last_name: lastName,
+        phone: phone,
+        email: email,
+        street: street,
+        unit: unit,
+        city: city,
+        state: state,
+        zip: zip,
         noti: "false"
     }
 
