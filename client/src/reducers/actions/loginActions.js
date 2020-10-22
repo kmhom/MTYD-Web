@@ -102,6 +102,8 @@ export const loginAttempt = (email, password, callback) => dispatch => {
                     .post(API_URL+'login',{
                         email: email,
                         password: hashedPassword,
+                        social_id: '',
+                        signup_platform: ''
                     })
                     .then((res) => {
                         // Handle successful Login
@@ -138,6 +140,8 @@ export const loginAttempt = (email, password, callback) => dispatch => {
                 .post(API_URL+'login',{
                     email: email,
                     password: 'test',
+                    social_id: '',
+                    signup_platform: ''
                 })
                 .then((res) => {
                     // Don't expect success, checking for need to log in by social media
@@ -175,7 +179,9 @@ export const socialLoginAttempt = (email, accessToken, refreshToken, platform, s
     axios
     .post(API_URL+'login',{
         email: email,
-        token: refreshToken
+        password: '',
+        social_id: refreshToken,
+        signup_platform: platform,
     })
     .then((res) => {
         console.log(res);
@@ -185,7 +191,23 @@ export const socialLoginAttempt = (email, accessToken, refreshToken, platform, s
             console.log('cookie',document.cookie)
             document.cookie = 'customer_uid=' + customerInfo.customer_uid;
             console.log('cookie',document.cookie)
-            preCallback(customerInfo.customer_uid,successCallback);
+            axios
+            .post(API_URL+'token_fetch_update/update_web',{
+                uid: customerInfo.customer_uid,
+                user_access_token: accessToken,
+                user_refresh_token: 'FALSE',
+            })
+            .then((res) => {
+                console.log(res);
+                preCallback(customerInfo.customer_uid,successCallback);
+            })
+            .catch((err) => {
+                if(err.response) {
+                    console.log(err.response);
+                }
+                console.log(err);
+                preCallback(customerInfo.customer_uid,successCallback);
+            })
         } else if(res.data.code === 404) {
             dispatch({
                 type: SUBMIT_SOCIAL,
@@ -382,10 +404,12 @@ export const submitPasswordSignUp = (
                     longitude: long.toString(),
                     referral_source: 'WEB',
                     role: 'CUSTOMER',
-                    social: false,
-                    access_token: 'NULL',
-                    refresh_token: 'NULL',
-                    social_timestamp:"2020-10-30 21:14:22"
+                    social: 'FALSE',
+                    social_id: 'NULL',
+                    user_access_token: 'FALSE',
+                    user_refresh_token: 'FALSE',
+                    mobile_access_token: 'FALSE',
+                    mobile_refresh_token: 'FALSE',
                 }
                 console.log(JSON.stringify(object));
                 axios
@@ -452,8 +476,6 @@ export const submitSocialSignUp = (
             if(!isApple) {
                 object = {
                     email: email,
-                    access_token: accessToken,
-                    refresh_token: refreshToken,
                     first_name: firstName,
                     last_name: lastName,
                     phone_number: phone,
@@ -464,17 +486,19 @@ export const submitSocialSignUp = (
                     zip_code: zip,
                     latitude: lat.toString(),
                     longitude: long.toString(),
-                    referral_source: 'Website',
-                    role: 'customer',
+                    referral_source: 'WEB',
+                    role: 'CUSTOMER',
                     social: platform,
-                    social_timestamp:"2020-10-30 21:14:22" //TODO: needs to change
+                    social_id: refreshToken,
+                    user_access_token: accessToken,
+                    user_refresh_token: 'FALSE',
+                    mobile_access_token: 'FALSE',
+                    mobile_refresh_token: 'FALSE',
                 }
             } else {
                 object = {
                     cust_id: customerId,
                     email: email,
-                    access_token: accessToken,
-                    refresh_token: refreshToken,
                     first_name: firstName,
                     last_name: lastName,
                     phone_number: phone,
@@ -488,7 +512,14 @@ export const submitSocialSignUp = (
                     referral_source: 'Website',
                     role: 'customer',
                     social: platform,
-                    social_timestamp:"2020-10-30 21:14:22"
+                    referral_source: 'WEB',
+                    role: 'CUSTOMER',
+                    social: platform,
+                    social_id: refreshToken,
+                    user_access_token: accessToken,
+                    user_refresh_token: 'FALSE',
+                    mobile_access_token: 'FALSE',
+                    mobile_refresh_token: 'FALSE',
                 }
             }
             console.log(JSON.stringify(object));
