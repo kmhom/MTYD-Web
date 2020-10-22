@@ -53,9 +53,9 @@ class SocialSignUp extends React.Component {
         }
     }
 
-    signUpSuccess = () => {
-        this.props.history.push('/');
-    }
+    signUpSuccess = (hasPurchases) => {
+        this.props.history.push("/choose-plan");
+    };
 
     render() {
         if(!this.state.mounted) {
