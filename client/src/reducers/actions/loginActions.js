@@ -527,12 +527,16 @@ export const submitSocialSignUp = (
             .post(API_URL+'signup',object)
             .then((res) => {
                 console.log(res);
+                if(customerId === '') {
+                    customerId = res.data.result.customer_uid;
+                }
                 dispatch({
                     type: SUBMIT_SIGNUP,
                 })
-                if(typeof callback !== 'undefined') {
-                    callback();
-                }
+                console.log('cookie',document.cookie)
+                document.cookie = 'customer_uid=' + customerId;
+                console.log('cookie',document.cookie)
+                callback()
             })
             .catch((err) => {
                 console.log(err);
