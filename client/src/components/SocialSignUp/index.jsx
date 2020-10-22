@@ -53,7 +53,7 @@ class SocialSignUp extends React.Component {
         }
     }
 
-    signUpSuccess = (hasPurchases) => {
+    signUpSuccess = () => {
         this.props.history.push("/choose-plan");
     };
 
