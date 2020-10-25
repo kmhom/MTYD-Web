@@ -7,7 +7,7 @@ import {
   changePassword,
   loginAttempt,
   socialLoginAttempt,
-} from "../../reducers/actions/loginActions";
+} from "../../../reducers/actions/loginActions";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import GoogleLogin from "react-google-login";

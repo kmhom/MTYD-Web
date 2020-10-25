@@ -5,7 +5,7 @@ import {
     fetchProfileInformation, changeAddressFirstName, changeAddressLastName, changeAddressStreet,
     changeAddressUnit, changeAddressCity, changeAddressState, changeAddressZip,
     changeAddressPhone, changeDeliveryInstructions, changePaymentPassword, submitPayment
-} from '../../reducers/actions/subscriptionActions';
+} from '../../../reducers/actions/subscriptionActions';
 
 import { withRouter } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

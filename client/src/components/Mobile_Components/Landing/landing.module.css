@@ -1,7 +1,7 @@
 .root {
   height: inherit;
   width: inherit;
-  background-image: url("../../images/landing.png");
+  background-image: url("../../../images/landing.png");
   background-size: cover;
 }
 

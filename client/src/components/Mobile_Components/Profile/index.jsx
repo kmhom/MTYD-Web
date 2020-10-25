@@ -5,9 +5,9 @@ import { withRouter } from 'react-router';
 import {
     resetProfile, fetchOrderHistory, fetchProfile, changeNewAddress, changeNewCity, changeNewEmail,
     changeNewFirstName, changeNewLastName, changeNewPhone, changeNewState, changeNewUnit, changeNewZip, submitnewProfile
-} from '../../reducers/actions/profileActions';
-import { resetSubsription } from '../../reducers/actions/subscriptionActions';
-import { resetLogin } from '../../reducers/actions/loginActions'
+} from '../../../reducers/actions/profileActions';
+import { resetSubsription } from '../../../reducers/actions/subscriptionActions';
+import { resetLogin } from '../../../reducers/actions/loginActions'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faBell, faPen, faShareAlt, faSearch, faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons'

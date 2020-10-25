@@ -6,19 +6,21 @@ import {
   // Route, Redirect,
   Switch,
 } from "react-router-dom";
+
 import AppliedRoute from "./components/AppliedRoute";
-import { SideNavBar, BottomNavBar } from "./components/NavBar";
-import Landing from "./components/Landing";
-import SignUp from "./components/SignUp";
-import SocialSignUp from "./components/SocialSignUp";
-import ChoosePlan from "./components/ChoosePlan";
-import PaymentDetails from "./components/PaymentDetails";
-import Profile from "./components/Profile";
-import SelectMeal from "./components/SelectMeal";
-import NotFound from "./components/NotFound";
+import { SideNavBar, BottomNavBar } from "./components/Mobile_Components/NavBar";
+import Landing from "./components/Mobile_Components/Landing";
+import SignUp from "./components/Mobile_Components/SignUp";
+import SocialSignUp from "./components/Mobile_Components/SocialSignUp";
+import ChoosePlan from "./components/Mobile_Components/ChoosePlan";
+import PaymentDetails from "./components/Mobile_Components/PaymentDetails";
+import Profile from "./components/Mobile_Components/Profile";
+import SelectMeal from "./components/Mobile_Components/SelectMeal";
+import NotFound from "./components/Mobile_Components/NotFound";
 import "./App.css";
 import AuthApi from "./components/AuthApi";
 import Cookies from "js-cookie";
+import SelectPlan from "./components/Desktop_Components/SelectPlan";
 
 
 const viewportContext = React.createContext({});
@@ -81,15 +83,41 @@ const MobileComponent = () => {
 
 const DesktopComponent = () => {
   return(
-    <div>"Wow, your screen is big!"</div>
+    <Provider store={store}>
+      <div className='root'>
+        <Router>
+          <div className='mainApp'>
+            <Switch>
+              <AppliedRoute exact path='/' component={Landing} />
+              <AppliedRoute exact path='/sign-up' component={SignUp} />
+              <AppliedRoute
+                exact
+                path='/social-sign-up'
+                component={SocialSignUp}
+              />
+              <AppliedRoute exact path='/choose-plan' component={ChoosePlan} />
+              <AppliedRoute
+                exact
+                path='/payment-details'
+                component={PaymentDetails}
+              />
+              <AppliedRoute exact path='/profile' component={Profile} />
+              <AppliedRoute exact path='/select-meal' component={SelectMeal} />
+              <AppliedRoute exact path='/select-plan' component={SelectPlan} />
+              <AppliedRoute path='*' component={NotFound} />
+            </Switch>
+          </div>
+        </Router>
+      </div>
+    </Provider>
   );
 };
 
 const MyComponent = () => {
   const { width } = useViewport();
   const breakpoint = 620;
-
-  return width < breakpoint ? <MobileComponent /> : <DesktopComponent />;
+  //width < breakpoint ? <MobileComponent /> : <DesktopComponent />
+  return <DesktopComponent />;
 };
 
 function App() {

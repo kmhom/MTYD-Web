@@ -5,10 +5,10 @@ import {
   fetchPlans,
   chooseMealsDelivery,
   choosePaymentOption,
-} from "../../reducers/actions/subscriptionActions";
+} from "../../../reducers/actions/subscriptionActions";
 
 import axios from 'axios'
-import { API_URL } from '../../reducers/constants'
+import { API_URL } from '../../../reducers/constants'
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import styles from "./choosePlan.module.css";
@@ -16,7 +16,6 @@ import takeaway from './take-away.svg';
 import paymentOption1 from './Group 2016.svg';
 import paymentOption2 from './Group 2029.svg';
 import paymentOption3 from './Group 2030.svg';
-import Burgermenu from "../SelectMeal/example";
 
 class ChoosePlan extends React.Component {
   constructor() {
@@ -144,6 +143,7 @@ class ChoosePlan extends React.Component {
     return (
       <div className={styles.root}>
         <div className={styles.mealHeader}>
+          {/*
         <p
             style={{
               flex: "6",
@@ -154,10 +154,9 @@ class ChoosePlan extends React.Component {
               paddingLeft: "50px",
             }}
           >
-            CHOOSE MEAL PLAN
           </p>
-
-          {/* <p id={styles.local}>LOCAL. ORGANIC. RESPONSIBLE.</p> */}
+          */}
+          <button>Home</button>
           <div className={styles.avatar}></div>
         </div>
         <div style={{ alignSelf:"center", marginTop:"1rem", paddingBottom:"6rem", margin:"2rem", borderRadius:"15px", boxShadow:"1px 1px 1px 2px #d3d3d3 "}}>
@@ -174,7 +173,7 @@ class ChoosePlan extends React.Component {
           </div>
           </div>
           <div style={{textAlign:"center"}}>
-          <h6 className={styles.subTitle}>NUMBER OF MEALS PER DELIVERY</h6>
+          <h6 className={styles.subTitle}>CHOOSE MEAL PLAN</h6>
 
           </div>
           <div className={styles.mealNumber}>
@@ -184,9 +183,9 @@ class ChoosePlan extends React.Component {
           <p style={{color:"black", fontSize:"1.3rem",fontWeight:"600", margin:"0rem", paddingLeft:"0.7rem"}} >PRE PAY OPTIONS</p>
           <div className={styles.paymentWrapper}>{this.paymentFrequency()}</div>
           <div className={styles.amount}>
-              <p style={{padding:"11px 0px 0px 0px", height:"40px" ,textAlign:"center", backgroundColor:"#FFF0C6", fontSize:"large", fontWeight:"600", color:"black"}} className={styles.amountItem}> $$ TOTAL {this.props.selectedPlan.item_price} </p>
+              <p style={{padding:"11px 0px 0px 0px", height:"40px" ,textAlign:"center", backgroundColor:"#FFF0C6", fontSize:"large", fontWeight:"600", color:"black"}} className={styles.amountItem}> $ TOTAL {this.props.selectedPlan.item_price} </p>
               <Link to='/payment-details'>
-                <button style={{textAlign:"center", backgroundColor:"#FF9E19", fontSize:"large", fontWeight:"400", color:"white"}} className={styles.amountItem}>PROCEED</button>
+                <button style={{textAlign:"center", backgroundColor:"#FF9E19", fontSize:"large", fontWeight:"400", color:"white"}} className={styles.amountItem}>SAVE</button>
               </Link>
           </div>
         </div>

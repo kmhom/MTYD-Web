@@ -12,7 +12,7 @@ import {
     changeNewState,
     changeNewZip,
     submitSocialSignUp,
-  } from "../../reducers/actions/loginActions";
+  } from "../../../reducers/actions/loginActions";
   import { withRouter } from "react-router";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

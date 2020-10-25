@@ -1,8 +1,8 @@
 import React from "react";
-import Subscribe from "../NavBar/subscribe.png";
-import Select from "../NavBar/select.png";
-import Profile from "../NavBar/profile.png";
-import More from "../NavBar/more.png";
+import Subscribe from "./subscribe.png";
+import Select from "./select.png";
+import Profile from "./profile.png";
+import More from "./more.png";
 import { Link } from "react-router-dom";
 
 import styles from "./navBar.module.css";

@@ -5,17 +5,17 @@
 }
 
 .mealHeader {
-  background-color: #ff9e19;
+  background-color: #FFFFFF;
   border-radius: 0px 0px 30px 30px;
   display: flex;
   flex-direction: row;
-  background-color: #ff9e19;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: black;
   box-sizing: border-box;
   height: 6rem;
   padding: 1rem;
   align-items: center;
+  box-shadow: 5px 10px #FFFFFF;
 }
 
 .avatar {
@@ -145,7 +145,7 @@
 .amount {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin-top: 1.2rem;
   padding: 0rem 1.5rem;
   box-sizing: border-box;

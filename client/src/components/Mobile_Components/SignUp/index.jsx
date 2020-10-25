@@ -14,7 +14,7 @@ import {
     changeNewState,
     changeNewZip,
     submitPasswordSignUp,
-  } from "../../reducers/actions/loginActions";
+  } from "../../../reducers/actions/loginActions";
 
 import styles from './signup.module.css'
 
