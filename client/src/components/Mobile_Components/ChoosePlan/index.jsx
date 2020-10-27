@@ -16,7 +16,7 @@ import takeaway from './take-away.svg';
 import paymentOption1 from './Group 2016.svg';
 import paymentOption2 from './Group 2029.svg';
 import paymentOption3 from './Group 2030.svg';
-import Burgermenu from "../SelectMeal/example";
+import Burgermenu from "../SelectMeal/example.js";
 
 class ChoosePlan extends React.Component {
   constructor() {

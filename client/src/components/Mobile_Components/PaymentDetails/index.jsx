@@ -11,7 +11,8 @@ import { withRouter } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faBell, faShareAlt, faSearch } from '@fortawesome/free-solid-svg-icons'
 
-import styles from './paymentDetails.module.css'
+import styles from './paymentDetails.module.css';
+import Burgermenu from "../SelectMeal/example.js";
 
 class PaymentDetails extends React.Component {
 
@@ -49,6 +50,7 @@ class PaymentDetails extends React.Component {
         return (
           <div className={styles.root}>
           <div className={styles.mealHeader}>
+            <Burgermenu />
           <p
               style={{
                 flex: "6",

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import MenuItemList from "./menuItemList";
 
-class ChoosePlan extends React.Component {
+class SelectMeal extends React.Component {
   render() {
     return (
       <div style={{ backgroundColor: "black" }}>
@@ -18,4 +18,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   /* Needed functions from actions*/
-})(ChoosePlan);
+})(SelectMeal);
