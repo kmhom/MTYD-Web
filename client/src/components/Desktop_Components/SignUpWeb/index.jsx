@@ -95,6 +95,61 @@ class SignUpWeb extends React.Component {
                     </div>
                     <div className={styles.inputItem}>
                         <input
+                            type='text'
+                            placeholder='Address*'
+                            className={styles.input}
+                            value={this.props.street}
+                            onChange={(e) => {
+                            this.props.changeNewAddress(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className={styles.inputItem}>
+                        <input
+                            type='text'
+                            placeholder='Unit*'
+                            className={styles.input}
+                            value={this.props.unit}
+                            onChange={(e) => {
+                            this.props.changeNewUnit(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className={styles.inputItem}>
+                        <input
+                            type='text'
+                            placeholder='City*'
+                            className={styles.input}
+                            value={this.props.city}
+                            onChange={(e) => {
+                            this.props.changeNewCity(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className={styles.inputItem}>
+                        <input
+                            type='text'
+                            placeholder='State*'
+                            className={styles.input}
+                            value={this.props.state}
+                            onChange={(e) => {
+                            this.props.changeNewState(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className={styles.inputItem}>
+                        <input
+                            type='text'
+                            placeholder='Zip*'
+                            className={styles.input}
+                            value={this.props.zip}
+                            onChange={(e) => {
+                            this.props.changeNewZip(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className={styles.inputItem}>
+                        <input
                             type="text"
                             className={styles.input}
                             placeholder={"Phone"}

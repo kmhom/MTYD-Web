@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import styles from "./choosePlan.module.css";
 import takeaway from './take-away.svg';
-import choose_meal_plan from '../../../images/choose_meal_plan/Group 1907@2x.png';
+import choose_meal_plan from '../../../images/choose_meal_plan/Group 1907.svg';
 import credit_card_image from '../../../images/Credit-card/Credit-card@2x.png';
 import delivery_guy_image from '../../../images/delivery_guy/3333449@2x.png';
 import first_step_icon from '../../../images/first_step.svg';
@@ -164,6 +164,7 @@ class SelectPlanWeb extends React.Component {
           */}
           <button>HOME</button>
           <button>ABOUT US</button>
+          <button>SIGN IN</button>
         </div>
         <div style={{ alignSelf:"center", marginTop:"1rem", paddingBottom:"6rem", margin:"2rem", borderRadius:"15px", boxShadow:"1px 1px 1px 2px #d3d3d3 "}}>
         <div className={styles.mealSelectMenu}>
@@ -343,7 +344,7 @@ class SelectPlanWeb extends React.Component {
 
           <div className={styles.amount}>
               <p style={{padding:"11px 0px 0px 0px", height:"40px" ,textAlign:"center", backgroundColor:"#FFF0C6", fontSize:"large", fontWeight:"600", color:"black"}} className={styles.amountItem}> $ TOTAL {this.props.selectedPlan.item_price} </p>
-              <Link to='/payment-details'>
+              <Link to='/select-meal-web'>
                 <button style={{textAlign:"center", backgroundColor:"#FF9E19", fontSize:"large", fontWeight:"400", color:"white"}} className={styles.amountItem}>SAVE</button>
               </Link>
           </div>

@@ -24,9 +24,9 @@ class LoginWeb extends React.Component {
 
   successLogin = (hasPurchases) => {
     if(hasPurchases) {
-      this.props.history.push("/select-meal")
+      this.props.history.push("/select-meal-web")
     } else {
-        this.props.history.push("/choose-plan");
+        this.props.history.push("/select-plan-web");
     }
   };
 
