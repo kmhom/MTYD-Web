@@ -119,15 +119,14 @@ class LoginWeb extends React.Component {
       <div className={styles.root}>
         <div style={{  backgroundColor: "#00000074"}}>
         <div className={styles.mealHeader}>
-          <p>NUTRITION MADE EASY</p>
-          <p>LOCAL.ORGANIC.RESPONSIBLE</p>
+         
         </div>
         <div style={{height:"700px"}}>
         <div className={styles.loginSectionContainer}>
           <div className={styles.loginSectionItem}>
             <input
               type='text'
-              placeholder='USER NAME'
+              placeholder='EMAIL'
               className={styles.loginSectionInput}
               value={this.props.email}
               onChange={(e) => {

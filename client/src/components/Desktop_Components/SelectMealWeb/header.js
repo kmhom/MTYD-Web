@@ -104,19 +104,9 @@ class Header extends Component {
     return (
       <React.Fragment>
         <div className={styles.mealHeader}>
-          <p
-            style={{
-              flex: "6",
-              textAlign: "center",
-              fontSize: "24px",
-              color: "black",
-              fontWeight: "bold",
-              paddingLeft: "50px",
-            }}
-          >
-            MENU THIS WEEK
-          </p>
-          <div className={styles.avatar}></div>
+          <button>HOME</button>
+          <button>ABOUT US</button>
+          <button>SIGN IN</button>
         </div>
         <div className={styles.stickyHeader}>
           <select

@@ -5,13 +5,22 @@ import {
   fetchPlans,
   chooseMealsDelivery,
   choosePaymentOption,
+  submitPayment,
+  changeAddressFirstName,
+  changeAddressLastName,
+  changeAddressStreet,
+  changeAddressCity,
+  changeAddressPhone,
+  changeAddressState,
+  changeAddressUnit,
+  changeAddressZip,
+  changeDeliveryInstructions,
 } from "../../../reducers/actions/subscriptionActions";
-
 import axios from 'axios';
 import { API_URL } from '../../../reducers/constants';
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
-import styles from "./choosePlan.module.css";
+import styles from "./SelectPlanWeb.module.css";
 import takeaway from './take-away.svg';
 import choose_meal_plan from '../../../images/choose_meal_plan/Group 1907.svg';
 import credit_card_image from '../../../images/Credit-card/Credit-card@2x.png';
@@ -29,6 +38,10 @@ class SelectPlanWeb extends React.Component {
     this.state = {
       mounted: false,
     };
+  }
+
+  submitplanSuccess = () => {
+    this.props.history.push('/select-meal-web');
   }
 
   componentDidMount() {
@@ -49,7 +62,7 @@ class SelectPlanWeb extends React.Component {
       .then((res) => {
           console.log(res);
           if(res.data.result !== undefined) {
-            this.props.history.push("/select-meal")
+            this.props.history.push("/select-meal-web")
           }
           this.props.fetchPlans();
           this.setState({
@@ -75,7 +88,7 @@ class SelectPlanWeb extends React.Component {
       });
     } else {
       // Reroute to log in page
-      this.props.history.push("/");
+      this.props.history.push("/login-web");
     }
   }
 
@@ -149,19 +162,6 @@ class SelectPlanWeb extends React.Component {
     return (
       <div className={styles.root}>
         <div className={styles.mealHeader}>
-          {/*
-        <p
-            style={{
-              flex: "6",
-              textAlign: "center",
-              fontSize: "22px",
-              color: "black",
-              fontWeight: "bold",
-              paddingLeft: "50px",
-            }}
-          >
-          </p>
-          */}
           <button>HOME</button>
           <button>ABOUT US</button>
           <button>SIGN IN</button>
@@ -177,7 +177,7 @@ class SelectPlanWeb extends React.Component {
           </div>
           </div>
           <div>
-          <img style={{height:"217px", width:"200px"}} src={choose_meal_plan} alt="Choose meal plan" />
+          <img style={{height:"217px", width:"200px"}} src={choose_meal_plan} alt="Choose meal plan image" />
           </div>
           <div style={{textAlign:"left"}}>
           <img style={{height:"69px", width:"69px"}} src={first_step_icon} alt="First step" />
@@ -187,12 +187,15 @@ class SelectPlanWeb extends React.Component {
           <div className={styles.mealNumber}>
             <div className={styles.buttonWrapper}>{this.mealsDelivery()}</div>
           </div>
-          
-          <img style={{height:"223px", width:"223px"}} src={credit_card_image} alt="credit card image" />
-          <img style={{height:"69px", width:"69px"}} src={second_step_icon} alt="Second step" />
-          <p style={{color:"black", fontSize:"1.3rem",fontWeight:"600", margin:"0rem", paddingLeft:"0.7rem"}} >PRE PAY OPTIONS</p>
-          <div className={styles.paymentWrapper}>{this.paymentFrequency()}</div>
-          <img style={{height:"274px", width:"183px"}} src={delivery_guy_image} alt="credit card image" />
+          <div styles={styles.selectionContainer}>
+            <img style={{height:"223px", width:"223px"}} src={credit_card_image} alt="credit card image" />
+            <div styles={styles.positionImage}>
+              <img style={{height:"69px", width:"69px"}} src={second_step_icon} alt="Second step" /> 
+              <p style={{color:"black", fontSize:"1.3rem",fontWeight:"600", margin:"0rem", paddingLeft:"0.7rem"}} >PRE PAY OPTIONS</p>
+            </div>
+            <div className={styles.paymentWrapper}>{this.paymentFrequency()}</div>
+          </div>
+          <img style={{height:"274px", width:"183px"}} src={delivery_guy_image} alt="delivery guy image" />
           <img style={{height:"69px", width:"69px"}} src={third_step_icon} alt="Third step" />
           <h6 className={styles.subTitle}>DELIVERY INFORMATION</h6>
           {/* Delivery info*/}
@@ -344,9 +347,16 @@ class SelectPlanWeb extends React.Component {
 
           <div className={styles.amount}>
               <p style={{padding:"11px 0px 0px 0px", height:"40px" ,textAlign:"center", backgroundColor:"#FFF0C6", fontSize:"large", fontWeight:"600", color:"black"}} className={styles.amountItem}> $ TOTAL {this.props.selectedPlan.item_price} </p>
-              <Link to='/select-meal-web'>
-                <button style={{textAlign:"center", backgroundColor:"#FF9E19", fontSize:"large", fontWeight:"400", color:"white"}} className={styles.amountItem}>SAVE</button>
-              </Link>
+              <button style={{textAlign:"center", backgroundColor:"#FF9E19", fontSize:"large", fontWeight:"400", color:"white"}} className={styles.amountItem} onClick={() => {
+                this.props.submitPayment(
+                    this.props.email, this.props.password, this.props.passwordConfirm,
+                    this.props.firstName, this.props.lastName, this.props.phone,
+                    this.props.street, this.props.unit, this.props.city, this.props.state,
+                    this.props.zip,this.submitplanSuccess
+                );
+                }}>
+                SAVE
+              </button>
           </div>
         </div>
         </div>
@@ -364,6 +374,16 @@ SelectPlanWeb.propTypes = {
   meals: PropTypes.string.isRequired,
   paymentOption: PropTypes.string.isRequired,
   selectedPlan: PropTypes.object.isRequired,
+  submitPayment: PropTypes.object.isRequired,
+  changeAddressFirstName: PropTypes.func.isRequired,
+  changeAddressLastName: PropTypes.func.isRequired,
+  changeAddressStreet: PropTypes.func.isRequired,
+  changeAddressCity: PropTypes.func.isRequired,
+  changeAddressPhone: PropTypes.func.isRequired,
+  changeAddressState: PropTypes.func.isRequired,
+  changeAddressUnit: PropTypes.func.isRequired,
+  changeAddressZip: PropTypes.func.isRequired,
+  changeDeliveryInstructions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -379,4 +399,14 @@ export default connect(mapStateToProps, {
   fetchPlans,
   chooseMealsDelivery,
   choosePaymentOption,
+  submitPayment,
+  changeAddressFirstName,
+  changeAddressLastName,
+  changeAddressStreet,
+  changeAddressCity,
+  changeAddressPhone,
+  changeAddressState,
+  changeAddressUnit,
+  changeAddressZip,
+  changeDeliveryInstructions
 })(withRouter(SelectPlanWeb));

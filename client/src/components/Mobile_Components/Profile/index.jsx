@@ -153,7 +153,6 @@ class Profile extends React.Component {
                                         className={styles.input}
                                         placeholder={"Email"}
                                         defaultvalue={this.props.profileInfo.customer_email}
-                                        
                                         onChange={(e) => {
                                             this.props.changeNewEmail(e.target.value);
                                         }}

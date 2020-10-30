@@ -1,23 +1,23 @@
 .mealMain {
   display: flex;
   flex-direction: column;
-
   overflow: visible;
   position: relative;
 }
 
 .mealHeader {
-  background-color: #ff9e19;
+  background-color: #FFFFFF;
   border-radius: 0px 0px 30px 30px;
   display: flex;
   flex-direction: row;
-  background-color: #ff9e19;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: black;
   box-sizing: border-box;
   height: 6rem;
   padding: 1rem;
   align-items: center;
+  box-shadow: 0px 3px 6px #00000029;
+  background-size: cover;
 }
 .avatar {
   flex: 1;
@@ -187,7 +187,7 @@
   border-radius: 25px;
   align-content: center;
   margin: 0.3rem;
-  color: white;
+  color:black;
   color: "#d3872f";
   background-color: #ff9e19;
   font-size: large;

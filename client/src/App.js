@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import store from "./reducers/store";
 import {
   BrowserRouter as Router,
-  // Route, Redirect,
+   Route, Redirect,
   Switch,
 } from "react-router-dom";
 import AppliedRoute from "./components/AppliedRoute";
@@ -87,6 +87,9 @@ const DesktopComponent = () => {
       <div className='root'>
         <Router>
           <div className='mainApp'>
+            <Route exact path="/">
+              <Redirect to="/login-web" />
+            </Route>
             <Switch>
               <AppliedRoute exact path='/login-web' component={LoginWeb} />
               <AppliedRoute exact path='/sign-up-web' component={SignUpWeb} />
@@ -103,8 +106,8 @@ const DesktopComponent = () => {
 
 const MyComponent = () => {
   const { width } = useViewport();
-  const breakpoint = 620;
-  return  width < breakpoint ? <MobileComponent /> : <DesktopComponent />;
+  const breakpoint = 375;
+  return  width <= breakpoint ? <MobileComponent /> : <DesktopComponent />;
 };
 
 function App() {
