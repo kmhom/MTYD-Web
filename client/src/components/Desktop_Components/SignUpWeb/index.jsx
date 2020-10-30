@@ -38,10 +38,10 @@ class SignUpWeb extends React.Component {
                             <h6 className={styles.subHeading}> SIGN UP </h6>
                             <div className={styles.inputItem}>
                                 <input
-                                    type="text"
+                                    type='text'
                                     className={styles.input}
-                                    placeholder={"Email"}
-                                    defaultValue={this.props.email}
+                                    placeholder='Email*'
+                                    value={this.props.email}
                                     onChange={(e) => {
                                         this.props.changeNewEmail(e.target.value);
                                     }}

@@ -10,10 +10,10 @@ class Burgermenu extends React.Component {
     // NOTE: You also need to provide styles, see https://github.com/negomi/react-burger-menu#styling
     return (
       <Menu>
-        <a id='subscribe' className='menu-item' href='/choose-plan'>
+        <a id='subscribe' className='menu-item' href='/select-plan-web'>
           Subscribe
         </a>
-        <a id='select' className='menu-item' href='/select-meal'>
+        <a id='select' className='menu-item' href='/select-meal-web'>
           Select
         </a>
         <a id='profile' className='menu-item' href='/profile'>

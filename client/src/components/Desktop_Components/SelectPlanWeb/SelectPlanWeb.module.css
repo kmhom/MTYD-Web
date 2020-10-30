@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
 }
 
 .mealHeader {
@@ -17,6 +20,15 @@
   padding: 1rem;
   align-items: center;
   box-shadow: 0px 3px 6px #00000029;
+  justify-content: flex-end;
+}
+
+.mealheaderButton{
+  border: none;
+  background: none;
+  padding: 10px;
+  font-size: 15px;
+  font-family: Verdana;
 }
 
 .avatar {
@@ -100,8 +112,8 @@
 
 .mealButton {
   color: #000000;
-  border: 2px solid #fff0c6;
-  background-color: #FFFFFF;
+  background-color: #FFFFFFD0;
+  box-shadow: 0px 3px 6px #00000029;
   border-radius: 25px;
   padding: 1rem 2rem;
   margin: 10px;
@@ -110,10 +122,12 @@
   min-width: 20%;
   font-size: 1rem;
   font-weight: 600;
+  border: none;
 }
 
 .mealButtonSelected {
-  background-color: #ffba00;
+  
+  border: 3px solid #FFBA00;
 }
 
 .subTitle2 {
@@ -163,6 +177,7 @@
   margin-top: 1.2rem;
   padding: 0rem 1.5rem;
   box-sizing: border-box;
+  display:inline-block;
 }
 .amountItem {
   border: none;
@@ -177,7 +192,8 @@
   height: 2.2rem;
   border-radius: 18px;
   border: none;
-  background-color: #fff0c6;
+  background-color: #FFFFFFD0;
+  box-shadow: 0px 3px 6px #00000029;
 }
 
 .inputContainer {

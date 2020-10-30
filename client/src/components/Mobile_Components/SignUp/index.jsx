@@ -16,7 +16,7 @@ import {
     submitPasswordSignUp,
   } from "../../../reducers/actions/loginActions";
 
-import styles from './signup.module.css'
+import styles from './SignUpWeb.module.css';
 
 class SignUp extends React.Component {
 
