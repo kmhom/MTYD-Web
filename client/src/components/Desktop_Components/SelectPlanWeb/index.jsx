@@ -169,9 +169,13 @@ class SelectPlanWeb extends React.Component {
     return (
       <div className={styles.root}>
         <div className={styles.mealHeader}>
-          <button className={styles.mealheaderButton}>HOME</button>
+          <Link to="/login-web">
+            <button className={styles.mealheaderButton}>HOME</button>
+          </Link>
           <button className={styles.mealheaderButton}>ABOUT US</button>
-          <button className={styles.mealheaderButton}>SIGN IN</button>
+          <Link to="/login-web">
+            <button className={styles.mealheaderButton}>SIGN IN</button>
+          </Link>
         </div>
         <div style={{display:"flex", flexDirection:"row", marginTop:"1rem", padding:"10px"}}>
             <img style={{height:"50px", width:"50px"}} src={takeaway} alt="React Logo" />

@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import styles from "./login.module.css";
+import { useCookies } from "react-cookie";
 
 class LoginWeb extends React.Component {
   constructor() {
@@ -44,6 +45,13 @@ class LoginWeb extends React.Component {
   };
 
   componentDidMount() {
+    if (
+      document.cookie
+        .split(";")
+        .some((item) => item.trim().startsWith("customer_uid=") )
+    ) {
+      document.cookie = "customer_uid=NULL";
+    }
     let queryString = this.props.location.search;
     let urlParams = new URLSearchParams(queryString);
     // Clear Query parameters

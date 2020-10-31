@@ -18,6 +18,7 @@
   align-items: center;
   box-shadow: 0px 3px 6px #00000029;
   background-size: cover;
+  justify-content: flex-end;
 }
 .avatar {
   flex: 1;
@@ -70,6 +71,15 @@
   align-content: center;
   flex: 1;
 }
+
+.mealheaderButton{
+  border: none;
+  background: none;
+  padding: 10px;
+  font-size: 15px;
+  font-family: Verdana;
+}
+
 .buttonWrapper {
   align-content: center;
   display: flex;

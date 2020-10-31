@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import MealIndicator from "./MealIndicator";
 import styles from "./selectmeal.module.css";
+import { Link } from "react-router-dom";
+
 class Header extends Component {
   
   showDeliveryDay = () => {
@@ -104,9 +106,13 @@ class Header extends Component {
     return (
       <React.Fragment>
         <div className={styles.mealHeader}>
-          <button>HOME</button>
-          <button>ABOUT US</button>
-          <button>SIGN IN</button>
+          <Link to="/select-plan-web">
+            <button className={styles.mealheaderButton}>HOME</button>
+          </Link>
+          <button className={styles.mealheaderButton}>ABOUT US</button>
+          <Link to="/login-web">
+          <button className={styles.mealheaderButton}>SIGN IN</button>
+          </Link>
         </div>
         <div className={styles.stickyHeader}>
           <select
