@@ -163,7 +163,7 @@ export class MenuItemList extends Component {
     let pulledSelection = this.state.mealSelected.filter(
       (item) =>
         item.sel_purchase_id === planName &&
-        item.sel_menu_date === this.state.myDate
+        item.sel_menu_date === this.state.myDate,
     );
 
     if (pulledSelection.length > 0) {

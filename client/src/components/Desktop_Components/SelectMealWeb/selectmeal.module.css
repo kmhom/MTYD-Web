@@ -20,6 +20,7 @@
   background-size: cover;
   justify-content: flex-end;
 }
+
 .avatar {
   flex: 1;
   box-sizing: border-box;
