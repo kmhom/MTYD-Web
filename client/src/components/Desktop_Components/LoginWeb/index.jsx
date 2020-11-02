@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import styles from "./login.module.css";
-import { useCookies } from "react-cookie";
+import { useCookies, Cookies } from "react-cookie";
 
 class LoginWeb extends React.Component {
   constructor() {
